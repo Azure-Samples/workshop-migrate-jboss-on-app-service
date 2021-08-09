@@ -36,5 +36,5 @@ Learn how to migrate an on-premises WebLogic application to JBoss EAP using the 
 
 ## Resources
 
-1. [JBoss EAP on Azure](https://docs.microsoft.comazure/developer/java/ee/jboss-on-azure)
+1. [JBoss EAP on Azure](https://docs.microsoft.com/azure/developer/java/ee/jboss-on-azure)
 2. [Migrate JBoss EAP to Azure App Service](https://docs.microsoft.com/azure/developer/java/migration/migrate-jboss-eap-to-jboss-eap-on-azure-app-service?toc=/azure/developer/java/ee/toc.json&bc=/azure/developer/breadcrumb/toc.json)
