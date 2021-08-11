@@ -28,6 +28,7 @@ Learn how to migrate an on-premises WebLogic application to JBoss EAP using the 
 
 ## Instructions
 
+1. Learn about Azure App Service 
 1. [Migrate an on-prem WebLogic app to JBoss on App Service using the Migration Toolkit for Apps](1-migrate-weblogic-to-jboss/README.md)
 2. [Set up GitHub Actions to build and deploy your JBoss app to App Service](/2-set-up-github-actions/README.md)
 3. [Learn about the App Service Environment](/3-ase-overview/README.md)
