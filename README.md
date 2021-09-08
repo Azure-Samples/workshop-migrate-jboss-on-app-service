@@ -21,22 +21,17 @@ Learn how to migrate an on-premises WebLogic application to JBoss EAP using the 
 - [Visual Studio Code](https://code.visualstudio.com/)
 - [An Azure Subscription](https://azure.microsoft.com/free/search/)
 
-## Set up
-
-1. Create a fork of the repository, you will need your own fork to set up GitHub Actions later.
-2. Clone your fork locally repository: `git clone https://github.com/<your-username>/workshop-migrate-jboss-on-app-service.git`
-
 ## Instructions
 
-1. Learn about Azure App Service 
-1. [Migrate an on-prem WebLogic app to JBoss on App Service using the Migration Toolkit for Apps](1-migrate-weblogic-to-jboss/README.md)
-2. [Set up GitHub Actions to build and deploy your JBoss app to App Service](/2-set-up-github-actions/README.md)
-3. [Learn about the App Service Environment](/3-ase-overview/README.md)
-4. [Update GitHub Actions to deploy to the App Service Environment](/4-update-github-actions/README.md)
-5. [Set up CI workflows to deploy to staging and UAT environments](/5-deploy-staging-uat/README.md)
+1. [Set up your environment](instructions/0-environment-setup.md)
+1. [Learn about and create an Azure App Service](instructions/1-learn-about-app-service.md)
+1. [Migrate an on-prem WebLogic app to JBoss on App Service using the Migration Toolkit for Apps](instructions/2-migrate-weblogic-to-jboss.md)
+1. [Create and connect a PostgreSQL application](instructions/3-create-postgres-on-azure.md)
+1. [Set up GitHub Actions to build and deploy your JBoss app to App Service](instructions/4-set-up-github-actions.md)
+1. [Deploy your application to the App Service Environment](instructions/5-app-service-environment.md)
+1. [Set up CI workflows to deploy to staging environments](instructions/6-deploy-to-staging-slots.md)
 
 ## Resources
 
 1. [JBoss EAP on Azure](https://docs.microsoft.com/azure/developer/java/ee/jboss-on-azure)
 2. [Migrate JBoss EAP to Azure App Service](https://docs.microsoft.com/azure/developer/java/migration/migrate-jboss-eap-to-jboss-eap-on-azure-app-service?toc=/azure/developer/java/ee/toc.json&bc=/azure/developer/breadcrumb/toc.json)
-
