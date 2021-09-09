@@ -17,5 +17,3 @@ jboss/server/minimal/work/**/*
 # deployed package files #
 
 *.DEPLOYED
-
-.devcontainer/set-env.sh
