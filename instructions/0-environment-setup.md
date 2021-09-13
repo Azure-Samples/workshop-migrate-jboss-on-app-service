@@ -4,4 +4,6 @@
   - Users will need to be in the Team that they have Code Space access from --> can't fork the repo into a new org/personal org
 - How to start a code space
 - Sign into Azure CLI
-- Clone the coolstore app
+- Clone the coolstore app (or we'll already have it as part of this repo)
+
+All the other sections can assume that these parts are set up

@@ -32,18 +32,22 @@ ENV LAUNCH_JBOSS_IN_BACKGROUND true
 
 USER root
 
-RUN mkdir -p ${JBOSS_HOME}
-RUN cd $HOME \
-    && curl -O https://download.jboss.org/wildfly/$WILDFLY_VERSION/wildfly-$WILDFLY_VERSION.tar.gz \
-    && sha1sum wildfly-$WILDFLY_VERSION.tar.gz | grep $WILDFLY_SHA1 \
-    && tar xf wildfly-$WILDFLY_VERSION.tar.gz \
-    && mv $HOME/wildfly-$WILDFLY_VERSION $JBOSS_HOME \
-    && rm wildfly-$WILDFLY_VERSION.tar.gz \
-    && chown -R vscode:0 ${JBOSS_HOME} \
-    && chmod -R g+rw ${JBOSS_HOME}
+# RUN mkdir -p ${JBOSS_HOME}
+# RUN cd $HOME \
+#     && curl -O https://download.jboss.org/wildfly/$WILDFLY_VERSION/wildfly-$WILDFLY_VERSION.tar.gz \
+#     && sha1sum wildfly-$WILDFLY_VERSION.tar.gz | grep $WILDFLY_SHA1 \
+#     && tar xf wildfly-$WILDFLY_VERSION.tar.gz \
+#     && mv $HOME/wildfly-$WILDFLY_VERSION $JBOSS_HOME \
+#     && rm wildfly-$WILDFLY_VERSION.tar.gz \
+#     && chown -R vscode:0 ${JBOSS_HOME} \
+#     && chmod -R g+rw ${JBOSS_HOME}
 
 USER vscode
 
+## psql
+RUN sudo apt-get update && sudo apt-get -y install postgresql-client
+
 # Set the default command to run on boot
 # This will boot WildFly in standalone mode and bind to all interfaces
-CMD ["/opt/jboss/wildfly/bin/standalone.sh", "-b", "0.0.0.0"]
+# CMD ["/opt/jboss/wildfly/bin/standalone.sh", "-b", "0.0.0.0"]
+CMD [ "sleep", "infinity" ]

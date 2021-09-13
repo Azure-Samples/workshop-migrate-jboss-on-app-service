@@ -8,7 +8,10 @@
         "RESOURCE_GROUP": ""
     },
 
-    "dockerFile": "Dockerfile",
+    //"dockerFile": "Dockerfile",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "wildfly",
+    "workspaceFolder": "/workspace",
     "remoteUser": "vscode",
     "extensions": [
         "ms-vscode.azure-account",
@@ -21,6 +24,7 @@
         8080,
         9990,
         61435,
-        61436
+        61436,
+        5432  // Postgres
     ]
 }
