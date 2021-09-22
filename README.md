@@ -8,20 +8,24 @@ description: "Migrate a WebLogic app to JBoss EAP on an Azure App Service Enviro
 urlFragment: "/workshop-migrate-jboss-on-app-service"
 ---
 
+<p align="center">
+  <a href="instructions/0-environment-setup.md">
+    <h1>Start here!</h1>
+  </a>
+</p>
+
 # Migration workshop for JBoss on Azure
 
-Learn how to migrate an on-premises WebLogic application to JBoss EAP using the RedHat Migration Toolkit, set up GitHub Action to deploy your app to staging environments, and secure your app using the App Service Environment.
+Learn how to migrate an on-premises WebLogic application to JBoss EAP using the RedHat Migration Toolkit, then set up GitHub Action workflows to deploy your app to staging environments, and secure your app using the App Service Environment.
 
-## Getting Started
+## Get Started
 
 ### Prerequisites
 
-- [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli)
-- [Java 11](https://docs.microsoft.com/java/openjdk/download)
-- [Visual Studio Code](https://code.visualstudio.com/)
 - [An Azure Subscription](https://azure.microsoft.com/free/search/)
+- [A GitHub Account](https://github.com/signup)
 
-## Instructions
+### Instructions
 
 1. [Set up your environment](instructions/0-environment-setup.md)
 1. [Learn about and create an Azure App Service](instructions/1-learn-about-app-service.md)
@@ -35,7 +39,3 @@ Learn how to migrate an on-premises WebLogic application to JBoss EAP using the 
 
 1. [JBoss EAP on Azure](https://docs.microsoft.com/azure/developer/java/ee/jboss-on-azure)
 2. [Migrate JBoss EAP to Azure App Service](https://docs.microsoft.com/azure/developer/java/migration/migrate-jboss-eap-to-jboss-eap-on-azure-app-service?toc=/azure/developer/java/ee/toc.json&bc=/azure/developer/breadcrumb/toc.json)
-
-## About Code Spaces and Billing
-
-As of September 2021, GitHub Code Spaces can only be used within a GitHub Team or Enterprise. Billing for Code Spaces is then done through the Team or Enterprise. If you want to deliver this workshop, fork this repository into a Team or Enterprise. Then add your attendees to the same Team/Enterprise. The attendees will then be able to run Code Spaces on the fork.

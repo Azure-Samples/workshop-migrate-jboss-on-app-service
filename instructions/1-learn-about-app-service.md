@@ -36,8 +36,8 @@ Let's cover a few key terms about App Service:
 To get started, let's create a JBoss EAP web app using the Azure CLI. First, we will need to create an App Service Plan. The App Service Plan is the compute container, it determines your cores, memory, price, and scale.
 
 ```bash
-az appservice plan create --name "workshop-app-service-plan" `
-    --resource-group $RESOURCE_GROUP `
+az appservice plan create --name "workshop-app-service-plan" \
+    --resource-group $RESOURCE_GROUP \
     --sku P1V3
 ```
 
