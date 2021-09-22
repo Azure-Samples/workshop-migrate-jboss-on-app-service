@@ -15,16 +15,12 @@
     "remoteUser": "vscode",
     "extensions": [
         "ms-vscode.azure-account",
-		"redhat.java",
 		"vscjava.vscode-java-pack",
 		"vscjava.vscode-java-debug",
         "redhat.mta-vscode-extension"
     ],
     "forwardPorts": [
         8080,
-        9990,
-        61435,
-        61436,
-        5432  // Postgres
+        9990
     ]
 }
