@@ -13,5 +13,7 @@ vscode:
 tasks:
   - name: Pre-warm Maven
     init: mvn -fn dependency:resolve-plugins dependency:resolve dependency:go-offline clean compile package
+  - name: Start PostgreSQL container
+    command: docker run -d --name coolstore-postgresql -e POSTGRESQL_USER=coolstore -e POSTGRES_PASSWORD=coolstore123 -e POSTGRESQL_DATABASE=monolith -d postgres
   - name: Start Wildfly server
     command: $JBOSS_HOME/bin/standalone.sh -b 0.0.0.0
