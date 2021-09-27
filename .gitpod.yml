@@ -1,15 +1,26 @@
-image:
-  file: .gitpod.Dockerfile
+image: quay.io/eap-appservice-workshop/gitpod-image:latest
+
 ports:
   - port: 8080
     onOpen: open-preview
   - port: 5005
     onOpen: ignore
+  - port: 9990
+    onOpen: ignore
+  - port: 8443
+    onOpen: ignore
+
+github:
+  prebuilds:
+    # enable for the default branch (defaults to true)
+    master: true
+    # enable for all branches in this repo (defaults to false)
+    branches: true
 
 vscode:
   extensions:
     - redhat.mta-vscode-extension@0.0.79
-    - redhat.vscode-quarkus
+
 tasks:
   - name: Pre-warm Maven
     init: mvn -fn dependency:resolve-plugins dependency:resolve dependency:go-offline clean compile package
