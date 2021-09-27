@@ -43,9 +43,10 @@ The exercises in this workshop will involve creating and configuring resources f
   - SUBSCRIPTION_NAME
   - WEBAPP_NAME
   - RESOURCE_GROUP
+  - LOCATION
 
 *Congratulations!* Your GitPod workspace is now ready to go. Click the link below to go to the next section
 
 ---
 
-➡️ Next section: [1 - Learn about Azure App Service](2-migrate-weblogic-to-jboss.md)
+➡️ Next section: [1 - Learn about Azure App Service](1-learn-about-app-service.md)
