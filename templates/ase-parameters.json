@@ -1,0 +1,54 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "aseName": {
+            "value": "example-name"
+        },
+        "location": {
+            "value": "eastus"
+        },
+        "subscriptionId": {
+            "value": "ef90e930-9d7f-4a60-8a99-748e0eea69de"
+        },
+        "dedicatedHostCount": {
+            "value": "0"
+        },
+        "zoneRedundant": {
+            "value": false
+        },
+        "virtualNetworkName": {
+            "value": "example-vnet"
+        },
+        "virtualNetworkResourceGroupName": {
+            "value": "freeberg-ilb-ase"
+        },
+        "virtualNetworkAddress": {
+            "value": "192.168.250.0/23"
+        },
+        "subnetName": {
+            "value": "example-subnet"
+        },
+        "subnetId": {
+            "value": "/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourceGroups/freeberg-ilb-ase/providers/Microsoft.Network/virtualNetworks/example-vnet/subnets/example-subnet"
+        },
+        "subnetAddress": {
+            "value": "192.168.250.0/24"
+        },
+        "delegationName": {
+            "value": "example-name-delegation"
+        },
+        "hostingEnvironmentId": {
+            "value": "/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourcegroups/freeberg-ilb-ase/providers/Microsoft.Web/HostingEnvironments/example-name"
+        },
+        "ilbMode": {
+            "value": 3
+        },
+        "virtualNetworkId": {
+            "value": "/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourceGroups/freeberg-ilb-ase/providers/Microsoft.Network/virtualNetworks/example-vnet"
+        },
+        "privateZoneName": {
+            "value": "example-name.appserviceenvironment.net"
+        }
+    }
+}

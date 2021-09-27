@@ -1,0 +1,185 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "aseName": {
+            "type": "string"
+        },
+        "location": {
+            "type": "string"
+        },
+        "subscriptionId": {
+            "type": "string"
+        },
+        "dedicatedHostCount": {
+            "type": "string"
+        },
+        "zoneRedundant": {
+            "type": "bool"
+        },
+        "virtualNetworkName": {
+            "type": "string"
+        },
+        "virtualNetworkResourceGroupName": {
+            "type": "string"
+        },
+        "virtualNetworkAddress": {
+            "type": "string"
+        },
+        "subnetName": {
+            "type": "string"
+        },
+        "subnetId": {
+            "type": "string"
+        },
+        "subnetAddress": {
+            "type": "string"
+        },
+        "delegationName": {
+            "type": "string"
+        },
+        "hostingEnvironmentId": {
+            "type": "string"
+        },
+        "ilbMode": {
+            "type": "int"
+        },
+        "virtualNetworkId": {
+            "type": "string"
+        },
+        "privateZoneName": {
+            "type": "string"
+        }
+    },
+    "resources": [
+        {
+            "apiVersion": "2018-04-01",
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[parameters('virtualNetworkName')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[parameters('virtualNetworkAddress')]"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "[parameters('subnetName')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('subnetAddress')]",
+                            "delegations": [
+                                {
+                                    "name": "[parameters('delegationName')]",
+                                    "properties": {
+                                        "serviceName": "Microsoft.Web/hostingEnvironments"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "2019-08-01",
+            "type": "Microsoft.Web/hostingEnvironments",
+            "name": "[parameters('aseName')]",
+            "kind": "ASEV3",
+            "location": "[parameters('location')]",
+            "properties": {
+                "name": "[parameters('aseName')]",
+                "location": "[parameters('location')]",
+                "dedicatedHostCount": "[parameters('dedicatedHostCount')]",
+                "zoneRedundant": "[parameters('zoneRedundant')]",
+                "InternalLoadBalancingMode": "[parameters('ilbMode')]",
+                "virtualNetwork": {
+                    "id": "[parameters('subnetId')]"
+                }
+            },
+            "tags": {},
+            "dependsOn": [
+                "[concat('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]"
+            ]
+        },
+        {
+            "apiVersion": "2018-09-01",
+            "type": "Microsoft.Network/privateDnsZones",
+            "name": "[parameters('privateZoneName')]",
+            "location": "global",
+            "dependsOn": [
+                "[concat('Microsoft.Web/hostingEnvironments/', parameters('aseName'))]"
+            ],
+            "tags": {},
+            "properties": {},
+            "resources": [
+                {
+                    "apiVersion": "2018-09-01",
+                    "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
+                    "name": "[concat(parameters('privateZoneName'), '/vnetLink')]",
+                    "location": "global",
+                    "properties": {
+                        "virtualNetwork": {
+                            "id": "[parameters('virtualNetworkId')]"
+                        },
+                        "registrationEnabled": false
+                    },
+                    "dependsOn": [
+                        "[concat('Microsoft.Network/privateDnsZones/', parameters('privateZoneName'))]"
+                    ]
+                },
+                {
+                    "apiVersion": "2018-09-01",
+                    "type": "Microsoft.Network/privateDnsZones/A",
+                    "name": "[concat(parameters('privateZoneName'), '/*')]",
+                    "location": "global",
+                    "properties": {
+                        "ttl": 3600,
+                        "aRecords": [
+                            {
+                                "ipv4Address": "[reference(concat(resourceId('Microsoft.Web/hostingEnvironments', parameters('aseName')), '/configurations/networking'), '2019-08-01').internalInboundIpAddresses[0]]"
+                            }
+                        ]
+                    },
+                    "dependsOn": [
+                        "[concat('Microsoft.Network/privateDnsZones/', parameters('privateZoneName'))]"
+                    ]
+                },
+                {
+                    "apiVersion": "2018-09-01",
+                    "type": "Microsoft.Network/privateDnsZones/A",
+                    "name": "[concat(parameters('privateZoneName'), '/*.scm')]",
+                    "location": "global",
+                    "properties": {
+                        "ttl": 3600,
+                        "aRecords": [
+                            {
+                                "ipv4Address": "[reference(concat(resourceId('Microsoft.Web/hostingEnvironments', parameters('aseName')), '/configurations/networking'), '2019-08-01').internalInboundIpAddresses[0]]"
+                            }
+                        ]
+                    },
+                    "dependsOn": [
+                        "[concat('Microsoft.Network/privateDnsZones/', parameters('privateZoneName'))]"
+                    ]
+                },
+                {
+                    "apiVersion": "2018-09-01",
+                    "type": "Microsoft.Network/privateDnsZones/A",
+                    "name": "[concat(parameters('privateZoneName'), '/@')]",
+                    "location": "global",
+                    "properties": {
+                        "ttl": 3600,
+                        "aRecords": [
+                            {
+                                "ipv4Address": "[reference(concat(resourceId('Microsoft.Web/hostingEnvironments', parameters('aseName')), '/configurations/networking'), '2019-08-01').internalInboundIpAddresses[0]]"
+                            }
+                        ]
+                    },
+                    "dependsOn": [
+                        "[concat('Microsoft.Network/privateDnsZones/', parameters('privateZoneName'))]"
+                    ]
+                }
+            ]
+        }
+    ]
+}
