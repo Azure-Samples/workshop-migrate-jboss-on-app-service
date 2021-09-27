@@ -32,7 +32,7 @@ The IDE Plugin for the Migration Toolkit for Applications provides assistance di
 
 You will be using Gitpod, a cloud-powered development environments based on [Visual Studio Code](https://code.visualstudio.com/) including the code editor, terminal, debugger, settings sync, and any extension. __Changes to files are auto-saved every few seconds__, so you don’t need to explicitly save changes.
 
-When your Gitpod instance gets started, you’ll be placed in the workspace in a few minutes. The project is imported into your workspace and is visible in the project explorer:
+You already started your IDE in a previous step, and you can see that the project is imported into your workspace and is visible in the project explorer:
 
 <img src="../img/2-gitpod-explorer.png" width=900 align=center>
 
@@ -47,17 +47,17 @@ Click on `MTA Explorer` icon on the left, you will see a new MTA configuration i
 
 <img src="../img/2-mta-add-input.png" width=700 align=center>
 
-The current working directory(_/workspace/appservice-coolstore/_) will be shown. Then click on `src` directory and clock on `Enter`:
+The current working directory `/workspace/workshop-migrate-jboss-on-app-service/` will be shown. Then click on `src` directory and click on `Enter`:
 
 <img src="../img/2-mta-add-opendir.png" width=700 align=center>
 
-Then you will see that **/workspace/appservice-coolstore/src/** directory is added in _--input_ configuration.
+Then you will see that `/workspace/workshop-migrate-jboss-on-app-service/src/` directory is added in _--input_ configuration.
 
-Select `eap7` in _--target_ server to migrate:
+Find and select `eap7` in _--target_ server to migrate:
 
 <img src="../img/2-mta-target.png" width=700 align=center>
 
-Click on `--source` to migrate from then select `weblogic`. Leave the other configurations:
+Find and click on the `--source` checkbox then select `weblogic` to indicate that the Weblogic-specific rules should be used. Leave the other configuration values as-is:
 
 <img src="../img/2-mta-source.png" width=700 align=center>
 
@@ -68,7 +68,7 @@ Right-click on *mtaConfiguration* to analyze the WebLogic application. Click on 
 
 <img src="../img/2-mta-run-report.png" width=700 align=center>
 
-Migration Toolkit for Applications (MTA) CLI will be executed automatically in a new terminal then it will take a few mins to complete the analysis. Click on `Open Report`:
+Migration Toolkit for Applications (MTA) CLI will be executed automatically in a new terminal and it will take a minute or less to complete the analysis. Once it's done, click on `Open Report` in the pop-up:
 
 <img src="../img/2-mta-analysis-complete.png" width=700 align=center>
 
@@ -105,9 +105,9 @@ In this step you will migrate some WebLogic-specific code in the app to use stan
 ### 2-1. Jump to Code
 ----
 
-Let's jump to code containing identified migration issues. Expand the **appservice-coolstore** source project in the MTA explorer and navigate to `appservice-coolstore > src > main > java > com > redhat > coolstore > utils > StartupListener.java`. Be sure to click the arrow next to the actual class name `StartupListener.java` to expand and show the Hints:
+Let's jump to code containing identified migration issues. Expand the **workshop-migrate-jboss-on-app-service** source project in the MTA explorer and navigate to `workshop-migrate-jboss-on-app-service > src > main > java > com > redhat > coolstore > utils > StartupListener.java`. Be sure to click the arrow next to the actual class name `StartupListener.java` to expand and show the Hints:
 
-**_TIP:_** You can use kbd:[CTRL+p] (or kbd:[CMD+p] on macOS) to quickly open a file. Simply start typing the name of the file in the text box that appears and select your file from the list that is produced.
+**_TIP:_** You can use [CTRL+p] (or [CMD+p] on macOS) to quickly open a file. Simply start typing the name of the file in the text box that appears and select your file from the list that is produced.
 
 <img src="../img/2-mta_project_issues.png" width=500 align=center>
 
@@ -179,7 +179,7 @@ public class StartupListener {
 }
 ```
 
-**_NOTE:_** Where is the Save button? Gitpod will __autosave__ your changes, that is why you can’t find a SAVE button - no more losing code because you forgot to save. You can undo with kbd:[CTRL-Z] (or kbd:[CMD-Z] on a macOS) or by using the `Edit -> Undo` menu option.
+**_NOTE:_** Where is the Save button? Gitpod will __autosave__ your changes, that is why you can’t find a SAVE button - no more losing code because you forgot to save. You can undo with `CTRL-Z` (or `CMD-Z` on a macOS) or by using the `Edit -> Undo` menu option.
 
 ### 2-4. Test the build
 ----
@@ -187,7 +187,7 @@ public class StartupListener {
 In the terminal, run the following command to test the build:
 
 ```shell
-mvn -f /workspace/appservice-coolstore clean package
+mvn -f $GITPOD_REPO_ROOT clean package
 ```
 
 <img src="../img/2-gitpod-build.png" width=700 align=center>
@@ -204,7 +204,7 @@ You can review the changes you've made. On the left, click on the _Version Contr
 
 <img src="../img/2-gitpod-diffs.png" width=700 align=center>
 
-Gitpod keeps track using GitHub of the changes you make, and you can use version control to check in, update, and compare files as you change them.
+Git keeps track of the changes you make, and you can use version control to check in, update, and compare files as you change them.
 
 For now, go back to the _Explorer_ tree and lets fix the remaining issues.
 
@@ -349,7 +349,7 @@ That one was pretty easy.
 Build and package the app again just as before:
 
 ```shell
-mvn -f /workspace/appservice-coolstore clean package
+mvn -f $GITPOD_REPO_ROOT clean package
 ```
 
 If builds successfully (you will see `BUILD SUCCESS`), then let’s move on to the next issue! If it does not compile, verify you made all the changes correctly and try the build again.
@@ -361,7 +361,7 @@ In this and the following few sections we'll be addressing this part of the repo
 
 <img src="../img/2-report_mdb_issues.png" width=900 align=center>
 
-Much of WebLogic’s interfaces for EJB components like MDBs reside in WebLogic descriptor XML files. Use kbd:[CTRL+p] (or kbd:[CMD+p] on a macOS) to Quickly Open
+Much of WebLogic’s interfaces for EJB components like MDBs reside in WebLogic descriptor XML files. Use `CTRL+p` (or `CMD+p` on a macOS) to quickly open
 `src/main/webapp/WEB-INF/weblogic-ejb-jar.xml` to see one of these descriptors. There are many different configuration possibilities for EJBs and MDBs in this file, but luckily our application only uses one of them, namely it configures `<trans-timeout-seconds>` to 30, which means that if a given transaction within an MDB operation takes too long to complete (over 30 seconds), then the transaction is rolled back and exceptions are thrown. This interface is WebLogic-specific so we’ll
 need to find an equivalent in JBoss.
 
@@ -390,7 +390,7 @@ Lastly, remove Maven dependency on **org.jboss.spec.javax.rmi:jboss-rmi-api_1.0_
 Build once again:
 
 ```shell
-mvn -f /workspace/appservice-coolstore clean package
+mvn -f $GITPOD_REPO_ROOT clean package
 ```
 
 If builds successfully (you will see `BUILD SUCCESS`). If it does not compile, verify you made all the changes correctly and try the build again.
@@ -404,12 +404,9 @@ In the MTA explorer, right-click on *mtaConfiguration* to analyze the WebLogic a
 
 <img src="../img/2-mta-rerun-report.png" width=700 align=center>
 
-Migration Toolkit for Applications (MTA) CLI will be executed automatically in a new terminal then it will take a few mins to complete the analysis. Click on `Open Report`:
+Migration Toolkit for Applications (MTA) CLI will be executed automatically in a new terminal then it will take less than a minute to complete the analysis. Click on `Open Report`:
 
 <img src="../img/2-mta-analysis-rerun-complete.png" width=700 align=center>
-
-**_NOTE:_** If it is taking too long, feel free to skip the next section and proceed to step *12* and return back to the analysis later to confirm that you
-eliminated all the issues.
 
 ### 2-11. View the results
 ----
@@ -430,7 +427,7 @@ In this development environment (GitPod), a JBoss EAP server is already running 
 
 <img src="../img/2-eap-running.png" width=700 align=center>
 
-You'll use **wildfly-maven-plugin** to deploy the application directly to the running EAP server. You can also deploy artifacts, such as JDBC drivers and database resources. This is the ability when you execute JBoss CLI commands.
+You'll use a Maven plugin (`wildfly-maven-plugin`) to deploy the application directly to the running EAP server. You can also deploy artifacts, such as JDBC drivers and database resources. This can also be done with JBoss CLI commands, which you'll explore later on.
 
 Open the `pom.xml` file to add the following configuration at the `<!-- TODO: Add Wildfly plugin here:[-->]`:
 
@@ -469,25 +466,25 @@ Open the `pom.xml` file to add the following configuration at the `<!-- TODO: Ad
 </plugin>
 ```
 
-The _wildfly:deploy_ goal deploys the application to the EAP server. Go back to the **Pre-warm Maven** terminal and run the following Maven command:
+The _wildfly:deploy_ goal deploys the application to the EAP server. In the terminal, run the following Maven command:
 
 ```shell
-mvn clean wildfly:deploy
+mvn -f $GITPOD_REPO_ROOT clean wildfly:deploy
 ```
 
 Wait for the build to finish and the `BUILD SUCCESS` message!
 
-Go back to `Start Wildfly server` terminal, See a `ROOT.war` file is deployed:
+Click on the existing `Start Wildfly server` terminal where EAP was started for you, and you'll see `ROOT.war` is deployed:
 
 <img src="../img/2-eap-deployed.png" width=700 align=center>
 
 #### Congratulations!
 
-Let's open a simple browser then access the application. Click on `Remote Explorer` on the left, you will see open ports. Then, click on `Open Browser` icon. 
+Let's open a simple browser then access the application. Click on `Remote Explorer` on the left, you will see open ports. Then, click on `Open Browser` icon next to port `8080` (the default web server port for JBoss EAP):
 
 <img src="../img/2-open-browser.png" width=700 align=center>
 
-It will open a new web browser to showcase the CoolStore web page:
+It will open a new web browser to showcase the CoolStore web app:
 
 <img src="../img/2-coolstore_web.png" width=700 align=center>
 
