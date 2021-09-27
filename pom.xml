@@ -13,6 +13,7 @@
         <maven.build.timestamp.format>yyyyMMdd'T'HHmmss</maven.build.timestamp.format>
         <project.encoding>UTF-8</project.encoding>
         <maven.test.skip>true</maven.test.skip>
+        <version.org.wildfly>24.0.1.Final</version.org.wildfly>
     </properties>
     <dependencies>
         <dependency>
@@ -53,7 +54,11 @@
             <artifactId>micrometer-core</artifactId>
             <version>1.7.1</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.24</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>ROOT</finalName>
@@ -72,9 +77,8 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.2.0</version>
             </plugin>
+            <!-- TODO: Add Wildfly plugin here -->
+            
         </plugins>
     </build>
-    <profiles>
-<!-- TODO: Add OpenShift profile here -->
-    </profiles>
 </project>
