@@ -5,51 +5,51 @@
         "aseName": {
             "type": "string"
         },
-        "location": {
-            "type": "string"
-        },
         "subscriptionId": {
             "type": "string"
         },
+
+        "virtualNetworkName": {
+            "type": "string",
+            "defaultValue": "ilb-ase-vnet"
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "eastus"
+        },
         "dedicatedHostCount": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "0"
         },
         "zoneRedundant": {
-            "type": "bool"
-        },
-        "virtualNetworkName": {
-            "type": "string"
-        },
-        "virtualNetworkResourceGroupName": {
-            "type": "string"
+            "type": "bool",
+            "defaultValue": false
         },
         "virtualNetworkAddress": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "192.168.250.0/23"
         },
         "subnetName": {
-            "type": "string"
-        },
-        "subnetId": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "ase-subnet"
         },
         "subnetAddress": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "192.168.250.0/24"
         },
         "delegationName": {
-            "type": "string"
-        },
-        "hostingEnvironmentId": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "ilb-ase-delegation"
         },
         "ilbMode": {
-            "type": "int"
-        },
-        "virtualNetworkId": {
-            "type": "string"
-        },
-        "privateZoneName": {
-            "type": "string"
+            "type": "int",
+            "defaultValue": 3
         }
+    },
+    "variables": {
+        "privateZoneName": "[concat(parameters('aseName'),'.appserviceenvironment.net')]",
+        "virtualNetworkId": "[resourceId(parameters('subscriptionId'), resourceGroup().name, 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
+        "subnetId": "[resourceId(parameters('subscriptionId'), resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]"
     },
     "resources": [
         {
@@ -94,7 +94,7 @@
                 "zoneRedundant": "[parameters('zoneRedundant')]",
                 "InternalLoadBalancingMode": "[parameters('ilbMode')]",
                 "virtualNetwork": {
-                    "id": "[parameters('subnetId')]"
+                    "id": "[variables('subnetId')]"
                 }
             },
             "tags": {},
@@ -105,7 +105,7 @@
         {
             "apiVersion": "2018-09-01",
             "type": "Microsoft.Network/privateDnsZones",
-            "name": "[parameters('privateZoneName')]",
+            "name": "[variables('privateZoneName')]",
             "location": "global",
             "dependsOn": [
                 "[concat('Microsoft.Web/hostingEnvironments/', parameters('aseName'))]"
@@ -116,22 +116,22 @@
                 {
                     "apiVersion": "2018-09-01",
                     "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
-                    "name": "[concat(parameters('privateZoneName'), '/vnetLink')]",
+                    "name": "[concat(variables('privateZoneName'), '/vnetLink')]",
                     "location": "global",
                     "properties": {
                         "virtualNetwork": {
-                            "id": "[parameters('virtualNetworkId')]"
+                            "id": "[variables('virtualNetworkId')]"
                         },
                         "registrationEnabled": false
                     },
                     "dependsOn": [
-                        "[concat('Microsoft.Network/privateDnsZones/', parameters('privateZoneName'))]"
+                        "[concat('Microsoft.Network/privateDnsZones/', variables('privateZoneName'))]"
                     ]
                 },
                 {
                     "apiVersion": "2018-09-01",
                     "type": "Microsoft.Network/privateDnsZones/A",
-                    "name": "[concat(parameters('privateZoneName'), '/*')]",
+                    "name": "[concat(variables('privateZoneName'), '/*')]",
                     "location": "global",
                     "properties": {
                         "ttl": 3600,
@@ -142,13 +142,13 @@
                         ]
                     },
                     "dependsOn": [
-                        "[concat('Microsoft.Network/privateDnsZones/', parameters('privateZoneName'))]"
+                        "[concat('Microsoft.Network/privateDnsZones/', variables('privateZoneName'))]"
                     ]
                 },
                 {
                     "apiVersion": "2018-09-01",
                     "type": "Microsoft.Network/privateDnsZones/A",
-                    "name": "[concat(parameters('privateZoneName'), '/*.scm')]",
+                    "name": "[concat(variables('privateZoneName'), '/*.scm')]",
                     "location": "global",
                     "properties": {
                         "ttl": 3600,
@@ -159,13 +159,13 @@
                         ]
                     },
                     "dependsOn": [
-                        "[concat('Microsoft.Network/privateDnsZones/', parameters('privateZoneName'))]"
+                        "[concat('Microsoft.Network/privateDnsZones/', variables('privateZoneName'))]"
                     ]
                 },
                 {
                     "apiVersion": "2018-09-01",
                     "type": "Microsoft.Network/privateDnsZones/A",
-                    "name": "[concat(parameters('privateZoneName'), '/@')]",
+                    "name": "[concat(variables('privateZoneName'), '/@')]",
                     "location": "global",
                     "properties": {
                         "ttl": 3600,
@@ -176,7 +176,7 @@
                         ]
                     },
                     "dependsOn": [
-                        "[concat('Microsoft.Network/privateDnsZones/', parameters('privateZoneName'))]"
+                        "[concat('Microsoft.Network/privateDnsZones/', variables('privateZoneName'))]"
                     ]
                 }
             ]
