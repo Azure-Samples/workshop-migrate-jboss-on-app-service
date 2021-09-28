@@ -5,9 +5,6 @@
         "aseName": {
             "type": "string"
         },
-        "subscriptionId": {
-            "type": "string"
-        },
 
         "virtualNetworkName": {
             "type": "string",
@@ -48,8 +45,8 @@
     },
     "variables": {
         "privateZoneName": "[concat(parameters('aseName'),'.appserviceenvironment.net')]",
-        "virtualNetworkId": "[resourceId(parameters('subscriptionId'), resourceGroup().name, 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
-        "subnetId": "[resourceId(parameters('subscriptionId'), resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]"
+        "virtualNetworkId": "[resourceId(subscription().subscriptionId, resourceGroup().name, 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
+        "subnetId": "[resourceId(subscription().subscriptionId, resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]"
     },
     "resources": [
         {
