@@ -41,7 +41,7 @@ The exercises in this workshop will involve creating and configuring resources f
 
 - TODO: set the env vars for GitPod.
   - SUBSCRIPTION_NAME
-  - WEBAPP_NAME
+  - WEBAPP_NAME  (remind them to make this unique, like their name)
   - RESOURCE_GROUP
   - LOCATION
 
