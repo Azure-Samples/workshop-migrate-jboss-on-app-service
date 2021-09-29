@@ -43,22 +43,32 @@ RUN curl -o /usr/local/bin/docker-compose -fsSL https://github.com/docker/compos
     && chmod +x /usr/local/bin/docker-compose
 
 # Azure CLI
-
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
+
+# postgres CLI
+RUN install-packages postgresql-client
 
 # Wildfly  (https://github.com/jboss-dockerfiles/wildfly/blob/master/Dockerfile)
 ENV WILDFLY_VERSION 24.0.1.Final
 ENV JBOSS_HOME /opt/jboss/wildfly
+ENV DEPLOYMENT_DIR /workspace/deployments
 ENV WILDFLY_SHA1 751e3ff9128a6fbe72016552a9b864f729a710cc
 ENV LAUNCH_JBOSS_IN_BACKGROUND true
 
 RUN mkdir -p ${JBOSS_HOME}
+
+RUN wget -O /tmp/postgresql.jar https://jdbc.postgresql.org/download/postgresql-42.2.24.jar
+COPY ./setup /tmp/
+ENV SETUP_DIR=/tmp
+
 RUN cd $HOME \
     && curl -O https://download.jboss.org/wildfly/$WILDFLY_VERSION/wildfly-$WILDFLY_VERSION.tar.gz \
     && sha1sum wildfly-$WILDFLY_VERSION.tar.gz | grep $WILDFLY_SHA1 \
     && tar xf wildfly-$WILDFLY_VERSION.tar.gz \
     && mv $HOME/wildfly-$WILDFLY_VERSION/* $JBOSS_HOME/ \
-    && rm -rf wildfly-$WILDFLY_VERSION.tar.gz \
+    && rm -rf wildfly-$WILDFLY_VERSION.tar.gz
+
+RUN $JBOSS_HOME/bin/jboss-cli.sh --echo-command --file=${SETUP_DIR}/jboss-cli-commands.cli \
     && chown -R gitpod:0 ${JBOSS_HOME} \
     && chmod -R g+rw ${JBOSS_HOME}
 
