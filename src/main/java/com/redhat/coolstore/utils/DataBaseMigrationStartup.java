@@ -25,7 +25,7 @@ public class DataBaseMigrationStartup {
     @Inject
     Logger logger;
 
-    @Resource(mappedName = "java:jboss/datasources/ExampleDS")
+    @Resource(mappedName = "java:jboss/datasources/CoolstoreDS")
     DataSource dataSource;
 
     @PostConstruct
