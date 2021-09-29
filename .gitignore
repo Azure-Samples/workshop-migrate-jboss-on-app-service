@@ -50,3 +50,4 @@ nbdist/
 .nb-gradle/
 
 .DS_Store
+templates/parameters.json
