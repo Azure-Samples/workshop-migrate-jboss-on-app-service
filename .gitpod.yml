@@ -29,4 +29,4 @@ tasks:
   - name: Start PostgreSQL container
     command: docker run -d --name coolstore-postgresql -p 5432:5432 -e POSTGRES_USER=coolstore -e POSTGRES_PASSWORD=coolstore123 -e POSTGRES_HOST_AUTH_METHOD=md5 -e POSTGRES_DB=monolith postgres
   - name: Start Wildfly server
-    command: $JBOSS_HOME/bin/standalone.sh -b 0.0.0.0
+    command: mkdir /workspace/deployments && $JBOSS_HOME/bin/standalone.sh -b 0.0.0.0
