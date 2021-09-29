@@ -427,56 +427,39 @@ In this development environment (GitPod), a JBoss EAP server is already running 
 
 <img src="../img/2-eap-running.png" width=700 align=center>
 
-You'll use a Maven plugin (`wildfly-maven-plugin`) to deploy the application directly to the running EAP server. You can also deploy artifacts, such as JDBC drivers and database resources. This can also be done with JBoss CLI commands, which you'll explore later on.
-
-Open the `pom.xml` file to add the following configuration at the `<!-- TODO: Add Wildfly plugin here:[-->]`:
-
-```xml
-<plugin>
-    <groupId>org.wildfly.plugins</groupId>
-    <artifactId>wildfly-maven-plugin</artifactId>
-    <version>2.1.0.Beta1</version>
-    <executions>
-        <execution>
-            <id>deploy-postgresql</id>
-            <phase>package</phase>
-            <goals>
-                <goal>deploy-artifact</goal>
-            </goals>
-            <configuration>
-                <groupId>org.postgresql</groupId>
-                <artifactId>postgresql</artifactId>
-                <name>postgresql.jar</name>
-            </configuration>
-        </execution>
-        <execution>
-            <id>add-datasource</id>
-            <phase>package</phase>
-            <goals>
-                <goal>execute-commands</goal>
-            </goals>
-            <configuration>
-                <batch>true</batch>
-                <commands>
-                    <command>/subsystem=datasources/data-source=postgresql:add(driver-name=postgresql.jar, jndi-name=&quot;java:/jdbc/CoolstoreDS&quot;, enabled=true, connection-url=&quot;jdbc:postgresql://coolstore-postgresql:5432/monolith&quot;)</command>
-                </commands>
-            </configuration>
-        </execution>
-    </executions>
-</plugin>
-```
-
-The _wildfly:deploy_ goal deploys the application to the EAP server. In the terminal, run the following Maven command:
+Copy the packaged application (.war file) to the running EAP server. Run the following command in the `Pre-warm Maven` Terminal:
 
 ```shell
-mvn -f $GITPOD_REPO_ROOT clean wildfly:deploy
+cp /workspace/workshop-migrate-jboss-on-app-service/target/ROOT.war /workspace/deployments/
 ```
 
-Wait for the build to finish and the `BUILD SUCCESS` message!
-
-Click on the existing `Start Wildfly server` terminal where EAP was started for you, and you'll see `ROOT.war` is deployed:
+Go back to the `Start Wildfly server` terminal where EAP was started for you, and you'll see `ROOT.war` is deployed:
 
 <img src="../img/2-eap-deployed.png" width=700 align=center>
+
+You can also find out that the inventory data is created in PostgreSQL. Run the following `psql` command in a Terminal:
+
+```shell
+PGPASSWORD=coolstore123 psql -h localhost -U coolstore monolith -c 'select itemid, quantity from INVENTORY;'
+```
+
+The output should look like:
+
+```
+ itemid | quantity
+--------+----------
+ 329299 |      736
+ 329199 |      512
+ 165613 |      256
+ 165614 |       54
+ 165954 |       87
+ 444434 |      443
+ 444435 |      600
+ 444436 |      230
+ 444437 |      300
+(9 rows)
+```
+
 
 #### Congratulations!
 
