@@ -1,4 +1,4 @@
-image: quay.io/jfalkner1/gitpod-test:latest
+image: quay.io/eap-appservice-workshop/gitpod-image
 
 ports:
   - port: 8080
