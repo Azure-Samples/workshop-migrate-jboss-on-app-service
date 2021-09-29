@@ -62,4 +62,9 @@ RUN cd $HOME \
     && chown -R gitpod:0 ${JBOSS_HOME} \
     && chmod -R g+rw ${JBOSS_HOME}
 
+RUN wget -O /tmp/postgresql.jar https://jdbc.postgresql.org/download/postgresql-42.2.24.jar
+COPY ./setup /tmp/
+ENV SETUP_DIR=/tmp
+RUN $JBOSS_HOME/bin/jboss-cli.sh --echo-command --file=${SETUP_DIR}/jboss-cli-commands.cli
+
 USER gitpod
