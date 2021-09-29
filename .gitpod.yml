@@ -1,4 +1,4 @@
-image: quay.io/eap-appservice-workshop/gitpod-image
+image: quay.io/eap-appservice-workshop/gitpod-image:latest
 
 ports:
   - port: 8080
