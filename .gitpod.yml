@@ -1,5 +1,4 @@
 image: quay.io/eap-appservice-workshop/gitpod-image:latest
-
 ports:
   - port: 8080
     onOpen: open-preview
@@ -8,6 +7,8 @@ ports:
   - port: 9990
     onOpen: ignore
   - port: 8443
+    onOpen: ignore
+  - port: 5432
     onOpen: ignore
 
 github:
