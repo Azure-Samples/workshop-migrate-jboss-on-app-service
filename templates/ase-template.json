@@ -1,0 +1,197 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "aseName": {
+            "type": "string"
+        },
+
+        "virtualNetworkName": {
+            "type": "string",
+            "defaultValue": "ilb-ase-vnet"
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "eastus"
+        },
+        "dedicatedHostCount": {
+            "type": "string",
+            "defaultValue": "0"
+        },
+        "zoneRedundant": {
+            "type": "bool",
+            "defaultValue": false
+        },
+        "virtualNetworkAddress": {
+            "type": "string",
+            "defaultValue": "192.168.250.0/24"
+        },
+        "ASEsubnetName": {
+            "type": "string",
+            "defaultValue": "ase-subnet"
+        },
+        "ASEsubnetAddress": {
+            "type": "string",
+            "defaultValue": "192.168.251.0/24"
+        },
+        "gatewaySubnetName": {
+            "type": "string",
+            "defaultValue": "gateway-subnet"
+        },
+        "gatewaySubnetAddress": {
+            "type": "string",
+            "defaultValue": "192.168.251.0/24"
+        },
+        "delegationName": {
+            "type": "string",
+            "defaultValue": "ilb-ase-delegation"
+        },
+        "ilbMode": {
+            "type": "int",
+            "defaultValue": 3
+        }
+    },
+    "variables": {
+        "privateZoneName": "[concat(parameters('aseName'),'.appserviceenvironment.net')]",
+        "virtualNetworkId": "[resourceId(subscription().subscriptionId, resourceGroup().name, 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
+        "subnetId": "[resourceId(subscription().subscriptionId, resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('aseSubnetName'))]"
+    },
+    "resources": [
+        {
+            "apiVersion": "2018-04-01",
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[parameters('virtualNetworkName')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[parameters('virtualNetworkAddress')]"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "[parameters('ASEsubnetName')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('ASEsubnetAddress')]",
+                            "delegations": [
+                                {
+                                    "name": "[parameters('delegationName')]",
+                                    "properties": {
+                                        "serviceName": "Microsoft.Web/hostingEnvironments"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "[parameters('gatewaySubnetName')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('gatewaySubnetAddress')]",
+                            "delegations": []
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "2019-08-01",
+            "type": "Microsoft.Web/hostingEnvironments",
+            "name": "[parameters('aseName')]",
+            "kind": "ASEV3",
+            "location": "[parameters('location')]",
+            "properties": {
+                "name": "[parameters('aseName')]",
+                "location": "[parameters('location')]",
+                "dedicatedHostCount": "[parameters('dedicatedHostCount')]",
+                "zoneRedundant": "[parameters('zoneRedundant')]",
+                "InternalLoadBalancingMode": "[parameters('ilbMode')]",
+                "virtualNetwork": {
+                    "id": "[variables('subnetId')]"
+                }
+            },
+            "tags": {},
+            "dependsOn": [
+                "[concat('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]"
+            ]
+        },
+        {
+            "apiVersion": "2018-09-01",
+            "type": "Microsoft.Network/privateDnsZones",
+            "name": "[variables('privateZoneName')]",
+            "location": "global",
+            "dependsOn": [
+                "[concat('Microsoft.Web/hostingEnvironments/', parameters('aseName'))]"
+            ],
+            "tags": {},
+            "properties": {},
+            "resources": [
+                {
+                    "apiVersion": "2018-09-01",
+                    "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
+                    "name": "[concat(variables('privateZoneName'), '/vnetLink')]",
+                    "location": "global",
+                    "properties": {
+                        "virtualNetwork": {
+                            "id": "[variables('virtualNetworkId')]"
+                        },
+                        "registrationEnabled": false
+                    },
+                    "dependsOn": [
+                        "[concat('Microsoft.Network/privateDnsZones/', variables('privateZoneName'))]"
+                    ]
+                },
+                {
+                    "apiVersion": "2018-09-01",
+                    "type": "Microsoft.Network/privateDnsZones/A",
+                    "name": "[concat(variables('privateZoneName'), '/*')]",
+                    "location": "global",
+                    "properties": {
+                        "ttl": 3600,
+                        "aRecords": [
+                            {
+                                "ipv4Address": "[reference(concat(resourceId('Microsoft.Web/hostingEnvironments', parameters('aseName')), '/configurations/networking'), '2019-08-01').internalInboundIpAddresses[0]]"
+                            }
+                        ]
+                    },
+                    "dependsOn": [
+                        "[concat('Microsoft.Network/privateDnsZones/', variables('privateZoneName'))]"
+                    ]
+                },
+                {
+                    "apiVersion": "2018-09-01",
+                    "type": "Microsoft.Network/privateDnsZones/A",
+                    "name": "[concat(variables('privateZoneName'), '/*.scm')]",
+                    "location": "global",
+                    "properties": {
+                        "ttl": 3600,
+                        "aRecords": [
+                            {
+                                "ipv4Address": "[reference(concat(resourceId('Microsoft.Web/hostingEnvironments', parameters('aseName')), '/configurations/networking'), '2019-08-01').internalInboundIpAddresses[0]]"
+                            }
+                        ]
+                    },
+                    "dependsOn": [
+                        "[concat('Microsoft.Network/privateDnsZones/', variables('privateZoneName'))]"
+                    ]
+                },
+                {
+                    "apiVersion": "2018-09-01",
+                    "type": "Microsoft.Network/privateDnsZones/A",
+                    "name": "[concat(variables('privateZoneName'), '/@')]",
+                    "location": "global",
+                    "properties": {
+                        "ttl": 3600,
+                        "aRecords": [
+                            {
+                                "ipv4Address": "[reference(concat(resourceId('Microsoft.Web/hostingEnvironments', parameters('aseName')), '/configurations/networking'), '2019-08-01').internalInboundIpAddresses[0]]"
+                            }
+                        ]
+                    },
+                    "dependsOn": [
+                        "[concat('Microsoft.Network/privateDnsZones/', variables('privateZoneName'))]"
+                    ]
+                }
+            ]
+        }
+    ]
+}
