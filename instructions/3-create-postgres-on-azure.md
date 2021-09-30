@@ -130,6 +130,10 @@ Create a new Application Setting for each of the above by clicking on **New Appl
 
 <img src="../img/3-appsvc-setting-dialog.png" width=700 align=center>
 
+Once you have created 3 new settings, be sure to save the changes. Click on `Save` then `Continue` to restart your application:
+
+<img src="../img/3-appsvc-setting-save-dialog.png" width=700 align=center>
+
 You can also use the `az` command line to accomplish the same thing:
 
 ```bash
@@ -142,15 +146,15 @@ az webapp config appsettings set -g $RESOURCE_GROUP -n $WEBAPP_NAME --settings \
 These values will be read by the scripts and EAP to configure Postgres. To make this happen on startup, run the following commands to upload these files using the `az webapp deploy` command:
 
 ```bash
-az webapp deploy --resource-group $RESOURCE_GROUP --name jhf-coolstore \
+az webapp deploy --resource-group $RESOURCE_GROUP --name $WEBAPP_NAME \
     --src-path $GITPOD_REPO_ROOT/setup/postgresql.jar  \
     --target-path /home/site/libs/postgresql.jar --type lib && \
 \
-az webapp deploy --resource-group $RESOURCE_GROUP --name jhf-coolstore \
+az webapp deploy --resource-group $RESOURCE_GROUP --name $WEBAPP_NAME \
     --src-path $GITPOD_REPO_ROOT/setup/jboss-cli-commands.cli  \
     --target-path /home/site/libs/jboss-cli-commands.cli --type lib && \
 \
-az webapp deploy --resource-group $RESOURCE_GROUP --name jhf-coolstore \
+az webapp deploy --resource-group $RESOURCE_GROUP --name $WEBAPP_NAME \
   --src-path $GITPOD_REPO_ROOT/setup/startup.sh  --type startup
 ```
 
@@ -179,7 +183,7 @@ az webapp deploy --resource-group $RESOURCE_GROUP \
 
 ## Check result
 
-After a minute or so, the application will be deployed and ready. Visit the application's URL, which you can find on the Azure Portal at _Home > All Resources > <your_app_service>_:
+After a minute or so, the application will be deployed and ready. Visit the application's URL, which you can find on the Azure Portal at _Home > All Resources > <your_app_service> > Overview_:
 
 <img src="../img/3-appsvc-url.png" width=700 align=center>
 
