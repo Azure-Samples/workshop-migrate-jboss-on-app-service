@@ -195,19 +195,19 @@ In this exercise you've made several changes to key source files for the Java ap
 
 Click on the _Source Control_ window and review the changes you've made:
 
-![Changes](img/3-changes.png)
+![Changes](../img/3-changes.png)
 
 To commit these, first you'll need to _stage_ changes. Click on the _Stage All Changes_ icon next to your changes, as shown:
 
-![Changes](img/3-stage.png)
+![Changes](../img/3-stage.png)
 
 Next, enter a comment such as "Migrated to JBoss" in the _Message_ box, and press CMD-ENTER (or CTRL-ENTER on Windows):
 
-![Changes](img/3-commit.png)
+![Changes](../img/3-commit.png)
 
 With your commit done, you can now _push_ that commit up to your GitHub repository.
 
-![Changes](img/3-push.png)
+![Changes](../img/3-push.png)
 
 If you then browse your your GitHub repository in a separate tab (e.g. _https://github.com/JoeSmith/workshop-migrate-jboss-on-app-service_), you should see your newest commit at the top with the same comment you entered. Congratulations! You can repeat this step as you make changes.
 
