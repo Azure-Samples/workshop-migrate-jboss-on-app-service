@@ -189,6 +189,28 @@ Click on the URL, and you should now see the Coolstore application running on Ap
 
 > **NOTE**: You may see the default JBoss EAP landing page instead. This is usually caused by invalid or missing setup scripts, or invalid values for the Application Settings (connection URL, username or password). Double-check the values are correct and try to re-deploy the application again!
 
+## Exercise: Push your changes to your repository
+
+In this exercise you've made several changes to key source files for the Java application, as well as some configuration files. Let's push all of that to your personal repository fork.
+
+Click on the _Source Control_ window and review the changes you've made:
+
+![Changes](img/3-changes.png)
+
+To commit these, first you'll need to _stage_ changes. Click on the _Stage All Changes_ icon next to your changes, as shown:
+
+![Changes](img/3-stage.png)
+
+Next, enter a comment such as "Migrated to JBoss" in the _Message_ box, and press CMD-ENTER (or CTRL-ENTER on Windows):
+
+![Changes](img/3-commit.png)
+
+With your commit done, you can now _push_ that commit up to your GitHub repository.
+
+![Changes](img/3-push.png)
+
+If you then browse your your GitHub repository in a separate tab (e.g. _https://github.com/JoeSmith/workshop-migrate-jboss-on-app-service_), you should see your newest commit at the top with the same comment you entered. Congratulations! You can repeat this step as you make changes.
+
 **Congratulations!** You now have deployed your migrated application to App Service. In the next section, we'll see about automating it so you don't have to manually deploy each time you wish to make a change.
 
 ---
