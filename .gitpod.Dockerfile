@@ -68,7 +68,10 @@ RUN cd $HOME \
     && mv $HOME/wildfly-$WILDFLY_VERSION/* $JBOSS_HOME/ \
     && rm -rf wildfly-$WILDFLY_VERSION.tar.gz
 
-RUN $JBOSS_HOME/bin/jboss-cli.sh --echo-command --file=${SETUP_DIR}/jboss-cli-commands.cli \
+RUN cat ${SETUP_DIR}/jboss-cli-docker.cli ${SETUP_DIR}/jboss-cli-commands.cli > ${SETUP_DIR}/config.cli
+RUN cat ${SETUP_DIR}/config.cli
+
+RUN $JBOSS_HOME/bin/jboss-cli.sh --echo-command --file=${SETUP_DIR}/config.cli \
     && chown -R gitpod:0 ${JBOSS_HOME} \
     && chmod -R g+rw ${JBOSS_HOME}
 
