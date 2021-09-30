@@ -1,0 +1,7 @@
+# This is used during container build to run EAP in offline mode to configure the scanner path for workshop
+
+embed-server --std-out=echo
+
+/subsystem=deployment-scanner/scanner=default:undefine-attribute(name=relative-to)
+
+/subsystem=deployment-scanner/scanner=default:write-attribute(name=path,value=${env.DEPLOYMENT_DIR})

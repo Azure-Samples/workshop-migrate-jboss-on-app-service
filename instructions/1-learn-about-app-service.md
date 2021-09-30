@@ -64,7 +64,9 @@ az webapp create \
     --plan "workshop-app-service-plan"
 ```
 
-When the web app is created it will have a default domain name of the format `https://<your-site-name>.azurewebsites.net`. You can browse to your web app now and it will serve a landing page with a few getting started instructions.
+When the web app is created it will have a default domain name of the format `https://<your-site-name>.azurewebsites.net`. After a minute or two you can browse to your web app and it will serve a landing page with a few getting started instructions. You should see:
+
+<img src="../img/1-landing.png" width=700 align=center>
 
 ## The Azure Portal
 
