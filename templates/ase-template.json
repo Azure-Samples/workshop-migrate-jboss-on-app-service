@@ -24,15 +24,23 @@
         },
         "virtualNetworkAddress": {
             "type": "string",
-            "defaultValue": "192.168.250.0/23"
+            "defaultValue": "192.168.250.0/24"
         },
-        "subnetName": {
+        "ASEsubnetName": {
             "type": "string",
             "defaultValue": "ase-subnet"
         },
-        "subnetAddress": {
+        "ASEsubnetAddress": {
             "type": "string",
-            "defaultValue": "192.168.250.0/24"
+            "defaultValue": "192.168.251.0/24"
+        },
+        "gatewaySubnetName": {
+            "type": "string",
+            "defaultValue": "gateway-subnet"
+        },
+        "gatewaySubnetAddress": {
+            "type": "string",
+            "defaultValue": "192.168.251.0/24"
         },
         "delegationName": {
             "type": "string",
@@ -46,7 +54,7 @@
     "variables": {
         "privateZoneName": "[concat(parameters('aseName'),'.appserviceenvironment.net')]",
         "virtualNetworkId": "[resourceId(subscription().subscriptionId, resourceGroup().name, 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
-        "subnetId": "[resourceId(subscription().subscriptionId, resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]"
+        "subnetId": "[resourceId(subscription().subscriptionId, resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('aseSubnetName'))]"
     },
     "resources": [
         {
@@ -62,9 +70,9 @@
                 },
                 "subnets": [
                     {
-                        "name": "[parameters('subnetName')]",
+                        "name": "[parameters('ASEsubnetName')]",
                         "properties": {
-                            "addressPrefix": "[parameters('subnetAddress')]",
+                            "addressPrefix": "[parameters('ASEsubnetAddress')]",
                             "delegations": [
                                 {
                                     "name": "[parameters('delegationName')]",
@@ -73,6 +81,13 @@
                                     }
                                 }
                             ]
+                        }
+                    },
+                    {
+                        "name": "[parameters('gatewaySubnetName')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('gatewaySubnetAddress')]",
+                            "delegations": []
                         }
                     }
                 ]

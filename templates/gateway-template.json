@@ -1,44 +1,64 @@
 {
-    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "location": {
-            "type": "string"
-        },
         "applicationGatewayName": {
             "type": "string"
         },
+        "aseInboundIpAddress": {
+            "type": "string",
+            "metadata": {
+                "description": "The inbound IP address of your ILB ASE"
+            }
+        },
+
+        "virtualNetworkName": {
+            "type": "string",
+            "defaultValue": "ilb-ase-vnet"
+        },
+        "subnetName": {
+            "type": "string",
+            "defaultValue": "gateway-subnet"
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "eastus"
+        },
         "tier": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "Standard_v2"
         },
         "skuSize": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "Standard_v2"
         },
         "capacity": {
             "type": "int",
             "defaultValue": 2
         },
-        "subnetName": {
-            "type": "string"
-        },
         "zones": {
-            "type": "array"
+            "type": "array",
+            "defaultValue": []
         },
         "publicIpAddressName": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "public-ip-address"
         },
         "sku": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "Standard"
         },
         "allocationMethod": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "Static"
         },
         "publicIpZones": {
-            "type": "array"
+            "type": "array",
+            "defaultValue": []
         }
     },
     "variables": {
-        "vnetId": "/subscriptions/ef90e930-9d7f-4a60-8a99-748e0eea69de/resourceGroups/freebergDemo/providers/Microsoft.Network/virtualNetworks/ilb-ase-vnet",
+        "vnetId": "[resourceId(subscription().subscriptionId, resourceGroup().name, 'Microsoft.Networks/virtualNetworks', parameters('virtualNetworkName'))]",
         "publicIPRef": "[resourceId('Microsoft.Network/publicIPAddresses/', parameters('publicIpAddressName'))]",
         "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]",
         "applicationGatewayId": "[resourceId('Microsoft.Network/applicationGateways', parameters('applicationGatewayName'))]"
@@ -90,11 +110,11 @@
                 ],
                 "backendAddressPools": [
                     {
-                        "name": "ase-backend-pool",
+                        "name": "backend-pool-for-ase",
                         "properties": {
                             "backendAddresses": [
                                 {
-                                    "ipAddress": "192.168.250.4",
+                                    "ipAddress": "[parameters('aseInboundIpAddress')]",
                                     "fqdn": null
                                 }
                             ]
@@ -103,18 +123,22 @@
                 ],
                 "backendHttpSettingsCollection": [
                     {
-                        "name": "basic-http-setting-name",
+                        "name": "basic-http-setting",
                         "properties": {
                             "Port": 80,
                             "Protocol": "Http",
                             "cookieBasedAffinity": "Disabled",
-                            "requestTimeout": 30
+                            "requestTimeout": 20,
+                            "hostName": "ilb-ase-domain.test",
+                            "probe": {
+                                "id": "[concat(variables('applicationGatewayId'), '/probes/probe-for-basic-http-setting')]"
+                            }
                         }
                     }
                 ],
                 "httpListeners": [
                     {
-                        "name": "public-ip-listener-name",
+                        "name": "listener-name",
                         "properties": {
                             "frontendIPConfiguration": {
                                 "id": "[concat(variables('applicationGatewayId'), '/frontendIPConfigurations/appGwPublicFrontendIp')]"
@@ -129,30 +153,44 @@
                 ],
                 "requestRoutingRules": [
                     {
-                        "Name": "main-routing-rule-name",
+                        "Name": "routing-rule-for-ase-name",
                         "properties": {
                             "RuleType": "Basic",
                             "httpListener": {
-                                "id": "[concat(variables('applicationGatewayId'), '/httpListeners/public-ip-listener-name')]"
+                                "id": "[concat(variables('applicationGatewayId'), '/httpListeners/listener-name')]"
                             },
+                            "priority": null,
                             "backendAddressPool": {
-                                "id": "[concat(variables('applicationGatewayId'), '/backendAddressPools/ase-backend-pool')]"
+                                "id": "[concat(variables('applicationGatewayId'), '/backendAddressPools/backend-pool-for-ase')]"
                             },
                             "backendHttpSettings": {
-                                "id": "[concat(variables('applicationGatewayId'), '/backendHttpSettingsCollection/basic-http-setting-name')]"
+                                "id": "[concat(variables('applicationGatewayId'), '/backendHttpSettingsCollection/basic-http-setting')]"
                             }
                         }
                     }
                 ],
                 "enableHttp2": false,
                 "sslCertificates": [],
-                "probes": [],
-                "webApplicationFirewallConfiguration": {
-                    "enabled": true,
-                    "firewallMode": "Detection",
-                    "ruleSetType": "OWASP",
-                    "ruleSetVersion": "3.0"
-                }
+                "probes": [
+                    {
+                        "name": "probe-for-basic-http-setting",
+                        "properties": {
+                            "backendHttpSettings": [
+                                {
+                                    "id": "[concat(variables('applicationGatewayId'), '/backendHttpSettingsCollection/basic-http-setting')]"
+                                }
+                            ],
+                            "interval": 30,
+                            "minServers": 0,
+                            "path": "/",
+                            "protocol": "Http",
+                            "timeout": 30,
+                            "unhealthyThreshold": 3,
+                            "pickHostNameFromBackendHttpSettings": false,
+                            "host": "ilb-ase-domain.test"
+                        }
+                    }
+                ]
             }
         },
         {
