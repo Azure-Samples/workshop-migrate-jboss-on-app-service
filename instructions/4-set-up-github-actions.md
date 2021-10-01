@@ -81,6 +81,8 @@ You will need to authorize App Service to be able to create files in your fork o
 
 Once authorized, back on the Azure Portal, continue to select the correct Organization (your personal GitHub organization), and the repository that you're using as your fork for this workshop. Select the `main` branch, select the **Add a Workflow** option, and confirm that the _Build_ section lists Java 11 and JBoss EAP:
 
+**_NOTE:_** It may take time to retrieve all repositories in your personal GitHub organization. You might need to reload the page if you don't see _workshop-migrate-jboss-on-app-service_ repository in the select box.
+
 ![Java with Maven template](../img/4-action-config1.png)
 
 Click **Preview file** to see what the newly created file will look like:
