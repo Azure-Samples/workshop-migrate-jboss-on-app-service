@@ -24,7 +24,7 @@
         },
         "virtualNetworkAddress": {
             "type": "string",
-            "defaultValue": "192.168.250.0/24"
+            "defaultValue": "192.168.250.0/23"
         },
         "ASEsubnetName": {
             "type": "string",
@@ -32,7 +32,7 @@
         },
         "ASEsubnetAddress": {
             "type": "string",
-            "defaultValue": "192.168.251.0/24"
+            "defaultValue": "192.168.250.0/24"
         },
         "gatewaySubnetName": {
             "type": "string",
