@@ -69,7 +69,14 @@
                 },
                 "serverFarmId": "[concat('/subscriptions/', subscription().subscriptionId, '/resourcegroups/', resourceGroup().name, '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]",
                 "clientAffinityEnabled": false,
-                "hostingEnvironmentProfile": "[variables('hostingEnvironmentProfile')]"
+                "hostingEnvironmentProfile": "[variables('hostingEnvironmentProfile')]",
+                "hostNameSslStates": [
+                    {
+                        "name": "ilb-ase-domain.test",
+                        "sslState": "Disabled",
+                        "hostType": "Standard"
+                    }
+                ]
             }
         },
         {
