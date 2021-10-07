@@ -62,7 +62,7 @@ Replace the entire file with the below content, and then replace the values in `
 
 Close your existing bash Terminal since it will not have these new settings (careful not to close the others!):
 
-![Preferences](../img/0-bash-kill.png)
+<img src="../img/0-bash-kill.png" width=650 align=center>
 
 Next, open a new Terminal using the `＋` button and confirm the values are correct by running this command in the new Terminal:
 
