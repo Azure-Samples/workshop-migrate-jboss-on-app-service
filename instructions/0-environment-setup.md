@@ -39,11 +39,43 @@ The exercises in this workshop will involve creating and configuring resources f
 
 ## Configure the workspace
 
-- TODO: set the env vars for GitPod.
-  - SUBSCRIPTION_NAME
-  - WEBAPP_NAME  (remind them to make this unique, like their name)
-  - RESOURCE_GROUP
-  - LOCATION
+Let's set some environment variables for later use. Press `F1` to open the command search window, and type `settings` into the search box, then select **Preferences: Open Workspace Settings (JSON)**. This will open a mostly empty file:
+
+![Preferences](../img/0-prefs.png)
+
+Replace the entire file with the below content, and then replace the values in `[]` with your unique values (Azure Subscription ID and your initials, as these must be unique). You can optionally use a different `LOCATION` (the Azure region in which your resources will be deployed later on) if you want it to be closer to your geographic location.
+
+```json
+{
+    "terminal.integrated.env.linux": {
+        "SUBSCRIPTION_ID": "[Replace this with your Azure Subscription ID]",
+        "WEBAPP_NAME": "[Replace this with your initials]-webapp",
+        "RESOURCE_GROUP": "jboss-rg",
+        "LOCATION": "eastus"
+    }
+}
+```
+
+> **HINT**: Valid values for `LOCATION` can be discovered by running `az account list-locations|jq '.[].name'` in the terminal.
+
+> **HINT**: You can discover your Subscription ID with `az account show | jq -r .id`
+
+Close your existing bash Terminal since it will not have these new settings (careful not to close the others!):
+
+![Preferences](../img/0-bash-kill.png)
+
+Next, open a new Terminal using the `＋` button and confirm the values are correct by running this command in the new Terminal:
+
+```sh
+echo "Subscription ID: $SUBSCRIPTION_ID" && \
+echo "Web App Name: $WEBAPP_NAME" && \
+echo "Resource Group: $RESOURCE_GROUP" && \
+echo "Location: $LOCATION"
+```
+
+![Preferences](../img/0-env-test.png)
+
+You should see the same values you entered. Now each new Terminal you open will have these settings. Some of the commands you run later in the workshop will reference these variables.
 
 *Congratulations!* Your GitPod workspace is now ready to go. Click the link below to go to the next section
 
