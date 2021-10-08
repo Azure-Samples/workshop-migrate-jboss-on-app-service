@@ -20,7 +20,11 @@ This workshop uses GitPod to provide a pre-configured development environment wi
 
 The exercises in this workshop will involve creating and configuring resources from the Azure CLI and Azure Portal. The GitPod workspace already has the Azure CLI installed, but you will have to sign in from the CLI.
 
-1. Open the VS Code terminal in GitPod by going to **Terminal** > **New Terminal**.
+1. Open the VS Code terminal in GitPod by going to the existing `bash` terminal:
+
+<img src="../img/0-terminal.png" width=650 align=center>
+
+
 2. Run the following command. This will open a new browser window to log into your Azure account.
 
     ```bash
