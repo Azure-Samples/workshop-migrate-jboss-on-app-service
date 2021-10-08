@@ -69,7 +69,7 @@ Details are shown, including the _build_ Job that was run. Click on the build jo
 
 ## Exercise: Add a workflow to deploy your application
 
-Now that we have a simple CI workflow to build and test our application for Pull Requests, let's add another workflow file to build and *deploy* our JBoss EAP application whenever there is a commit on the main branch.
+Now that we have a simple CI workflow to build and test our application for Pull Requests, let's add another workflow file to build and *deploy* our Cool Store application to JBoss EAP on App Service whenever there is a commit on the main branch.
 
 To do that, we'll use App Service and it's ability to _automatically_ create GitHub Actions in our fork for us, along with the needed setup of secrets, hostnames, etc.
 
@@ -107,9 +107,26 @@ This will also trigger the action to deploy your app to App Service. Click on th
 
 If you click on the new action, you can see the steps and output from the build and deploy.
 
+## Test your application
+
+Once the GitHub action completes, after a minute or so, the application will be deployed and ready! Visit the application's URL, which you can find on the Azure Portal at _Home > All Resources > <your_app_service> > Overview_:
+
+<img src="../img/4-appsvc-url.png" width=700 align=center>
+
+Click on the URL, and you should now see the Coolstore application running on App Service:
+
+<img src="../img/4-appsvc-app.png" width=700 align=center>
+
+> **NOTE**: You may see the default JBoss EAP landing page instead. This is usually caused by invalid or missing setup scripts, or invalid values for the Application Settings (connection URL, username or password) from prior exercises. Double-check the values are correct and try to re-deploy the application again!
+
+
+> **NOTE**: You can manually trigger another workflow run by clicking on the **Actions** tab, then clicking on the action you wish to re-run, and finally click on **Re-run jobs** and selecting **Re-run all jobs**:
+
+<img src="../img/4-rerun.png" width=700 align=center>
+
 ## Exercise: Make a code change and see it automatically deployed
 
-Head back to your developer CLI. The first thing to do is to update our local source to reflect the changes that we made via github.com and the Azure Portal. On the _Source Control_ page, click on the sub-menu and select **Pull** to pull in all of those changes we made outside our IDE.
+Let's exercise our Action by making a code change and committing it, to trigger another workflow run. Head back to your developer CLI. The first thing to do is to update our local source to reflect the changes that we made via github.com and the Azure Portal. On the _Source Control_ page, click on the sub-menu and select **Pull** to pull in all of those changes we made outside our IDE.
 
 ![Java with Maven template](../img/4-action-repull.png)
 
@@ -146,7 +163,7 @@ re-visit your running app via its URL and it should now be sporting your new bis
 
 ![Java with Maven template](../img/4-cool-bisque.png)
 
-**Congratulations!** In this exercise you setup GitHub Actions to provide basic checks for your app when developers make changes, and created another Action to deploy those changes to your Azure App Service with JBoss EAP. In the next section we'll explore how you can provide greater scale and security for your applications using _App Service Environments_.
+**Congratulations!** In this exercise you setup GitHub Actions to provide basic checks for your app when developers make changes, and created another Action to deploy those changes to your Azure App Service with JBoss EAP. You then deployed your app, and made a change, and watched the GitHub Action automate the redeployment. In the next section we'll explore how you can provide greater scale and security for your applications using _App Service Environments_.
 
 ---
 

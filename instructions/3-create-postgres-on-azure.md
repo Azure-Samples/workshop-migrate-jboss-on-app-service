@@ -160,39 +160,6 @@ az webapp deploy --resource-group $RESOURCE_GROUP --name $WEBAPP_NAME \
 
 The `--type` argument informs where the files are placed on the app service. This will also trigger the app to restart to apply the new configuration. We should now have a fully deployed EAP instance on App Service with support for PostgreSQL.
 
-## Deploy Coolstore application to App Service
-
-With our EAP App Service and Postgres database deployed, and EAP configured to enable Postgres, it's time to deploy the application. Re-build the application on last time by running this command:
-
-```bash
-mvn -f $GITPOD_REPO_ROOT clean package
-```
-
-This builds the application as a Jakarta EE web app (`.war` extension).
-
-Finally, to deploy the application, run this:
-
-```bash
-az webapp deploy --resource-group $RESOURCE_GROUP \
-  --name $WEBAPP_NAME \
-  --src-path $GITPOD_REPO_ROOT/target/ROOT.war \
-  --type war
-```
-
-> **NOTE** there are many different ways to deploy apps to EAP on App Service. You can also install the Azure plugin for various IDEs which can build and deploy Java apps, or you can use a the Azure Maven Plugin to accomplish the same.
-
-## Check result
-
-After a minute or so, the application will be deployed and ready. Visit the application's URL, which you can find on the Azure Portal at _Home > All Resources > <your_app_service> > Overview_:
-
-<img src="../img/3-appsvc-url.png" width=700 align=center>
-
-Click on the URL, and you should now see the Coolstore application running on App Service:
-
-<img src="../img/3-appsvc-app.png" width=700 align=center>
-
-> **NOTE**: You may see the default JBoss EAP landing page instead. This is usually caused by invalid or missing setup scripts, or invalid values for the Application Settings (connection URL, username or password). Double-check the values are correct and try to re-deploy the application again!
-
 ## Exercise: Push your changes to your repository
 
 In this exercise you've made several changes to key source files for the Java application, as well as some configuration files. Let's push all of that to your personal repository fork.
@@ -215,7 +182,7 @@ With your commit done, you can now _push_ that commit up to your GitHub reposito
 
 If you then browse your your GitHub repository in a separate tab (e.g. _https://github.com/JoeSmith/workshop-migrate-jboss-on-app-service_), you should see your newest commit at the top with the same comment you entered. Congratulations! You can repeat this step as you make changes.
 
-**Congratulations!** You now have deployed your migrated application to App Service. In the next section, we'll see about automating it so you don't have to manually deploy each time you wish to make a change.
+**Congratulations!** You now have deployed a PostgreSQL database and enabled it for use in JBoss EAP, but you have not yet deployed the Cool Store application to App Service. In the next section, you will set up automation to deploy and redeploy the app each time you wish to make a change.
 
 ---
 
