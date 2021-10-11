@@ -1,0 +1,464 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "webAppName": {
+            "type": "string"
+        },
+
+
+        "alwaysOn": {
+            "type": "bool",
+            "defaultValue": true
+        },
+        "sku": {
+            "type": "string",
+            "defaultValue": "IsolatedV2"
+        },
+        "skuCode": {
+            "type": "string",
+            "defaultValue": "I1V2"
+        },
+        "workerSize": {
+            "type": "string",
+            "defaultValue": "6"
+        },
+        "workerSizeId": {
+            "type": "string",
+            "defaultValue": "6"
+        },
+        "numberOfWorkers": {
+            "type": "string",
+            "defaultValue": "1"
+        },
+        "linuxFxVersion": {
+            "type": "string",
+            "defaultValue": "JBOSSEAP|7-java11"
+        },
+
+
+        "virtualNetworkName": {
+            "type": "string",
+            "defaultValue": "ilb-ase-vnet"
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "eastus"
+        },
+        "dedicatedHostCount": {
+            "type": "string",
+            "defaultValue": "0"
+        },
+        "zoneRedundant": {
+            "type": "bool",
+            "defaultValue": false
+        },
+        "virtualNetworkAddress": {
+            "type": "string",
+            "defaultValue": "192.168.250.0/23"
+        },
+        "ASEsubnetName": {
+            "type": "string",
+            "defaultValue": "ase-subnet"
+        },
+        "ASEsubnetAddress": {
+            "type": "string",
+            "defaultValue": "192.168.250.0/24"
+        },
+        "gatewaySubnetName": {
+            "type": "string",
+            "defaultValue": "gateway-subnet"
+        },
+        "gatewaySubnetAddress": {
+            "type": "string",
+            "defaultValue": "192.168.251.0/24"
+        },
+        "delegationName": {
+            "type": "string",
+            "defaultValue": "ilb-ase-delegation"
+        },
+        "ilbMode": {
+            "type": "int",
+            "defaultValue": 3
+        },
+
+
+        "tier": {
+            "type": "string",
+            "defaultValue": "Standard_v2"
+        },
+        "skuSize": {
+            "type": "string",
+            "defaultValue": "Standard_v2"
+        },
+        "capacity": {
+            "type": "int",
+            "defaultValue": 2
+        },
+        "zones": {
+            "type": "array",
+            "defaultValue": []
+        },
+        "publicIpAddressName": {
+            "type": "string",
+            "defaultValue": "public-ip-address"
+        },
+        "gatewaySku": {
+            "type": "string",
+            "defaultValue": "Standard"
+        },
+        "allocationMethod": {
+            "type": "string",
+            "defaultValue": "Static"
+        },
+        "publicIpZones": {
+            "type": "array",
+            "defaultValue": []
+        }
+    },
+    "variables": {
+        "aseName": "[concat(parameters('webAppName'),'-ilb-ase')]",
+        "hostingPlanName": "[concat(parameters('webAppName'),'-plan')]",
+        "privateZoneName": "[concat(variables('aseName'),'.appserviceenvironment.net')]",
+        "virtualNetworkId": "[resourceId(subscription().subscriptionId, resourceGroup().name, 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
+        "subnetId": "[resourceId(subscription().subscriptionId, resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('aseSubnetName'))]",
+        "hostingEnvironmentProfile": {
+            "id": "[resourceId(subscription().subscriptionId, resourceGroup().name, 'Microsoft.Web/hostingEnvironments', variables('aseName'))]"
+        },
+        "gatewaySubnetRef": "[concat(variables('virtualNetworkId'), '/subnets/', parameters('gatewaySubnetName'))]",
+        "applicationGatewayName": "[concat('gateway-',variables('aseName'))]",
+        "applicationGatewayId": "[resourceId('Microsoft.Network/applicationGateways', variables('applicationGatewayName'))]",
+        "publicIPRef": "[resourceId('Microsoft.Network/publicIPAddresses/', parameters('publicIpAddressName'))]"
+    },
+    "resources": [
+        {
+            "apiVersion": "2018-04-01",
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[parameters('virtualNetworkName')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[parameters('virtualNetworkAddress')]"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "[parameters('ASEsubnetName')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('ASEsubnetAddress')]",
+                            "delegations": [
+                                {
+                                    "name": "[parameters('delegationName')]",
+                                    "properties": {
+                                        "serviceName": "Microsoft.Web/hostingEnvironments"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "[parameters('gatewaySubnetName')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('gatewaySubnetAddress')]",
+                            "delegations": []
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "2019-08-01",
+            "type": "Microsoft.Web/hostingEnvironments",
+            "name": "[variables('aseName')]",
+            "kind": "ASEV3",
+            "location": "[parameters('location')]",
+            "properties": {
+                "name": "[variables('aseName')]",
+                "location": "[parameters('location')]",
+                "dedicatedHostCount": "[parameters('dedicatedHostCount')]",
+                "zoneRedundant": "[parameters('zoneRedundant')]",
+                "InternalLoadBalancingMode": "[parameters('ilbMode')]",
+                "virtualNetwork": {
+                    "id": "[variables('subnetId')]"
+                }
+            },
+            "tags": {},
+            "dependsOn": [
+                "[concat('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]"
+            ],
+            
+        },
+        {
+            "apiVersion": "2018-11-01",
+            "name": "[variables('hostingPlanName')]",
+            "type": "Microsoft.Web/serverfarms",
+            "location": "[parameters('location')]",
+            "kind": "linux",
+            "tags": null,
+            "dependsOn": [
+                "[concat('Microsoft.Web/hostingEnvironments/', variables('aseName'))]"
+            ],
+            "properties": {
+                "name": "[variables('hostingPlanName')]",
+                "workerSize": "[parameters('workerSize')]",
+                "workerSizeId": "[parameters('workerSizeId')]",
+                "numberOfWorkers": "[parameters('numberOfWorkers')]",
+                "reserved": true,
+                "hostingEnvironmentProfile": "[variables('hostingEnvironmentProfile')]"
+            },
+            "sku": {
+                "Tier": "[parameters('sku')]",
+                "Name": "[parameters('skuCode')]"
+            }
+        },
+        {
+            "apiVersion": "2018-11-01",
+            "name": "[parameters('webAppName')]",
+            "type": "Microsoft.Web/sites",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Web/serverfarms/', variables('hostingPlanName'))]"
+            ],
+            "properties": {
+                "name": "[parameters('webAppName')]",
+                "siteConfig": {
+                    "appSettings": [],
+                    "linuxFxVersion": "[parameters('linuxFxVersion')]",
+                    "alwaysOn": "[parameters('alwaysOn')]"
+                },
+                "serverFarmId": "[concat('/subscriptions/', subscription().subscriptionId, '/resourcegroups/', resourceGroup().name, '/providers/Microsoft.Web/serverfarms/', variables('hostingPlanName'))]",
+                "clientAffinityEnabled": false,
+                "hostingEnvironmentProfile": "[variables('hostingEnvironmentProfile')]",
+                "hostNameSslStates": [
+                    {
+                        "name": "ilb-ase-domain.test",
+                        "sslState": "Disabled",
+                        "hostType": "Standard"
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "2018-09-01",
+            "type": "Microsoft.Network/privateDnsZones",
+            "name": "[variables('privateZoneName')]",
+            "location": "global",
+            "dependsOn": [
+                "[concat('Microsoft.Web/hostingEnvironments/', variables('aseName'))]"
+            ],
+            "tags": {},
+            "properties": {},
+            "resources": [
+                {
+                    "apiVersion": "2018-09-01",
+                    "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
+                    "name": "[concat(variables('privateZoneName'), '/vnetLink')]",
+                    "location": "global",
+                    "properties": {
+                        "virtualNetwork": {
+                            "id": "[variables('virtualNetworkId')]"
+                        },
+                        "registrationEnabled": false
+                    },
+                    "dependsOn": [
+                        "[concat('Microsoft.Network/privateDnsZones/', variables('privateZoneName'))]"
+                    ]
+                },
+                {
+                    "apiVersion": "2018-09-01",
+                    "type": "Microsoft.Network/privateDnsZones/A",
+                    "name": "[concat(variables('privateZoneName'), '/*')]",
+                    "location": "global",
+                    "properties": {
+                        "ttl": 3600,
+                        "aRecords": [
+                            {
+                                "ipv4Address": "[reference(concat(resourceId('Microsoft.Web/hostingEnvironments', variables('aseName')), '/configurations/networking'), '2019-08-01').internalInboundIpAddresses[0]]"
+                            }
+                        ]
+                    },
+                    "dependsOn": [
+                        "[concat('Microsoft.Network/privateDnsZones/', variables('privateZoneName'))]"
+                    ]
+                },
+                {
+                    "apiVersion": "2018-09-01",
+                    "type": "Microsoft.Network/privateDnsZones/A",
+                    "name": "[concat(variables('privateZoneName'), '/*.scm')]",
+                    "location": "global",
+                    "properties": {
+                        "ttl": 3600,
+                        "aRecords": [
+                            {
+                                "ipv4Address": "[reference(concat(resourceId('Microsoft.Web/hostingEnvironments', variables('aseName')), '/configurations/networking'), '2019-08-01').internalInboundIpAddresses[0]]"
+                            }
+                        ]
+                    },
+                    "dependsOn": [
+                        "[concat('Microsoft.Network/privateDnsZones/', variables('privateZoneName'))]"
+                    ]
+                },
+                {
+                    "apiVersion": "2018-09-01",
+                    "type": "Microsoft.Network/privateDnsZones/A",
+                    "name": "[concat(variables('privateZoneName'), '/@')]",
+                    "location": "global",
+                    "properties": {
+                        "ttl": 3600,
+                        "aRecords": [
+                            {
+                                "ipv4Address": "[reference(concat(resourceId('Microsoft.Web/hostingEnvironments', variables('aseName')), '/configurations/networking'), '2019-08-01').internalInboundIpAddresses[0]]"
+                            }
+                        ]
+                    },
+                    "dependsOn": [
+                        "[concat('Microsoft.Network/privateDnsZones/', variables('privateZoneName'))]"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "[variables('applicationGatewayName')]",
+            "type": "Microsoft.Network/applicationGateways",
+            "apiVersion": "2019-09-01",
+            "location": "[parameters('location')]",
+            "zones": "[parameters('zones')]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/publicIPAddresses/', parameters('publicIpAddressName'))]"
+            ],
+            "tags": {},
+            "properties": {
+                "sku": {
+                    "name": "[parameters('skuSize')]",
+                    "tier": "[parameters('tier')]",
+                    "capacity": "[parameters('capacity')]"
+                },
+                "gatewayIPConfigurations": [
+                    {
+                        "name": "appGatewayIpConfig",
+                        "properties": {
+                            "subnet": {
+                                "id": "[variables('gatewaySubnetRef')]"
+                            }
+                        }
+                    }
+                ],
+                "frontendIPConfigurations": [
+                    {
+                        "name": "appGwPublicFrontendIp",
+                        "properties": {
+                            "PublicIPAddress": {
+                                "id": "[variables('publicIPRef')]"
+                            }
+                        }
+                    }
+                ],
+                "frontendPorts": [
+                    {
+                        "name": "port_80",
+                        "properties": {
+                            "Port": 80
+                        }
+                    }
+                ],
+                "backendAddressPools": [
+                    {
+                        "name": "backend-pool-for-ase",
+                        "properties": {
+                            "backendAddresses": [
+                                {
+                                    "ipAddress": "[]",
+                                    "fqdn": null
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "backendHttpSettingsCollection": [
+                    {
+                        "name": "basic-http-setting",
+                        "properties": {
+                            "Port": 80,
+                            "Protocol": "Http",
+                            "cookieBasedAffinity": "Disabled",
+                            "requestTimeout": 20,
+                            "hostName": "ilb-ase-domain.test",
+                            "probe": {
+                                "id": "[concat(variables('applicationGatewayId'), '/probes/probe-for-basic-http-setting')]"
+                            }
+                        }
+                    }
+                ],
+                "httpListeners": [
+                    {
+                        "name": "listener-name",
+                        "properties": {
+                            "frontendIPConfiguration": {
+                                "id": "[concat(variables('applicationGatewayId'), '/frontendIPConfigurations/appGwPublicFrontendIp')]"
+                            },
+                            "frontendPort": {
+                                "id": "[concat(variables('applicationGatewayId'), '/frontendPorts/port_80')]"
+                            },
+                            "protocol": "Http",
+                            "sslCertificate": null
+                        }
+                    }
+                ],
+                "requestRoutingRules": [
+                    {
+                        "Name": "routing-rule-for-ase-name",
+                        "properties": {
+                            "RuleType": "Basic",
+                            "httpListener": {
+                                "id": "[concat(variables('applicationGatewayId'), '/httpListeners/listener-name')]"
+                            },
+                            "priority": null,
+                            "backendAddressPool": {
+                                "id": "[concat(variables('applicationGatewayId'), '/backendAddressPools/backend-pool-for-ase')]"
+                            },
+                            "backendHttpSettings": {
+                                "id": "[concat(variables('applicationGatewayId'), '/backendHttpSettingsCollection/basic-http-setting')]"
+                            }
+                        }
+                    }
+                ],
+                "enableHttp2": false,
+                "sslCertificates": [],
+                "probes": [
+                    {
+                        "name": "probe-for-basic-http-setting",
+                        "properties": {
+                            "backendHttpSettings": [
+                                {
+                                    "id": "[concat(variables('applicationGatewayId'), '/backendHttpSettingsCollection/basic-http-setting')]"
+                                }
+                            ],
+                            "interval": 30,
+                            "minServers": 0,
+                            "path": "/",
+                            "protocol": "Http",
+                            "timeout": 30,
+                            "unhealthyThreshold": 3,
+                            "pickHostNameFromBackendHttpSettings": false,
+                            "host": "ilb-ase-domain.test"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "2020-08-01",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "[parameters('publicIpAddressName')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "[parameters('gatewaySku')]"
+            },
+            "zones": "[parameters('publicIpZones')]",
+            "properties": {
+                "publicIPAllocationMethod": "[parameters('allocationMethod')]"
+            }
+        }
+    ]
+}
