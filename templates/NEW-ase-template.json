@@ -128,6 +128,7 @@
         "gatewaySubnetRef": "[concat(variables('virtualNetworkId'), '/subnets/', parameters('gatewaySubnetName'))]",
         "applicationGatewayName": "[concat('gateway-',variables('aseName'))]",
         "applicationGatewayId": "[resourceId('Microsoft.Network/applicationGateways', variables('applicationGatewayName'))]",
+        "customDomainName": "[concat(parameters('webAppName'), '.internal')]",
         "publicIPRef": "[resourceId('Microsoft.Network/publicIPAddresses/', parameters('publicIpAddressName'))]"
     },
     "resources": [
@@ -186,8 +187,7 @@
             "tags": {},
             "dependsOn": [
                 "[concat('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]"
-            ],
-            
+            ]
         },
         {
             "apiVersion": "2018-11-01",
@@ -232,12 +232,25 @@
                 "hostingEnvironmentProfile": "[variables('hostingEnvironmentProfile')]",
                 "hostNameSslStates": [
                     {
-                        "name": "ilb-ase-domain.test",
+                        "name": "[variables('customDomainName')]",
                         "sslState": "Disabled",
                         "hostType": "Standard"
                     }
                 ]
             }
+        },
+        {
+            "type": "Microsoft.Web/sites/hostNameBindings",
+            "apiVersion": "2021-01-15",
+            "name": "[concat(parameters('webAppName'), '/', variables('customDomainName'))]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('webAppName'))]"
+            ],
+            "properties": {
+                "siteName": "[parameters('webAppName')]",
+                "hostNameType": "Verified"
+            } 
         },
         {
             "apiVersion": "2018-09-01",
@@ -368,7 +381,7 @@
                         "properties": {
                             "backendAddresses": [
                                 {
-                                    "ipAddress": "[]",
+                                    "ipAddress": "[reference(concat(resourceId('Microsoft.Web/hostingEnvironments', variables('aseName')), '/configurations/networking'), '2019-08-01').internalInboundIpAddresses[0]]",
                                     "fqdn": null
                                 }
                             ]
@@ -383,7 +396,7 @@
                             "Protocol": "Http",
                             "cookieBasedAffinity": "Disabled",
                             "requestTimeout": 20,
-                            "hostName": "ilb-ase-domain.test",
+                            "hostName": "[variables('customDomainName')]",
                             "probe": {
                                 "id": "[concat(variables('applicationGatewayId'), '/probes/probe-for-basic-http-setting')]"
                             }
@@ -441,7 +454,7 @@
                             "timeout": 30,
                             "unhealthyThreshold": 3,
                             "pickHostNameFromBackendHttpSettings": false,
-                            "host": "ilb-ase-domain.test"
+                            "host": "[variables('customDomainName')]"
                         }
                     }
                 ]
@@ -460,5 +473,7 @@
                 "publicIPAllocationMethod": "[parameters('allocationMethod')]"
             }
         }
-    ]
+    ],
+    "outputs": {
+    }
 }
