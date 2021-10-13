@@ -85,14 +85,22 @@ You should see the same values you entered. Now each new Terminal you open will 
 
 Later sections of this workshop will introduce and explain the App Service Environment, a single-tenant version of App Service. This service is quite large, so we will initiate the deployment for it now so that it is ready for us in the later sections of the workshop
 
-```bash
-az deployment group create \
-    --name ase_deployment \
-    --resource-group $RESOURCE_GROUP \
-    --template-file templates/ase-template.json \
-    --no-wait \
-    --parameters webAppName=$WEBAPP_NAME-ase
-```
+1. First, create a resource group:
+
+    ```bash
+    az group create --name $RESOURCE_GROUP --location $LOCATION
+    ```
+
+2. Next, deploy the ARM Template to that resource group:
+
+    ```bash
+    az deployment group create \
+        --name ase_deployment \
+        --resource-group $RESOURCE_GROUP \
+        --template-file templates/ase-template.json \
+        --no-wait \
+        --parameters webAppName=$WEBAPP_NAME-ase
+    ```
 
 > **Tip**: You can view the progress of your deployments in the Azure Portal by navigating to your resource group, and clicking on the **Deployments** tab.
 
