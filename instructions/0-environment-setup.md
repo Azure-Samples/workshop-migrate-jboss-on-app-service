@@ -22,7 +22,7 @@ The exercises in this workshop will involve creating and configuring resources f
 
 1. Open the VS Code terminal in GitPod by going to the existing `bash` terminal:
 
-<img src="../img/0-terminal.png" width=650 align=center>
+    <img src="../img/0-terminal.png" width=650 align=center>
 
 
 2. Run the following command. This will open a new browser window to log into your Azure account.
@@ -80,6 +80,21 @@ echo "Location: $LOCATION"
 ![Preferences](../img/0-env-test.png)
 
 You should see the same values you entered. Now each new Terminal you open will have these settings. Some of the commands you run later in the workshop will reference these variables.
+
+## Deploy the App Service Environment
+
+Later sections of this workshop will introduce and explain the App Service Environment, a single-tenant version of App Service. This service is quite large, so we will initiate the deployment for it now so that it is ready for us in the later sections of the workshop
+
+```bash
+az deployment group create \
+    --name ase_deployment \
+    --resource-group $RESOURCE_GROUP \
+    --template-file templates/ase-template.json \
+    --no-wait \
+    --parameters aseName=$WEBAPP_NAME-ase
+```
+
+> **Tip**: You can view the progress of your deployments in the Azure Portal by navigating to your resource group, and clicking on the **Deployments** tab.
 
 *Congratulations!* Your GitPod workspace is now ready to go. Click the link below to go to the next section
 

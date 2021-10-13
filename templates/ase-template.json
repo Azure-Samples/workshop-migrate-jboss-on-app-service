@@ -1,6 +1,12 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
+    "metadata": {
+        "title": "Deploys VNet, ILB ASE, App Gateway, and public IP address",
+        "description": "This template deploys a Virtual Network with subnets for an App Service Environment and an Application 
+        Gateway. The ASE is deployed with a private IP address, so a routing rule is set on the App Gateway to route traffic from the public IP address
+        to the internal domain name of the web app. The template also deploys an App Service Plan and Linux Web App."
+    },
     "parameters": {
         "webAppName": {
             "type": "string"

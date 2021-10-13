@@ -11,7 +11,7 @@ ASE's can be deployed with an internet-routable IP address or deployed within a 
 - [External ASE](https://docs.microsoft.com/azure/app-service/environment/create-external-ase): The external ASE is conceptually similar to the multi-tenant App Service Plan, where the applications have an internet-routable IP address and default domain name.
 - [Internal ASE](https://docs.microsoft.com/azure/app-service/environment/create-ilb-ase): Internally Load Balanced (ILB) ASEs are only accessible from within the VNet, but they can still be surfaced to the public internet through upstream devices such as a WAF. The ILB ASE is appropriate for hosting intranet applications securely in the cloud, or creating internet-isolated backend applications that your frontend apps can securely connect to.
 
-TODO: Insert side-by-side diagrams of internal and external ASEs to get the point across
+![Internal VS External ASE](../img/5-internal-vs-external-ase.png)
 
 ### Features over multi-tenant App Service
 
@@ -22,57 +22,17 @@ App Service Environments are appropriate for applications that require:
 - **High memory utilization**: The Isolated App Service Plans offer 2, 4, and 8 core machines with 8, 16, and 32 GB of memory respectively.
 - **Zone redundancy**: ASEs can be [deployed into Availability Zones](https://azure.github.io/AppService/2019/12/12/App-Service-Environment-Support-for-Availability-Zones.html) to ensure a highly available deployment. Availability Zones are unique physical locations *within* an Azure Region. There are a minimum of three separate zones in supported regions, meaning if one zone suffers an outage, your applications will be available on the remaining zone.
 
-## Exercise: Create an ILB ASE with an Azure App Gateway
+## Exercise: Inspect your ILB ASE and Azure App Gateway
 
-The following sections will walk you through creating an App Service Environment without a public IP address. You will then create an Azure Application Gateway to front the application and expose it publicly to the internet. This architecture allows us to route all traffic through the App Gateway before it reaches our application, providing a firewall, DDoS protection, and enterprise-grade scale.
+[Earlier in this workshop](0-environment-setup.md#deploy-the-app-service-environment) you created an App Service Environment using an ARM Template. This template deployed a few resources:
 
-TODO: Add final deployment diagram
+- A [Virtual Network](https://docs.microsoft.com/azure/virtual-network/virtual-networks-overview) with two subnets: one for the App Service Environment, and one for the App Gateway.
+- An [App Service Environment](https://docs.microsoft.com/azure/app-service/environment/intro) with a private IP address, as well as an I1V2 App Service Plan, and a JBoss EAP web app.
+- An [Application Gateway](https://docs.microsoft.com/azure/application-gateway/) to route traffic from a public IP address to the internal IP address of our ASE.
 
-### Phase 1: Create an ILB ASE and Virtual Network
+![Diagram of the resources deployed by the template](../img/5-ASE-deployment-diagram.png)
 
-In this phase you will create an Virtual Network, an ILB ASE, an Isolated App Service Plan, and a JBoss EAP site on the ILB ASE.
-
-1. First, run this CLI command to deploy the [`ase-template.json`](../../templates/ase-template.json). This will create a new Virtual Network and subnet, then create an App Service Environment within the subnet.
-
-    ```bash
-    az deployment group create \
-        --name ase_deployment \
-        --resource-group $RESOURCE_GROUP \
-        --template-file templates/ase-template.json \
-        --no-wait \
-        --parameters aseName=$WEBAPP_NAME-ase
-    ```
-
-    > You can view the progress of your deployments in the Azure Portal by navigating to your resource group, and clicking on the **Deployments** tab.
-
-2. Once that deployment is complete, run the following CLI command to deploy the [`app-template.json`](../../templates/app-template.json). This template will create an I1V2 App Service Plan inside the ASE, and create a JBoss EAP Web App on that plan.
-
-    ```bash
-    az deployment group create \
-        --name ase_webapp_deployment \
-        --resource-group $RESOURCE_GROUP \
-        --template-file templates/app-template.json \
-        --no-wait \
-        --parameters webAppName=$WEBAPP_NAME-ilb aseName=$WEBAPP_NAME-ase
-    ```
-
-### Phase 2: Connect to an App Gateway
-
-At this point we have a running JBoss EAP site on an ASE and it's not exposed to the public internet... which isn't very helpful for our storefront application! This final deployment will create a new subnet in the  virtual network you created earlier, deploy an Application Gateway with a public IP address, and set up a routing rule to send traffic on that Public IP to your JBoss EAP Web App.
-
-```bash
-az deployment group create \
-    --name app_gateway_deployment \
-    --resource-group $RESOURCE_GROUP \
-    --template-file templates/gateway-template.json \
-    --parameters applicationGatewayName=$WEBAPP_NAME-gateway 
-```
-
-This CLI command will ask you for the inbound IP address of your ASE. To get the inbound IP address for your ASE, navigate to your ASE in the Portal and go to **Settings** > **IP Addresses** > **Inbound**. Copy the value of **Inbound address** and paste it into the CLI command above when prompted.
-
-### Phase 3: Confirm the site is served on the App Gateway
-
-When the final deployment is complete, you can get the public IP address from the **Overview** section your App Gateway in the Portal. Browse to that IP address in the Portal and you should see the default landing page for your JBoss site! The following exercise will guide you through deploying to this network-isolated site.
+When the deployment template is complete, you can get the public IP address from the **Overview** section your App Gateway in the Portal. Browse to that IP address in the Portal and you should see the default landing page for your JBoss site! The following exercise will guide you through deploying to this network-isolated site.
 
 ## Exercise: Update Actions Workflow to deploy to ASE
 
