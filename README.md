@@ -22,8 +22,9 @@ Learn how to migrate an on-premises WebLogic application to JBoss EAP using the 
 
 ### Prerequisites
 
-- [An Azure Subscription](https://azure.microsoft.com/free/search/)
+- [An Azure Subscription](https://azure.microsoft.com/free/search/) (your workshop moderator may be able to provide credits)
 - [A GitHub Account](https://github.com/signup)
+- Basic knowledge of Java, Git, and Linux command line
 
 ### Instructions
 
