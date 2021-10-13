@@ -91,7 +91,7 @@ az deployment group create \
     --resource-group $RESOURCE_GROUP \
     --template-file templates/ase-template.json \
     --no-wait \
-    --parameters aseName=$WEBAPP_NAME-ase
+    --parameters webAppName=$WEBAPP_NAME-ase
 ```
 
 > **Tip**: You can view the progress of your deployments in the Azure Portal by navigating to your resource group, and clicking on the **Deployments** tab.
