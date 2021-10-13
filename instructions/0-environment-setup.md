@@ -6,7 +6,11 @@ This workshop uses GitPod to provide a pre-configured development environment wi
 
 1. Fork [the workshop repository](https://github.com/Azure-Samples/workshop-migrate-jboss-on-app-service) into your personal GitHub account.
 2. Go to [https://gitpod.io/](https://gitpod.io/) and create an account. You can use the Single-Sign-On to create a GitPod account from your GitHub account.
-3. To create a GitPod workspace, navigate to your fork of the workshop repository on GitHub (ex: **https://github.com/JoeSmith/workshop-migrate-jboss-on-app-service**) and prefix the entire URL with **gitpod.io/#**, like this:
+3. On your [GitPod Preferences](https://gitpod.io/preferences) page, select the **Insiders** VSCode version, which enables a few features used in this workshop, as shown:
+
+![Preferences](../img/0-prefs-vscode.png)
+
+4. To create a GitPod workspace, navigate to your fork of the workshop repository on GitHub (ex: **https://github.com/JoeSmith/workshop-migrate-jboss-on-app-service**) and prefix the entire URL with **gitpod.io/#**, like this:
 
     ```text
     gitpod.io/#https://github.com/JoeSmith/workshop-migrate-jboss-on-app-service
@@ -14,7 +18,7 @@ This workshop uses GitPod to provide a pre-configured development environment wi
 
     This will open a new GitPod workspace using the configuration files in the repo.
 
-4. Once the workspace launches, you will have a cloud-based VS Code IDE!
+5. Once the workspace launches, you will have a cloud-based VS Code IDE!
 
 ## Sign into Azure
 
@@ -22,7 +26,7 @@ The exercises in this workshop will involve creating and configuring resources f
 
 1. Open the VS Code terminal in GitPod by going to the existing `bash` terminal:
 
-    <img src="../img/0-terminal.png" width=650 align=center>
+<img src="../img/0-terminal.png" width=650 align=center>
 
 
 2. Run the following command. This will open a new browser window to log into your Azure account.
