@@ -2,6 +2,32 @@
 
 In this module you’ll work with an existing Java EE application designed for a retail store, _CoolStore_. The current version of the CoolStore is a Java EE application built for Oracle _WebLogic_ Application Server. As part of a modernization strategy you've decided to move this application to _JBoss EAP_.
 
+### What is JBoss Enterprise Application Platform(JBoss EAP)?
+
+[JBoss EAP](https://www.redhat.com/en/technologies/jboss-middleware/application-platform) is an open source platform for highly transactional, web-scale Java applications. JBoss EAP combines the familiar and popular Jakarta EE specifications with the latest technologies, like Eclipse MicroProfile, to modernize your applications from traditional Java EE into the new world of DevOps, cloud, containers, and microservices.
+
+JBoss EAP includes everything needed to build, run, deploy, and manage enterprise Java applications in a variety of environments, including on-premise, virtual environments, and in private, public, and hybrid clouds. JBoss EAP is based upon the popular open source project [WildFly](https://jbossorg.github.io/wildflysite/). 
+
+More features and benefits of JBoss EAP are here: 
+
+* **Java certified** - Support the leading Java standards and specifications including Jakarta EE 8, Java SE 11 ([OpenJDK](https://developers.redhat.com/products/openjdk/overview) and OracleJDK), and Eclipse MicroProfile.
+* **Optimizing for the Cloud** - Highly efficient and optimized for container and cloud deployments including [Red Hat OpenShift](https://developers.redhat.com/products/openshift/overview). JBoss EAP offers an extremely low memory footprint, fast start-up times, and efficient resource utilization.
+* **Modular and lightweight** - Provide a modular structure that allows service enabling only when required, improving startup speed to build a modern application platform.
+* **Enterprise performance** - Provide a flexible web server, Undertow, as well as enterprise features such as failover, clustering, caching, intelligent load balancing, and distributed deployment performance-tuned for highly transactional applications.
+* **Security** - Provide a security subsystem called Elytron, that provides a unified framework to manage and configure access for standalone servers and managed domains. It can also be used to configure security access for deployed applications.
+* **Flexible management** - Provide a management console and CLI that provides administrators with a unified view into configurations, deployments, security, and subsystems as well as the ability to manage servers offline. The CLI can be used with popular configuration management tools, such as Red Hat Ansible or Puppet.
+* **Developer productivity** - Provides tools to boost productivity and innovate faster with features like self-service application provisioning, simplified stack management, and application auto-scaling. It also supports continuous testing and integration technologies such as [Arquillian](https://arquillian.org/) for integration testing, Maven for automated and managed build processes, and Jenkins for continuous integration and continuous delivery.
+
+The following JBoss EAP versions are based on these Wildfly versions.
+
+| JBoss EAP Version      | Wildfly Version |
+| ----------- | ----------- |
+| 7.4      | 23       |
+| 7.3      | 18       |
+| 7.2      | 14       |
+| 7.1      | 11       |
+| 7.0      | 10       |
+
 ### What is Migration Toolkit for Applications?
 
 <img src="../img/2-mta_logo.png" width=500 align=center>
