@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  RESOURCE_GROUP: <your-resource-group-name>
+  GROUP: <your-resource-group-name>
   WEBAPP: <your-webapp-name>
   ACCOUNT: deploymentartifacts
   CONTAINER: artifacts
