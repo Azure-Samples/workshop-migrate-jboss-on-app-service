@@ -26,7 +26,7 @@ The exercises in this workshop will involve creating and configuring resources f
 
 1. Open the VS Code terminal in GitPod by going to the existing `bash` terminal:
 
-<img src="../img/0-terminal.png" width=650 align=center>
+    <img src="../img/0-terminal.png" width=650 align=center>
 
 
 2. Run the following command. This will open a new browser window to log into your Azure account.

@@ -6,10 +6,10 @@ on:
   workflow_dispatch:
 
 env:
-  WEBAPP: <your-webapp-name>
   GROUP: <your-resource-group-name>
-  ACCOUNT: deployment-artifact-storage
-  CONTAINER: deployment-artifacts
+  WEBAPP: <your-webapp-name>
+  ACCOUNT: deploymentartifacts
+  CONTAINER: artifacts
   EXPIRY_TIME: 10 minutes
 
 jobs:
@@ -60,14 +60,25 @@ jobs:
       - name: Azure CLI script
         uses: azure/CLI@v1
         with:
-          azcliversion: 2.19.1
+          azcliversion: 2.28.0
           inlineScript: |
             az storage account create   -n $ACCOUNT   -g $GROUP -l westus
             az storage container create -n $CONTAINER --account-name $ACCOUNT
             az storage blob upload      -f app.zip    --account-name $ACCOUNT -c $CONTAINER -n $ACCOUNT
 
             ZIP_URL=$(az storage blob generate-sas --full-uri --permissions r --expiry ${{ env.expiry }} --account-name $ACCOUNT -c $CONTAINER -n $ACCOUNT | xargs)
+            SUBSCRIPTION=$(az account show --query id -o tsv)
 
-            az webapp deploy --name $WEBAPP --resource-group $GROUP --type zip --src-url  $ZIP_URL --async false
+            az rest --method PUT \
+                    --uri "https://management.azure.com/subscriptions/${SUBSCRIPTION}/resourceGroups/${GROUP}/providers/Microsoft.Web/sites/${WEBAPP}/extensions/onedeploy?api-version=2020-12-01" \
+                    --body '{ 
+                        "properties": { 
+                          "properties": {
+                            "packageUri": "'"${ZIP_URL}"'"
+                          }, 
+                          "type": "war", 
+                          "ignorestack": true 
+                        }
+                      }'
 
             az storage container delete -n $CONTAINER --account-name $ACCOUNT
