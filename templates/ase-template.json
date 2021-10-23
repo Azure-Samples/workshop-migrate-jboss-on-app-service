@@ -411,7 +411,7 @@
                 ],
                 "httpListeners": [
                     {
-                        "name": "listener-name",
+                        "name": "http-listener",
                         "properties": {
                             "frontendIPConfiguration": {
                                 "id": "[concat(variables('applicationGatewayId'), '/frontendIPConfigurations/appGwPublicFrontendIp')]"
@@ -430,7 +430,7 @@
                         "properties": {
                             "RuleType": "Basic",
                             "httpListener": {
-                                "id": "[concat(variables('applicationGatewayId'), '/httpListeners/listener-name')]"
+                                "id": "[concat(variables('applicationGatewayId'), '/httpListeners/http-listener')]"
                             },
                             "priority": null,
                             "backendAddressPool": {
