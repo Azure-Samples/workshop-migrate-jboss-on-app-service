@@ -246,6 +246,33 @@
             }
         },
         {
+            "type": "Microsoft.Web/sites/slots",
+            "apiVersion": "2021-01-15",
+            "name": "[concat(parameters('webAppName'), '/staging')]",
+            "location": "East US",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('webAppName'))]"
+            ],
+            "kind": "app,linux",
+            "properties": {
+                "siteConfig": {
+                    "appSettings": [],
+                    "linuxFxVersion": "[parameters('linuxFxVersion')]",
+                    "alwaysOn": "[parameters('alwaysOn')]"
+                },
+                "serverFarmId": "[concat('/subscriptions/', subscription().subscriptionId, '/resourcegroups/', resourceGroup().name, '/providers/Microsoft.Web/serverfarms/', variables('hostingPlanName'))]",
+                "clientAffinityEnabled": false,
+                "hostingEnvironmentProfile": "[variables('hostingEnvironmentProfile')]",
+                "hostNameSslStates": [
+                    {
+                        "name": "staging-slot.internal",
+                        "sslState": "Disabled",
+                        "hostType": "Standard"
+                    }
+                ]
+            }
+        },
+        {
             "type": "Microsoft.Web/sites/hostNameBindings",
             "apiVersion": "2021-01-15",
             "name": "[concat(parameters('webAppName'), '/', variables('customDomainName'))]",
@@ -257,6 +284,20 @@
                 "siteName": "[parameters('webAppName')]",
                 "hostNameType": "Verified"
             } 
+        },
+        {
+            "type": "Microsoft.Web/sites/slots/hostNameBindings",
+            "apiVersion": "2021-01-15",
+            "name": "[concat(parameters('webAppName'), '/staging/staging-slot.internal')]",
+            "location": "East US",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites/slots', parameters('webAppName'), 'staging')]",
+                "[resourceId('Microsoft.Web/sites', parameters('webAppName'))]"
+            ],
+            "properties": {
+                "siteName": "[concat(parameters('webAppName'),'(staging)')]",
+                "hostNameType": "Verified"
+            }
         },
         {
             "apiVersion": "2018-09-01",
