@@ -448,6 +448,22 @@
                                 "id": "[concat(variables('applicationGatewayId'), '/probes/probe-for-basic-http-setting')]"
                             }
                         }
+                    },
+                    {
+                        "name": "slot-http-setting",
+                        "properties": {
+                            "port": 80,
+                            "protocol": "Http",
+                            "cookieBasedAffinity": "Disabled",
+                            "hostName": "staging-slot.internal",
+                            "pickHostNameFromBackendAddress": false,
+                            "affinityCookieName": "ApplicationGatewayAffinity",
+                            "path": "/",
+                            "requestTimeout": 20,
+                            "probe": {
+                                "id": "[concat(variables('applicationGatewayId'), '/probes/probe-for-slot')]"
+                            }
+                        }
                     }
                 ],
                 "httpListeners": [
@@ -469,7 +485,7 @@
                     {
                         "Name": "routing-rule-for-ase-name",
                         "properties": {
-                            "RuleType": "Basic",
+                            "RuleType": "PathBasedRouting",
                             "httpListener": {
                                 "id": "[concat(variables('applicationGatewayId'), '/httpListeners/http-listener')]"
                             },
@@ -479,7 +495,40 @@
                             },
                             "backendHttpSettings": {
                                 "id": "[concat(variables('applicationGatewayId'), '/backendHttpSettingsCollection/basic-http-setting')]"
+                            },
+                            "urlPathMap": {
+                                "id": "[concat(variables('applicationGatewayId'), '/urlPathMaps/slot-listener')]"
                             }
+                        }
+                    }
+                ],
+                "urlPathMaps": [
+                    {
+                        "name": "slot-listener",
+                        "properties": {
+                            "defaultBackendAddressPool": {
+                                "id": "[concat(variables('applicationGatewayId'), '/backendAddressPools/backend-pool-for-ase')]"
+                            },
+                            "defaultBackendHttpSettings": {
+                                "id": "[concat(variables('applicationGatewayId'), '/backendHttpSettingsCollection/basic-http-setting')]"
+                            },
+                            "pathRules": [
+                                {
+                                    "name": "slot-target",
+                                    "properties": {
+                                        "paths": [
+                                            "/staging",
+                                            "/staging/*"
+                                        ],
+                                        "backendAddressPool": {
+                                            "id": "[concat(variables('applicationGatewayId'), '/backendAddressPools/backend-pool-for-ase')]"
+                                        },
+                                        "backendHttpSettings": {
+                                            "id": "[concat(variables('applicationGatewayId'), '/backendHttpSettingsCollection/slot-http-setting')]"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     }
                 ],
@@ -502,6 +551,24 @@
                             "unhealthyThreshold": 3,
                             "pickHostNameFromBackendHttpSettings": false,
                             "host": "[variables('customDomainName')]"
+                        }
+                    },
+                    {
+                        "name": "probe-for-slot",
+                        "properties": {
+                            "protocol": "Http",
+                            "host": "staging-slot.internal",
+                            "path": "/",
+                            "interval": 30,
+                            "timeout": 30,
+                            "unhealthyThreshold": 3,
+                            "pickHostNameFromBackendHttpSettings": false,
+                            "minServers": 0,
+                            "match": {
+                                "statusCodes": [
+                                    "200-399"
+                                ]
+                            }
                         }
                     }
                 ]
