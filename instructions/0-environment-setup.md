@@ -6,7 +6,11 @@ This workshop uses GitPod to provide a pre-configured development environment wi
 
 1. Fork [the workshop repository](https://github.com/Azure-Samples/workshop-migrate-jboss-on-app-service) into your personal GitHub account.
 2. Go to [https://gitpod.io/](https://gitpod.io/) and create an account. You can use the Single-Sign-On to create a GitPod account from your GitHub account.
-3. To create a GitPod workspace, navigate to your fork of the workshop repository on GitHub (ex: **https://github.com/JoeSmith/workshop-migrate-jboss-on-app-service**) and prefix the entire URL with **gitpod.io/#**, like this:
+3. On your [GitPod Preferences](https://gitpod.io/preferences) page, select the **Insiders** VSCode version, which enables a few features used in this workshop, as shown:
+
+![Preferences](../img/0-prefs-vscode.png)
+
+4. To create a GitPod workspace, navigate to your fork of the workshop repository on GitHub (ex: **https://github.com/JoeSmith/workshop-migrate-jboss-on-app-service**) and prefix the entire URL with **gitpod.io/#**, like this:
 
     ```text
     gitpod.io/#https://github.com/JoeSmith/workshop-migrate-jboss-on-app-service
@@ -14,7 +18,7 @@ This workshop uses GitPod to provide a pre-configured development environment wi
 
     This will open a new GitPod workspace using the configuration files in the repo.
 
-4. Once the workspace launches, you will have a cloud-based VS Code IDE!
+5. Once the workspace launches, you will have a cloud-based VS Code IDE!
 
 ## Sign into Azure
 
@@ -85,14 +89,22 @@ You should see the same values you entered. Now each new Terminal you open will 
 
 Later sections of this workshop will introduce and explain the App Service Environment, a single-tenant version of App Service. This service is quite large, so we will initiate the deployment for it now so that it is ready for us in the later sections of the workshop
 
-```bash
-az deployment group create \
-    --name ase_deployment \
-    --resource-group $RESOURCE_GROUP \
-    --template-file templates/ase-template.json \
-    --no-wait \
-    --parameters aseName=$WEBAPP_NAME-ase
-```
+1. First, create a resource group:
+
+    ```bash
+    az group create --name $RESOURCE_GROUP --location $LOCATION
+    ```
+
+2. Next, deploy the ARM Template to that resource group:
+
+    ```bash
+    az deployment group create \
+        --name ase_deployment \
+        --resource-group $RESOURCE_GROUP \
+        --template-file templates/ase-template.json \
+        --no-wait \
+        --parameters webAppName=$WEBAPP_NAME-ase
+    ```
 
 > **Tip**: You can view the progress of your deployments in the Azure Portal by navigating to your resource group, and clicking on the **Deployments** tab.
 
