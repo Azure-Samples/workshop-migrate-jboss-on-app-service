@@ -13,12 +13,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Cancel the PR deploy workflow
-      uses: styfle/cancel-workflow-action@0.9.1
-      with:
-        workflow_id: 'deploy-pull-requests.yaml'
-        access_token: ${{ github.token }}
-
     - name: Log into Azure CLI with service principal
       uses: azure/login@v1.1
       with:
