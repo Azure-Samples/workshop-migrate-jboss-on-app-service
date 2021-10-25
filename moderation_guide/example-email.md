@@ -20,7 +20,7 @@ I hope you are excited for our upcoming JBoss EAP migration workshop! Before the
         --parameters webAppName=jboss-ilb-ase
     ```
 
-    > If you do not have the Azure CLI installed, you can log into Azure and use the [Cloud Shell]()
+    > If you do not have the Azure CLI installed, you can log into Azure and use the [Cloud Shell](https://shell.azure.com/)
 
 Contact me if you have any questions!
 
