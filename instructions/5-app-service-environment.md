@@ -1,8 +1,16 @@
 # The App Service Environment
 
+## Exercise: check the status of your ASE Deployment
+
+Before starting this section, run the CLI command below to confirm that the ARM template you [deployed earlier](0-environment-setup.md#Deploy-the-App-Service-Environment).
+
+```bash
+az deployment group show --name ase_deployment -g $RESOURCE_GROUP
+```
+
 ## Overview of the App Service Environment
 
-In Section 1 you created an Azure Web App on the Premium V3 tier. The Premium V3 is a high-performance option for production applications, but for workloads that require even greater scale and security, there is the App Service Environment. The App Service Environment (ASE) is a single-tenant variant of App Service, meaning that the infrastructure components like the load balancers, storage, and VMs are dedicated to only your deployment. 
+In Section 1 you created an Azure Web App on the Premium V3 tier. The Premium V3 is a high-performance option for production applications, but for workloads that require even greater scale and security, there is the App Service Environment. The App Service Environment (ASE) is a single-tenant variant of App Service, meaning that the infrastructure components like the load balancers, storage, and VMs are dedicated to only your deployment.
 
 ### Internal and External ASE
 

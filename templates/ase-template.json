@@ -246,6 +246,33 @@
             }
         },
         {
+            "type": "Microsoft.Web/sites/slots",
+            "apiVersion": "2021-01-15",
+            "name": "[concat(parameters('webAppName'), '/staging')]",
+            "location": "East US",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('webAppName'))]"
+            ],
+            "kind": "app,linux",
+            "properties": {
+                "siteConfig": {
+                    "appSettings": [],
+                    "linuxFxVersion": "[parameters('linuxFxVersion')]",
+                    "alwaysOn": "[parameters('alwaysOn')]"
+                },
+                "serverFarmId": "[concat('/subscriptions/', subscription().subscriptionId, '/resourcegroups/', resourceGroup().name, '/providers/Microsoft.Web/serverfarms/', variables('hostingPlanName'))]",
+                "clientAffinityEnabled": false,
+                "hostingEnvironmentProfile": "[variables('hostingEnvironmentProfile')]",
+                "hostNameSslStates": [
+                    {
+                        "name": "staging-slot.internal",
+                        "sslState": "Disabled",
+                        "hostType": "Standard"
+                    }
+                ]
+            }
+        },
+        {
             "type": "Microsoft.Web/sites/hostNameBindings",
             "apiVersion": "2021-01-15",
             "name": "[concat(parameters('webAppName'), '/', variables('customDomainName'))]",
@@ -257,6 +284,20 @@
                 "siteName": "[parameters('webAppName')]",
                 "hostNameType": "Verified"
             } 
+        },
+        {
+            "type": "Microsoft.Web/sites/slots/hostNameBindings",
+            "apiVersion": "2021-01-15",
+            "name": "[concat(parameters('webAppName'), '/staging/staging-slot.internal')]",
+            "location": "East US",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites/slots', parameters('webAppName'), 'staging')]",
+                "[resourceId('Microsoft.Web/sites', parameters('webAppName'))]"
+            ],
+            "properties": {
+                "siteName": "[concat(parameters('webAppName'),'(staging)')]",
+                "hostNameType": "Verified"
+            }
         },
         {
             "apiVersion": "2018-09-01",
@@ -407,11 +448,27 @@
                                 "id": "[concat(variables('applicationGatewayId'), '/probes/probe-for-basic-http-setting')]"
                             }
                         }
+                    },
+                    {
+                        "name": "slot-http-setting",
+                        "properties": {
+                            "port": 80,
+                            "protocol": "Http",
+                            "cookieBasedAffinity": "Disabled",
+                            "hostName": "staging-slot.internal",
+                            "pickHostNameFromBackendAddress": false,
+                            "affinityCookieName": "ApplicationGatewayAffinity",
+                            "path": "/",
+                            "requestTimeout": 20,
+                            "probe": {
+                                "id": "[concat(variables('applicationGatewayId'), '/probes/probe-for-slot')]"
+                            }
+                        }
                     }
                 ],
                 "httpListeners": [
                     {
-                        "name": "listener-name",
+                        "name": "http-listener",
                         "properties": {
                             "frontendIPConfiguration": {
                                 "id": "[concat(variables('applicationGatewayId'), '/frontendIPConfigurations/appGwPublicFrontendIp')]"
@@ -428,9 +485,9 @@
                     {
                         "Name": "routing-rule-for-ase-name",
                         "properties": {
-                            "RuleType": "Basic",
+                            "RuleType": "PathBasedRouting",
                             "httpListener": {
-                                "id": "[concat(variables('applicationGatewayId'), '/httpListeners/listener-name')]"
+                                "id": "[concat(variables('applicationGatewayId'), '/httpListeners/http-listener')]"
                             },
                             "priority": null,
                             "backendAddressPool": {
@@ -438,7 +495,40 @@
                             },
                             "backendHttpSettings": {
                                 "id": "[concat(variables('applicationGatewayId'), '/backendHttpSettingsCollection/basic-http-setting')]"
+                            },
+                            "urlPathMap": {
+                                "id": "[concat(variables('applicationGatewayId'), '/urlPathMaps/slot-listener')]"
                             }
+                        }
+                    }
+                ],
+                "urlPathMaps": [
+                    {
+                        "name": "slot-listener",
+                        "properties": {
+                            "defaultBackendAddressPool": {
+                                "id": "[concat(variables('applicationGatewayId'), '/backendAddressPools/backend-pool-for-ase')]"
+                            },
+                            "defaultBackendHttpSettings": {
+                                "id": "[concat(variables('applicationGatewayId'), '/backendHttpSettingsCollection/basic-http-setting')]"
+                            },
+                            "pathRules": [
+                                {
+                                    "name": "slot-target",
+                                    "properties": {
+                                        "paths": [
+                                            "/staging",
+                                            "/staging/*"
+                                        ],
+                                        "backendAddressPool": {
+                                            "id": "[concat(variables('applicationGatewayId'), '/backendAddressPools/backend-pool-for-ase')]"
+                                        },
+                                        "backendHttpSettings": {
+                                            "id": "[concat(variables('applicationGatewayId'), '/backendHttpSettingsCollection/slot-http-setting')]"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     }
                 ],
@@ -461,6 +551,24 @@
                             "unhealthyThreshold": 3,
                             "pickHostNameFromBackendHttpSettings": false,
                             "host": "[variables('customDomainName')]"
+                        }
+                    },
+                    {
+                        "name": "probe-for-slot",
+                        "properties": {
+                            "protocol": "Http",
+                            "host": "staging-slot.internal",
+                            "path": "/",
+                            "interval": 30,
+                            "timeout": 30,
+                            "unhealthyThreshold": 3,
+                            "pickHostNameFromBackendHttpSettings": false,
+                            "minServers": 0,
+                            "match": {
+                                "statusCodes": [
+                                    "200-399"
+                                ]
+                            }
                         }
                     }
                 ]
