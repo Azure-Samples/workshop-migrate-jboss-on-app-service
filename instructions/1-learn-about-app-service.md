@@ -29,7 +29,7 @@ TODO: Add App Insights image
 Let's cover a few key terms about App Service:
 
 - [App Service Plans](https://docs.microsoft.com/azure/app-service/overview-hosting-plans): Your web apps will always run in an App Service Plan. The Plan defines the size of your compute, the OS, the region, and pricing tier. For example, you can create a Linux Premium 1 V3 Plan, which has 2 cores and 8GB of memory, in the Central US region. You can then host *multiple* Web Apps on this Plan. The Plan is also where you will define your scaling rules.
-- [Azure Web App](): The Web App is resource that runs on top of the App Service Plan, defines the runtime and configuration for your site, and is the resource that you will actually deploy your code to.
+- [Azure Web App](https://docs.microsoft.com/azure/app-service/): The Web App is resource that runs on top of the App Service Plan, defines the runtime and configuration for your site, and is the resource that you will actually deploy your code to.
 
 ## Exercise: Create an Azure Web App
 
@@ -67,8 +67,7 @@ az webapp create \
 When the web app is created it will have a default domain name of the format `https://<your-site-name>.azurewebsites.net`. After a minute or two you can browse to your web app and it will serve a landing page with a few getting started instructions. Use this command to open your new site in a preview window in your IDE:
 
 ```bash
-gp preview --external https://$(az webapp show -g $RESOURCE_GROUP -n $WEBAPP_NAME |
-    jq -r '.defaultHostName')
+gp preview --external https://$(az webapp show -g $RESOURCE_GROUP -n $WEBAPP_NAME | jq -r '.defaultHostName')
 ```
 
 This will open your site in a new tab in your browser after constructing the URL using the `az webapp show` command.

@@ -26,15 +26,15 @@ The exercises in this workshop will involve creating and configuring resources f
 
 1. Open the VS Code terminal in GitPod by going to the existing `bash` terminal:
 
-<img src="../img/0-terminal.png" width=650 align=center>
+    <img src="../img/0-terminal.png" width=650 align=center>
 
-2. Run the following command. This will open a new browser window to log into your Azure account.
+2. Run the following command to start the authentication flow.
 
     ```bash
     az login
     ```
 
-    Complete the login process in the new window.
+    Follow the instructions in the terminal output to login in.
 
 3. To confirm your CLI is authenticated, run the following command. This will output summary information about your Azure Subscription.
 
