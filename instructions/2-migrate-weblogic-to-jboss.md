@@ -2,13 +2,13 @@
 
 In this module you’ll work with an existing Java EE application designed for a retail store, _CoolStore_. The current version of the CoolStore is a Java EE application built for Oracle _WebLogic_ Application Server. As part of a modernization strategy you've decided to move this application to _JBoss EAP_.
 
-### What is JBoss Enterprise Application Platform(JBoss EAP)?
+### What is JBoss Enterprise Application Platform (JBoss EAP)?
 
 [JBoss EAP](https://www.redhat.com/en/technologies/jboss-middleware/application-platform) is an open source platform for highly transactional, web-scale Java applications. JBoss EAP combines the familiar and popular Jakarta EE specifications with the latest technologies, like Eclipse MicroProfile, to modernize your applications from traditional Java EE into the new world of DevOps, cloud, containers, and microservices.
 
-JBoss EAP includes everything needed to build, run, deploy, and manage enterprise Java applications in a variety of environments, including on-premise, virtual environments, and in private, public, and hybrid clouds. JBoss EAP is based upon the popular open source project [WildFly](https://jbossorg.github.io/wildflysite/). 
+JBoss EAP includes everything needed to build, run, deploy, and manage enterprise Java applications in a variety of environments, including on-premise, virtual environments, and in private, public, and hybrid clouds.
 
-More features and benefits of JBoss EAP are here: 
+More features and benefits of JBoss EAP are here:
 
 * **Java certified** - Support the leading Java standards and specifications including Jakarta EE 8, Java SE 11 ([OpenJDK](https://developers.redhat.com/products/openjdk/overview) and OracleJDK), and Eclipse MicroProfile.
 * **Optimizing for the Cloud** - Highly efficient and optimized for container and cloud deployments including [Red Hat OpenShift](https://developers.redhat.com/products/openshift/overview). JBoss EAP offers an extremely low memory footprint, fast start-up times, and efficient resource utilization.
@@ -18,7 +18,7 @@ More features and benefits of JBoss EAP are here:
 * **Flexible management** - Provide a management console and CLI that provides administrators with a unified view into configurations, deployments, security, and subsystems as well as the ability to manage servers offline. The CLI can be used with popular configuration management tools, such as Red Hat Ansible or Puppet.
 * **Developer productivity** - Provides tools to boost productivity and innovate faster with features like self-service application provisioning, simplified stack management, and application auto-scaling. It also supports continuous testing and integration technologies such as [Arquillian](https://arquillian.org/) for integration testing, Maven for automated and managed build processes, and Jenkins for continuous integration and continuous delivery.
 
-The following JBoss EAP versions are based on these Wildfly versions.
+JBoss EAP is based upon the popular open source project [WildFly](https://jbossorg.github.io/wildflysite/). The following JBoss EAP versions are based on these Wildfly versions.
 
 | JBoss EAP Version      | Wildfly Version |
 | ----------- | ----------- |
@@ -28,9 +28,11 @@ The following JBoss EAP versions are based on these Wildfly versions.
 | 7.1      | 11       |
 | 7.0      | 10       |
 
-### What is Migration Toolkit for Applications?
+### What is the Migration Toolkit for Applications?
 
-<img src="../img/2-mta_logo.png" width=500 align=center>
+<p align="center">
+    <img src="../img/2-mta_logo.png" width=500 align=center>
+</p>
 
 __Migration Toolkit for Applications (MTA)__ is an extensible and customizable rule-based tool that helps simplify migration of Java applications.
 
@@ -60,54 +62,74 @@ You will be using Gitpod, a cloud-powered development environments based on [Vis
 
 You already started your IDE in a previous step, and you can see that the project is imported into your workspace and is visible in the project explorer:
 
-<img src="../img/2-gitpod-explorer.png" width=900 align=center>
+<p align="center">
+    <img src="../img/2-gitpod-explorer.png" width=900 align=center>
+</p>
 
 You can see icons on the left for navigating between project explorer, search, version control (e.g. Git), debugging, and other plugins. You’ll use these during the course of this workshop. Feel free to click on them and see what they do:
 
-<img src="../img/2-gitpod-icons.png" width=400 align=center>
+<p align="center">
+    <img src="../img/2-gitpod-icons.png" width=400 align=center>
+</p>
 
 ### 1-2. Use the configuration editor to setup the analysis
 ----
 
 Click on `MTA Explorer` icon on the left, you will see a new MTA configuration is automatically added. To input source files and directories, click on `Add` then select `Open File Explorer`:
 
+<p align="center">
 <img src="../img/2-mta-add-input.png" width=700 align=center>
+</p>
 
 The current working directory `/workspace/workshop-migrate-jboss-on-app-service/` will be shown. Then click on `src` directory and click on `Enter`:
 
+<p align="center">
 <img src="../img/2-mta-add-opendir.png" width=700 align=center>
+</p>
 
 Then you will see that `/workspace/workshop-migrate-jboss-on-app-service/src/` directory is added in _--input_ configuration.
 
 Find and select `eap7` in _--target_ server to migrate:
 
+<p align="center">
 <img src="../img/2-mta-target.png" width=700 align=center>
+</p>
 
 Find and click on the `--source` checkbox then select `weblogic` to indicate that the Weblogic-specific rules should be used. Leave the other configuration values as-is:
 
+<p align="center">
 <img src="../img/2-mta-source.png" width=700 align=center>
+</p>
 
 ### 1-3. Run an analysis report
 ----
 
 Right-click on *mtaConfiguration* to analyze the WebLogic application. Click on `Run` in the popup menu:
 
+<p align="center">
 <img src="../img/2-mta-run-report.png" width=700 align=center>
+</p>
 
 Migration Toolkit for Applications (MTA) CLI will be executed automatically in a new terminal and it will take a minute or less to complete the analysis. Once it's done, click on `Open Report` in the pop-up:
 
+<p align="center">
 <img src="../img/2-mta-analysis-complete.png" width=700 align=center>
+</p>
 
 ### 1-4. Review the report
 ----
 
+<p align="center">
 <img src="../img/2-mta_result_landing_page.png" width=700 align=center>
+</p>
 
 The main landing page of the report lists the applications that were processed. Each row contains a high-level overview of the story points, number of incidents, and technologies encountered in that application.
 
 **Click on the `src` link** to access details for the project:
 
+<p align="center">
 <img src="../img/2-mta_project_overview.png" width=900 align=center>
+</p>
 
 ### 1-5. Understanding the report
 ----
@@ -135,22 +157,30 @@ Let's jump to code containing identified migration issues. Expand the **workshop
 
 **_TIP:_** You can use [CTRL+p] (or [CMD+p] on macOS) to quickly open a file. Simply start typing the name of the file in the text box that appears and select your file from the list that is produced.
 
+<p align="center">
 <img src="../img/2-mta_project_issues.png" width=500 align=center>
+</p>
 
 In the Explorer, MTA issues use an icon to indicate their severity level and status. The following table describes the meaning of the various icons:
 
+<p align="center">
 <img src="../img/2-mta-issues-table.png" width=700 align=center>
+</p>
 
 ### 2-2. View Details about the Migration Issues
 ----
 
 Let's take a look at the details about the migration issue. Right-click on `WebLogic ApplicationLifecycleListenerEvent[rule-id:xxx]` in _Hints_ of _StartupListener.java_ file. Click on `View Details`:
 
+<p align="center">
 <img src="../img/2-mta-issue-detail.png" width=900 align=center>
+</p>
 
 MTA also provides helpful links to understand the issue deeper and offer guidance for the migration when you click on `Open Report`:
 
+<p align="center">
 <img src="../img/2-mta-issue-open-report.png" width=900 align=center>
+</p>
 
 The WebLogic `ApplicationLifecycleListener` abstract class is used to perform functions or schedule jobs in Oracle WebLogic, like server start and stop. In this case we have code in the `postStart` and `preStop` methods which are executed after WebLogic starts up and before it shuts down, respectively.
 
@@ -165,11 +195,15 @@ Using this method makes the code much more portable.
 
 In this section we're going to deal with the following two issues from the report:
 
+<p align="center">
 <img src="../img/2-report_applifecycle_issues.png" width=900 align=center>
+</p>
 
 To begin we are fixing the issues under the Monolith application. Right-click on `WebLogic ApplicationLifecycleListenerEvent[rule-id:xxx]` in _Hints_ of _StartupListener.java_ file. Click on `Open Code`:
 
+<p align="center">
 <img src="../img/2-mta-issue-open-code.png" width=900 align=center>
+</p>
 
 Open the file `src/main/java/com/redhat/coolstore/utils/StartupListener.java` by clicking on it.
 
@@ -216,19 +250,23 @@ In the terminal, run the following command to test the build:
 mvn -f $GITPOD_REPO_ROOT clean package
 ```
 
+<p align="center">
 <img src="../img/2-gitpod-build.png" width=700 align=center>
+</p>
 
 If it builds successfully (you will see `BUILD SUCCESS`), let’s move on to the next issue! If it does not compile, verify you made all the changes correctly and try the build again.
 
+<p align="center">
 <img src="../img/2-gitpod-build-result.png" width=700 align=center>
-
-` `
+</p>
 
 ### View the diffs
 
 You can review the changes you've made. On the left, click on the _Version Control_ icon, which shows a list of the changed files. Click on `StartupListener.java` to view the differences you've made:
 
+<p align="center">
 <img src="../img/2-gitpod-diffs.png" width=700 align=center>
+</p>
 
 Git keeps track of the changes you make, and you can use version control to check in, update, and compare files as you change them.
 
@@ -239,7 +277,9 @@ For now, go back to the _Explorer_ tree and lets fix the remaining issues.
 
 In this section we'll be looking to remediate this part of the migration report:
 
+<p align="center">
 <img src="../img/2-report_logging_issues.png" width=900 align=center>
+</p>
 
 Some of our application makes use of WebLogic-specific logging methods like the `PromoService`, which offer features related to logging of internationalized content, and client-server logging.
 
@@ -385,7 +425,9 @@ If builds successfully (you will see `BUILD SUCCESS`), then let’s move on to t
 
 In this and the following few sections we'll be addressing this part of the report:
 
+<p align="center">
 <img src="../img/2-report_mdb_issues.png" width=900 align=center>
+</p>
 
 Much of WebLogic’s interfaces for EJB components like MDBs reside in WebLogic descriptor XML files. Use `CTRL+p` (or `CMD+p` on a macOS) to quickly open
 `src/main/webapp/WEB-INF/weblogic-ejb-jar.xml` to see one of these descriptors. There are many different configuration possibilities for EJBs and MDBs in this file, but luckily our application only uses one of them, namely it configures `<trans-timeout-seconds>` to 30, which means that if a given transaction within an MDB operation takes too long to complete (over 30 seconds), then the transaction is rolled back and exceptions are thrown. This interface is WebLogic-specific so we’ll
@@ -395,20 +437,26 @@ Remove the unneeded `weblogic-ejb-jar.xml` file from the **Project Explorer** (n
 
 > **_TIP:_** If you have the tab for the `weblogic-ejb-jar.xml` file open (or handy) you can quickly find it in the Project Explorer by right-clicking on the tab and then selecting **Reveal in Explorer** as shown.
 
+<p align="center">
 <img src="../img/2-gitpod-delete-jar.png" width=700 align=center>
+</p>
 
 While we’re at it, let’s remove the stub weblogic implementation classes added as part of the scenario.
 
 Whilst still in the Project Explorer, right-click on the `src/main/java/weblogic` folder and select *Delete* to delete the folder:
 
+<p align="center">
 <img src="../img/2-gitpod-delete-weblogic.png" width=700 align=center>
+</p>
 
 ### 2-8. Fix the code
 ----
 
-Lastly, remove Maven dependency on **org.jboss.spec.javax.rmi:jboss-rmi-api_1.0_spec**. In JBoss EAP 7.3(or later), artifact with groupId _org.jboss.spec.javax.rmi_ and artifactId _jboss-rmi-api_1.0_spec_ are unsupported dependencies. Remove the following dependency in `pom.xml`:
+Lastly, remove Maven dependency on **org.jboss.spec.javax.rmi:jboss-rmi-api_1.0_spec**. In JBoss EAP 7.3 (or later), artifact with groupId _org.jboss.spec.javax.rmi_ and artifactId _jboss-rmi-api_1.0_spec_ are unsupported dependencies. Remove the following dependency in `pom.xml`:
 
+<p align="center">
 <img src="../img/2-mta-remove-dependency.png" width=700 align=center>
+</p>
 
 ### 2-9. Test the build
 ----
@@ -428,11 +476,15 @@ In this step we will re-run the MTA report to verify our migration was successfu
 
 In the MTA explorer, right-click on *mtaConfiguration* to analyze the WebLogic application once again. Click on `Run` in the popup menu:
 
+<p align="center">
 <img src="../img/2-mta-rerun-report.png" width=700 align=center>
+</p>
 
 Migration Toolkit for Applications (MTA) CLI will be executed automatically in a new terminal then it will take less than a minute to complete the analysis. Click on `Open Report`:
 
+<p align="center">
 <img src="../img/2-mta-analysis-rerun-complete.png" width=700 align=center>
+</p>
 
 ### 2-11. View the results
 ----
@@ -441,7 +493,9 @@ Click on the latest result to go to the report web page and verify that it now r
 
 You have successfully migrated this app to JBoss EAP, congratulations!
 
+<p align="center">
 <img src="../img/2-mta_project_issues_story.png" width=700 align=center>
+</p>
 
 **_NOTE:_** You should be aware that this type of migration is more involved than the previous steps, and in real world applications it will rarely be as simple as changing one line at a time for a migration. Consult the [MTA documentation](https://access.redhat.com/documentation/en-us/migration_toolkit_for_applications/) for more
 detail on Red Hat’s Application Migration strategies or contact your local Red Hat representative to learn more about how Red Hat can help you on your migration path.
@@ -451,7 +505,9 @@ detail on Red Hat’s Application Migration strategies or contact your local Red
 
 In this development environment (GitPod), a JBoss EAP server is already running with a PostgreSQL database. Click on `Start Wildfly server` terminal, take a look at if the EAP server is running properly:
 
+<p align="center">
 <img src="../img/2-eap-running.png" width=700 align=center>
+</p>
 
 Copy the packaged application (.war file) to the running EAP server. Run the following command in the `Pre-warm Maven` Terminal:
 
@@ -461,7 +517,9 @@ cp /workspace/workshop-migrate-jboss-on-app-service/target/ROOT.war /workspace/d
 
 Go back to the `Start Wildfly server` terminal where EAP was started for you, and you'll see `ROOT.war` is deployed:
 
+<p align="center">
 <img src="../img/2-eap-deployed.png" width=700 align=center>
+</p>
 
 You can also find out that the inventory data is created in PostgreSQL. Run the following `psql` command in a Terminal:
 
@@ -471,7 +529,7 @@ PGPASSWORD=coolstore123 psql -h localhost -U coolstore monolith -c 'select itemi
 
 The output should look like:
 
-```
+```text
  itemid | quantity
 --------+----------
  329299 |      736
@@ -486,22 +544,25 @@ The output should look like:
 (9 rows)
 ```
 
-
 #### Congratulations!
 
 Let's open a simple browser then access the application. Click on `Remote Explorer` on the left, you will see open ports. Then, click on `Open Browser` icon next to port `8080` (the default web server port for JBoss EAP):
 
+<p align="center">
 <img src="../img/2-open-browser.png" width=700 align=center>
+</p>
 
 It will open a new web browser to showcase the CoolStore web app:
 
+<p align="center">
 <img src="../img/2-coolstore_web.png" width=700 align=center>
+</p>
 
 #### Summary
 
 Now that you have migrated an existing Java EE app on JBoss EAP, you are ready to start modernizing the application by deploying it on Azure App Service in incremental steps, and employing modern techniques to ensure the application runs well in a distributed and cloud environment.
 
----
+----
 
 ⬅️ Previous section: [1 - Learn about Azure App Service](1-learn-about-app-service.md)
 
