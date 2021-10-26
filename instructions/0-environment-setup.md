@@ -28,14 +28,13 @@ The exercises in this workshop will involve creating and configuring resources f
 
     <img src="../img/0-terminal.png" width=650 align=center>
 
-
-2. Run the following command. This will open a new browser window to log into your Azure account.
+2. Run the following command to start the authentication flow.
 
     ```bash
     az login
     ```
 
-    Complete the login process in the new window.
+    Follow the instructions in the terminal output to login in.
 
 3. To confirm your CLI is authenticated, run the following command. This will output summary information about your Azure Subscription.
 
@@ -51,7 +50,7 @@ Let's set some environment variables for later use. Press `F1` to open the comma
 
 ![Preferences](../img/0-prefs.png)
 
-Replace the entire file with the below content, and then replace the values in `[]` with your unique values (Azure Subscription ID and your initials, as these must be unique). You can optionally use a different `LOCATION` (the Azure region in which your resources will be deployed later on) if you want it to be closer to your geographic location.
+Replace the entire file with the below content, and then replace the placeholder values in `[]` with your unique values (Azure Subscription ID and your initials, as these must be unique). You can optionally use a different `LOCATION` (the Azure region in which your resources will be deployed later on) if you want it to be closer to your geographic location.
 
 ```json
 {
@@ -85,7 +84,18 @@ echo "Location: $LOCATION"
 
 You should see the same values you entered. Now each new Terminal you open will have these settings. Some of the commands you run later in the workshop will reference these variables.
 
+> **Warning:**
+> 
+> If you still see placeholder values instead of the values you entered into the JSON file, ensure that
+> the file is saved by clicking into the file, and using `CTRL-S` (or `CMD-S` on a Mac), then close the
+> newly-opened Terminal and open a new one and try the above command again until it shows correct values.
+
 ## Deploy the App Service Environment
+
+> **Warning:**
+>
+> If you already executed this the day before the workshop, you can safely skip this section,
+> as there is no need to execute it again (it will produce a deployment error that is harmless).
 
 Later sections of this workshop will introduce and explain the App Service Environment, a single-tenant version of App Service. This service is quite large, so we will initiate the deployment for it now so that it is ready for us in the later sections of the workshop
 
@@ -95,7 +105,7 @@ Later sections of this workshop will introduce and explain the App Service Envir
     az group create --name $RESOURCE_GROUP --location $LOCATION
     ```
 
-2. Next, deploy the ARM Template to that resource group:
+2. Next, deploy the ARM Template to that resource group (this will take 2-3 hours to complete!)
 
     ```bash
     az deployment group create \
@@ -103,7 +113,7 @@ Later sections of this workshop will introduce and explain the App Service Envir
         --resource-group $RESOURCE_GROUP \
         --template-file templates/ase-template.json \
         --no-wait \
-        --parameters webAppName=$WEBAPP_NAME-ase
+        --parameters webAppName=jboss-ilb-ase
     ```
 
 > **Tip**: You can view the progress of your deployments in the Azure Portal by navigating to your resource group, and clicking on the **Deployments** tab.
