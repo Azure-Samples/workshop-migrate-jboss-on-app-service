@@ -64,7 +64,16 @@ az webapp create \
     --plan "workshop-app-service-plan"
 ```
 
-When the web app is created it will have a default domain name of the format `https://<your-site-name>.azurewebsites.net`. After a minute or two you can browse to your web app and it will serve a landing page with a few getting started instructions. You should see:
+When the web app is created it will have a default domain name of the format `https://<your-site-name>.azurewebsites.net`. After a minute or two you can browse to your web app and it will serve a landing page with a few getting started instructions. Use this command to open your new site in a preview window in your IDE:
+
+```bash
+gp preview --external https://$(az webapp show -g $RESOURCE_GROUP -n $WEBAPP_NAME |
+    jq -r '.defaultHostName')
+```
+
+This will open your site in a new tab in your browser after constructing the URL using the `az webapp show` command.
+
+You should see:
 
 <img src="../img/1-landing.png" width=700 align=center>
 
@@ -75,6 +84,10 @@ So far we have used the Azure CLI to create resources, but you can also use the 
 Let's go to the Azure Web App you created in the last exercise. In the Portal, use the search bar at the top to search for the web app by name, or click **All resources** to view the full list of resources in your subscription.
 
 ![The Azure Portal](../img/1-azure-dashboard.png)
+
+On the list of resources, you'll see your newly-created webapp (along with other resources we'll use later):
+
+![The Azure Portal](../img/1-allresources.png)
 
 *Congratulations!* You created a new Azure Web App. Click the link below to go to the next section to migrate a WebLogic app to JBoss EAP.
 
