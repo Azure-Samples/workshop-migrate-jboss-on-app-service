@@ -8,7 +8,7 @@ on:
 env:
   GROUP: freeberg-fresh-ase-oct-22
   WEBAPP: new-ase-ase
-  ACCOUNT: deploymentartifacts1010101
+  ACCOUNT: artifacts1010101  # This must be *globally* unique, so append your name or numbers. (Only lowercase letters and numbers allowed. No spaces, dashes, underscores.)
   LOCATION: eastus
   CONTAINER: artifacts
   EXPIRY_TIME: 10 minutes
