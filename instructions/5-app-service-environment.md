@@ -67,7 +67,7 @@ First, we will need to create a Service Principal so that our workflow can log i
 
 Now that the Service Principal is set as a secret in our repository, we can update our GitHub Actions workflow to use the credentials to log in.
 
-1. Copy the template file, [`deploy-to-ilb-ase.yaml`](templates\deploy-to-ilb-ase.yaml) and paste it as a new workflow file under `.github/workflows/depoy-to-ilb-ase.yaml`.
+1. Copy the template file, [`deploy-to-ilb-ase.yaml`](../templates/deploy-to-ilb-ase.yaml) and paste it as a new workflow file under `.github/workflows/depoy-to-ilb-ase.yaml`.
 2. Replace the placeholders at the top of the file with your webapp name and resource group name.
 3. Commit this as a new workflow file on the main branch.
 
