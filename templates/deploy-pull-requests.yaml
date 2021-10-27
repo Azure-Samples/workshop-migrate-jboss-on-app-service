@@ -27,13 +27,13 @@ jobs:
         java-version: 11
         
     - name: Build with Maven
-      run: mvn package
+      run: mvn clean install
       
     - name: Upload artifact for deployment jobs
       uses: actions/upload-artifact@v2
       with:
         name: app
-        path: target/app.war # TODO: Update this to the right file name
+        path: target/ROOT.war # TODO: Update this to the right file name
 
   create-slot:
     runs-on: ubuntu-latest

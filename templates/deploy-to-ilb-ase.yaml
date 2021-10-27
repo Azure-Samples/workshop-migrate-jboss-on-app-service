@@ -6,8 +6,8 @@ on:
   workflow_dispatch:
 
 env:
+  WEBAPP: <your-ase-webapp-name>
   GROUP: <your-resource-group-name>
-  WEBAPP: <your-webapp-name>
   ACCOUNT: deploymentartifacts
   CONTAINER: artifacts
   EXPIRY_TIME: 10 minutes
@@ -25,13 +25,13 @@ jobs:
         java-version: 11
         
     - name: Build with Maven
-      run: mvn package
+      run: mvn clean install
       
     - name: Upload artifact for deployment jobs
       uses: actions/upload-artifact@v2
       with:
         name: app
-        path: target/app.war # TODO: Update this to the right file name
+        path: target/ROOT.war # TODO: Update this to the right file name
   
   publish:
     runs-on: ubuntu-latest
@@ -51,7 +51,7 @@ jobs:
       - name: Zip the app contents
         uses: papeloto/action-zip@v1
         with:
-          files: app.jar # TODO: Update this to the right file name
+          files: ROOT.war
           dest: app.zip
 
       - name: Set SAS token expiration
