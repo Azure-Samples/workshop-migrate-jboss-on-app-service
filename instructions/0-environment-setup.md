@@ -8,7 +8,7 @@ This workshop uses GitPod to provide a pre-configured development environment wi
 2. Go to [https://gitpod.io/](https://gitpod.io/) and create an account. You can use the Single-Sign-On to create a GitPod account from your GitHub account.
 3. On your [GitPod Preferences](https://gitpod.io/preferences) page, select the **Insiders** VSCode version, which enables a few features used in this workshop, as shown:
 
-![Preferences](../img/0-prefs-vscode.png)
+    ![Preferences](../img/0-prefs-vscode.png)
 
 4. To create a GitPod workspace, navigate to your fork of the workshop repository on GitHub (ex: **https://github.com/JoeSmith/workshop-migrate-jboss-on-app-service**) and prefix the entire URL with **gitpod.io/#**, like this:
 
