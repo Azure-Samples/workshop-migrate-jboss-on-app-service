@@ -87,7 +87,7 @@ jobs:
           
             # Deploy database driver
             az storage blob upload --account-name $STORAGE_ACCOUNT -c $CONTAINER -f setup/postgresql.jar
-            ZIP_URL=$(az storage blob generate-sas --full-uri --permissions r --expiry ${{ env.expiry }} --account-name $STORAGE_ACCOUNT -c $CONTAINER -n ROOT.war | xargs)
+            ZIP_URL=$(az storage blob generate-sas --full-uri --permissions r --expiry ${{ env.expiry }} --account-name $STORAGE_ACCOUNT -c $CONTAINER -n postgresql.jar | xargs)
 
             az rest --method PUT \
                     --uri "https://management.azure.com/subscriptions/${SUBSCRIPTION}/resourceGroups/${RESOURCE_GROUP}/providers/Microsoft.Web/sites/${WEBAPP}/extensions/onedeploy?api-version=2020-12-01" \
@@ -104,7 +104,7 @@ jobs:
 
             # Deploy startup scripts
             az storage blob upload --account-name $STORAGE_ACCOUNT -c $CONTAINER -f setup/jboss-cli-commands.cli
-            ZIP_URL=$(az storage blob generate-sas --full-uri --permissions r --expiry ${{ env.expiry }} --account-name $STORAGE_ACCOUNT -c $CONTAINER -n ROOT.war | xargs)
+            ZIP_URL=$(az storage blob generate-sas --full-uri --permissions r --expiry ${{ env.expiry }} --account-name $STORAGE_ACCOUNT -c $CONTAINER -n jboss-cli-commands.cli | xargs)
 
             az rest --method PUT \
                     --uri "https://management.azure.com/subscriptions/${SUBSCRIPTION}/resourceGroups/${RESOURCE_GROUP}/providers/Microsoft.Web/sites/${WEBAPP}/extensions/onedeploy?api-version=2020-12-01" \
@@ -121,7 +121,7 @@ jobs:
 
             # Deploy startup script
             az storage blob upload --account-name $STORAGE_ACCOUNT -c $CONTAINER -f setup/startup.sh
-            ZIP_URL=$(az storage blob generate-sas --full-uri --permissions r --expiry ${{ env.expiry }} --account-name $STORAGE_ACCOUNT -c $CONTAINER -n ROOT.war | xargs)
+            ZIP_URL=$(az storage blob generate-sas --full-uri --permissions r --expiry ${{ env.expiry }} --account-name $STORAGE_ACCOUNT -c $CONTAINER -n startup.sh | xargs)
 
             az rest --method PUT \
                     --uri "https://management.azure.com/subscriptions/${SUBSCRIPTION}/resourceGroups/${RESOURCE_GROUP}/providers/Microsoft.Web/sites/${WEBAPP}/extensions/onedeploy?api-version=2020-12-01" \
