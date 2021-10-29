@@ -33,7 +33,10 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: app
-        path: target/ROOT.war
+        path: |
+          target/ROOT.war
+          setup/postgresql.jar
+          setup/startup.sh
   
   publish:
     runs-on: ubuntu-latest
@@ -49,12 +52,6 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: app
-      
-      # - name: Zip the app contents
-      #   uses: papeloto/action-zip@v1
-      #   with:
-      #     files: ROOT.war
-      #     dest: app.zip
 
       - name: Set SAS token expiration
         run: echo "expiry=`date -u -d "$EXPIRY_TIME" '+%Y-%m-%dT%H:%MZ'`" >> $GITHUB_ENV
@@ -87,7 +84,6 @@ jobs:
                       }'
           
             # Deploy database driver
-            wget -O postgresql.jar https://jdbc.postgresql.org/download/postgresql-42.2.24.jar
             az storage blob upload --account-name $STORAGE_ACCOUNT -c $CONTAINER -f postgresql.jar
             ZIP_URL=$(az storage blob generate-sas --full-uri --permissions r --expiry ${{ env.expiry }} --account-name $STORAGE_ACCOUNT -c $CONTAINER -n ROOT.war | xargs)
 
@@ -99,13 +95,13 @@ jobs:
                             "packageUri": "'"${ZIP_URL}"'"
                           }, 
                           "type": "lib", 
-                          "target-path": "/home/site/libs/postgresql.jar",
+                          "path": "/home/site/libs/postgresql.jar",
                           "restart": false
                         }
                       }'
 
             # Deploy startup scripts
-            az storage blob upload --account-name $STORAGE_ACCOUNT -c $CONTAINER -f setup/jboss-cli-commands.cli
+            az storage blob upload --account-name $STORAGE_ACCOUNT -c $CONTAINER -f jboss-cli-commands.cli
             ZIP_URL=$(az storage blob generate-sas --full-uri --permissions r --expiry ${{ env.expiry }} --account-name $STORAGE_ACCOUNT -c $CONTAINER -n ROOT.war | xargs)
 
             az rest --method PUT \
@@ -116,13 +112,13 @@ jobs:
                             "packageUri": "'"${ZIP_URL}"'"
                           }, 
                           "type": "lib", 
-                          "target-path": "/home/site/libs/jboss-cli-commands.cli",
+                          "path": "/home/site/libs/jboss-cli-commands.cli",
                           "restart": false
                         }
                       }'
 
             # Deploy startup script
-            az storage blob upload --account-name $STORAGE_ACCOUNT -c $CONTAINER -f setup/startup.sh
+            az storage blob upload --account-name $STORAGE_ACCOUNT -c $CONTAINER -f startup.sh
             ZIP_URL=$(az storage blob generate-sas --full-uri --permissions r --expiry ${{ env.expiry }} --account-name $STORAGE_ACCOUNT -c $CONTAINER -n ROOT.war | xargs)
 
             az rest --method PUT \
