@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 # This script is called in the GitHub Actions workflows that deploy the app and supporting files to the ASE.
 
 # Deploy WAR file

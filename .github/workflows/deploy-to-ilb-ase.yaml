@@ -66,4 +66,4 @@ jobs:
             az storage container create -n $CONTAINER   --account-name $STORAGE_ACCOUNT
 
             # Deploy the app and supporting files
-            ./.github/deploy.sh
+            source deploy.sh
