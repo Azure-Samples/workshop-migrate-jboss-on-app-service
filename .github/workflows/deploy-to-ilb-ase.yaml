@@ -62,7 +62,7 @@ jobs:
       - name: Azure CLI script
         uses: azure/CLI@v1
         with:
-          azcliversion: 2.28.0
+          azcliversion: 2.29.1
           inlineScript: |
             az storage account create   -n $STORAGE_ACCOUNT   -g $RESOURCE_GROUP -l $LOCATION
             az storage container create -n $CONTAINER   --account-name $STORAGE_ACCOUNT
