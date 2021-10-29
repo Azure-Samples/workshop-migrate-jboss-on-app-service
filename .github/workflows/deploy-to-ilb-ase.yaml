@@ -54,7 +54,7 @@ jobs:
           name: app
 
       - name: Set SAS token expiration
-        run: echo "expiry=`date -u -d "$EXPIRY_TIME" '+%Y-%m-%dT%H:%MZ'`" >> $GITHUB_ENV
+        run: echo "EXPIRY=`date -u -d "$EXPIRY_TIME" '+%Y-%m-%dT%H:%MZ'`" >> $GITHUB_ENV
 
 
       - name: Azure CLI script
@@ -63,7 +63,7 @@ jobs:
           azcliversion: 2.29.1
           inlineScript: |
             SUBSCRIPTION=$(az account show --query id -o tsv)
-            EXPIRY=`date -u -d "$EXPIRY_TIME" '+%Y-%m-%dT%H:%MZ'`
+            
             az storage account create   -n $STORAGE_ACCOUNT   -g $RESOURCE_GROUP -l $LOCATION
             az storage container create -n $CONTAINER   --account-name $STORAGE_ACCOUNT
 
