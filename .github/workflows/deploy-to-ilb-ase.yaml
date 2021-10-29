@@ -120,7 +120,7 @@ jobs:
                       }'
 
             # Deploy startup script
-            az storage blob upload --account-name $STORAGE_ACCOUNT -c $CONTAINER -f startup.sh
+            az storage blob upload --account-name $STORAGE_ACCOUNT -c $CONTAINER -f setup/startup.sh
             ZIP_URL=$(az storage blob generate-sas --full-uri --permissions r --expiry ${{ env.expiry }} --account-name $STORAGE_ACCOUNT -c $CONTAINER -n ROOT.war | xargs)
 
             az rest --method PUT \
