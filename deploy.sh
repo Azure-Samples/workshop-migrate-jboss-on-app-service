@@ -2,18 +2,17 @@
 
 if [ -z "$1" ]
 then
+    SITE_URI="https://management.azure.com/subscriptions/${SUBSCRIPTION}/resourceGroups/${RESOURCE_GROUP}/providers/Microsoft.Web/sites/${WEBAPP}/extensions/onedeploy?api-version=2020-12-01"
+else
     # Append slot to URI
     SITE_URI="https://management.azure.com/subscriptions/${SUBSCRIPTION}/resourceGroups/${RESOURCE_GROUP}/providers/Microsoft.Web/sites/${WEBAPP}/slots/${1}/extensions/onedeploy?api-version=2020-12-01"
-else
-    SITE_URI="https://management.azure.com/subscriptions/${SUBSCRIPTION}/resourceGroups/${RESOURCE_GROUP}/providers/Microsoft.Web/sites/${WEBAPP}/extensions/onedeploy?api-version=2020-12-01"
 fi
 
 echo "Site URI: ${SITE_URI}"
 
 # Deploy WAR file
-az storage blob upload      --account-name $STORAGE_ACCOUNT -c $CONTAINER -f ROOT.war
+az storage blob upload --account-name $STORAGE_ACCOUNT -c $CONTAINER -f ROOT.war
 WAR_URL=$(az storage blob generate-sas --full-uri --permissions r --expiry $EXPIRY --account-name $STORAGE_ACCOUNT -c $CONTAINER -n ROOT.war | xargs)
-echo $WAR_URL
 az rest --method PUT \
         --debug \
         --uri $SITE_URI \

@@ -137,7 +137,7 @@ jobs:
           az storage container create -n $CONTAINER --account-name $STORAGE_ACCOUNT
           
           # Deploy the app and supporting files
-          source deploy.sh
+          source deploy.sh "pr-${{ github.event.number }}"
 
   comment-on-pr:
     name: Comment on PR with preview URL
