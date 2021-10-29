@@ -6,9 +6,10 @@ on:
   workflow_dispatch:
 
 env:
-  GROUP: freeberg-fresh-ase-oct-22
   WEBAPP: new-ase-ase
-  ACCOUNT: artifacts1010101  # This must be *globally* unique, so append your name or numbers. (Only lowercase letters and numbers allowed. No spaces, dashes, underscores.)
+  RESOURCE_GROUP: freeberg-fresh-ase-oct-22
+  STORAGE_ACCOUNT: artifacts1010101  # This must be *globally* unique, so append your name or numbers. (Only lowercase letters and numbers allowed. No spaces, dashes, underscores.)
+  
   LOCATION: eastus
   CONTAINER: artifacts
   EXPIRY_TIME: 10 minutes
@@ -63,15 +64,15 @@ jobs:
         with:
           azcliversion: 2.28.0
           inlineScript: |
-            az storage account create   -n $ACCOUNT   -g $GROUP -l $LOCATION
-            az storage container create -n $CONTAINER --account-name $ACCOUNT
-            az storage blob upload      -f ROOT.war    --account-name $ACCOUNT -c $CONTAINER -n $ACCOUNT
+            az storage account create   -n $STORAGE_ACCOUNT   -g $RESOURCE_GROUP -l $LOCATION
+            az storage container create -n $CONTAINER   --account-name $STORAGE_ACCOUNT
+            az storage blob upload      -f ROOT.war     --account-name $STORAGE_ACCOUNT -c $CONTAINER -n $STORAGE_ACCOUNT
 
-            ZIP_URL=$(az storage blob generate-sas --full-uri --permissions r --expiry ${{ env.expiry }} --account-name $ACCOUNT -c $CONTAINER -n $ACCOUNT | xargs)
+            ZIP_URL=$(az storage blob generate-sas --full-uri --permissions r --expiry ${{ env.expiry }} --account-name $STORAGE_ACCOUNT -c $CONTAINER -n $STORAGE_ACCOUNT | xargs)
             SUBSCRIPTION=$(az account show --query id -o tsv)
 
             az rest --method PUT \
-                    --uri "https://management.azure.com/subscriptions/${SUBSCRIPTION}/resourceGroups/${GROUP}/providers/Microsoft.Web/sites/${WEBAPP}/extensions/onedeploy?api-version=2020-12-01" \
+                    --uri "https://management.azure.com/subscriptions/${SUBSCRIPTION}/resourceGroups/${RESOURCE_GROUP}/providers/Microsoft.Web/sites/${WEBAPP}/extensions/onedeploy?api-version=2020-12-01" \
                     --body '{ 
                         "properties": { 
                           "properties": {

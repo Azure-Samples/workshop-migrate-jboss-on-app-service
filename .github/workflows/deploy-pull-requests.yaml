@@ -6,12 +6,13 @@ on:
     - master
 
 env:
-  WEBAPP: <your-webapp-name>
-  GATEWAY_NAME: <your-app-gateway-name>
-  RESOURCE_GROUP: <your-resource-group-name>
+  WEBAPP: new_ase_ase
+  GATEWAY_NAME: gateway-new-ase-ase-ilb-ase
+  RESOURCE_GROUP: freeberg-fresh-ase-oct-22
+  STORAGE_ACCOUNT: artifacts1010101  # This must be *globally* unique, so append your name or numbers. (Only lowercase letters and numbers allowed. No spaces, dashes, underscores.)
 
-  ACCOUNT: deploymentartifacts
-  CONTAINER: artifacts
+  LOCATION: eastus
+  CONTAINER: stagingartifacts
   EXPIRY_TIME: 10 minutes
 
 jobs:
@@ -33,7 +34,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: app
-        path: target/app.war # TODO: Update this to the right file name
+        path: target/ROOT.war
 
   create-slot:
     runs-on: ubuntu-latest
@@ -110,11 +111,11 @@ jobs:
       with:
         name: app
     
-    - name: Zip the app contents
-      uses: papeloto/action-zip@v1
-      with:
-        files: app.jar # TODO: Update this to the right file name
-        dest: app.zip
+    # - name: Zip the app contents
+    #   uses: papeloto/action-zip@v1
+    #   with:
+    #     files: app.jar # TODO: Update this to the right file name
+    #     dest: app.zip
 
     - name: Set SAS token expiration
       run: echo "expiry=`date -u -d "$EXPIRY_TIME" '+%Y-%m-%dT%H:%MZ'`" >> $GITHUB_ENV
@@ -124,11 +125,11 @@ jobs:
       with:
         azcliversion: 2.28.0
         inlineScript: |
-          az storage account create   -n $ACCOUNT   -g $GROUP -l westus
-          az storage container create -n $CONTAINER --account-name $ACCOUNT
-          az storage blob upload      -f app.zip    --account-name $ACCOUNT -c $CONTAINER -n $ACCOUNT
+          az storage account create   -n $STORAGE_ACCOUNT   -g $GROUP -l westus
+          az storage container create -n $CONTAINER --account-name $STORAGE_ACCOUNT
+          az storage blob upload      -f ROOT.war    --account-name $STORAGE_ACCOUNT -c $CONTAINER -n $STORAGE_ACCOUNT
 
-          ZIP_URL=$(az storage blob generate-sas --full-uri --permissions r --expiry ${{ env.expiry }} --account-name $ACCOUNT -c $CONTAINER -n $ACCOUNT | xargs)
+          ZIP_URL=$(az storage blob generate-sas --full-uri --permissions r --expiry ${{ env.expiry }} --account-name $STORAGE_ACCOUNT -c $CONTAINER -n $STORAGE_ACCOUNT | xargs)
           SUBSCRIPTION=$(az account show --query id -o tsv)
 
           az rest --method PUT \
@@ -139,11 +140,12 @@ jobs:
                           "packageUri": "'"${ZIP_URL}"'"
                         }, 
                         "type": "war", 
-                        "ignorestack": true 
+                        "ignorestack": true,
+                        "clean": true
                       }
                     }'
 
-          az storage container delete -n $CONTAINER --account-name $ACCOUNT
+          az storage container delete -n $CONTAINER --account-name $STORAGE_ACCOUNT
 
   comment-on-pr:
     runs-on: ubuntu-latest
