@@ -66,9 +66,9 @@ jobs:
           inlineScript: |
             az storage account create   -n $STORAGE_ACCOUNT   -g $RESOURCE_GROUP -l $LOCATION
             az storage container create -n $CONTAINER   --account-name $STORAGE_ACCOUNT
-            az storage blob upload      -f ROOT.war     --account-name $STORAGE_ACCOUNT -c $CONTAINER -n $STORAGE_ACCOUNT
+            az storage blob upload      --account-name $STORAGE_ACCOUNT -c $CONTAINER -f ROOT.war
 
-            ZIP_URL=$(az storage blob generate-sas --full-uri --permissions r --expiry ${{ env.expiry }} --account-name $STORAGE_ACCOUNT -c $CONTAINER -n $STORAGE_ACCOUNT | xargs)
+            ZIP_URL=$(az storage blob generate-sas --full-uri --permissions r --expiry ${{ env.expiry }} --account-name $STORAGE_ACCOUNT -c $CONTAINER -n ROOT.war | xargs)
             SUBSCRIPTION=$(az account show --query id -o tsv)
 
             az rest --method PUT \
