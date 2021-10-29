@@ -64,12 +64,13 @@ jobs:
         with:
           azcliversion: 2.29.1
           inlineScript: |
+            SUBSCRIPTION=$(az account show --query id -o tsv)
+
             az storage account create   -n $STORAGE_ACCOUNT   -g $RESOURCE_GROUP -l $LOCATION
             az storage container create -n $CONTAINER   --account-name $STORAGE_ACCOUNT
             az storage blob upload      --account-name $STORAGE_ACCOUNT -c $CONTAINER -f ROOT.war
 
             ZIP_URL=$(az storage blob generate-sas --full-uri --permissions r --expiry ${{ env.expiry }} --account-name $STORAGE_ACCOUNT -c $CONTAINER -n ROOT.war | xargs)
-            SUBSCRIPTION=$(az account show --query id -o tsv)
 
             az rest --method PUT \
                     --uri "https://management.azure.com/subscriptions/${SUBSCRIPTION}/resourceGroups/${RESOURCE_GROUP}/providers/Microsoft.Web/sites/${WEBAPP}/extensions/onedeploy?api-version=2020-12-01" \
@@ -80,6 +81,59 @@ jobs:
                           }, 
                           "type": "war", 
                           "ignorestack": false,
-                          "clean": true
+                          "clean": true,
+                          "restart": false
                         }
                       }'
+          
+            # Deploy database driver
+            wget -O postgresql.jar https://jdbc.postgresql.org/download/postgresql-42.2.24.jar
+            az storage blob upload --account-name $STORAGE_ACCOUNT -c $CONTAINER -f postgresql.jar
+            ZIP_URL=$(az storage blob generate-sas --full-uri --permissions r --expiry ${{ env.expiry }} --account-name $STORAGE_ACCOUNT -c $CONTAINER -n ROOT.war | xargs)
+
+            az rest --method PUT \
+                    --uri "https://management.azure.com/subscriptions/${SUBSCRIPTION}/resourceGroups/${RESOURCE_GROUP}/providers/Microsoft.Web/sites/${WEBAPP}/extensions/onedeploy?api-version=2020-12-01" \
+                    --body '{ 
+                        "properties": { 
+                          "properties": {
+                            "packageUri": "'"${ZIP_URL}"'"
+                          }, 
+                          "type": "lib", 
+                          "target-path": "/home/site/libs/postgresql.jar",
+                          "restart": false
+                        }
+                      }'
+
+            # Deploy startup scripts
+            az storage blob upload --account-name $STORAGE_ACCOUNT -c $CONTAINER -f setup/jboss-cli-commands.cli
+            ZIP_URL=$(az storage blob generate-sas --full-uri --permissions r --expiry ${{ env.expiry }} --account-name $STORAGE_ACCOUNT -c $CONTAINER -n ROOT.war | xargs)
+
+            az rest --method PUT \
+                    --uri "https://management.azure.com/subscriptions/${SUBSCRIPTION}/resourceGroups/${RESOURCE_GROUP}/providers/Microsoft.Web/sites/${WEBAPP}/extensions/onedeploy?api-version=2020-12-01" \
+                    --body '{ 
+                        "properties": { 
+                          "properties": {
+                            "packageUri": "'"${ZIP_URL}"'"
+                          }, 
+                          "type": "lib", 
+                          "target-path": "/home/site/libs/jboss-cli-commands.cli",
+                          "restart": false
+                        }
+                      }'
+
+            # Deploy startup script
+            az storage blob upload --account-name $STORAGE_ACCOUNT -c $CONTAINER -f setup/startup.sh
+            ZIP_URL=$(az storage blob generate-sas --full-uri --permissions r --expiry ${{ env.expiry }} --account-name $STORAGE_ACCOUNT -c $CONTAINER -n ROOT.war | xargs)
+
+            az rest --method PUT \
+                    --uri "https://management.azure.com/subscriptions/${SUBSCRIPTION}/resourceGroups/${RESOURCE_GROUP}/providers/Microsoft.Web/sites/${WEBAPP}/extensions/onedeploy?api-version=2020-12-01" \
+                    --body '{ 
+                        "properties": { 
+                          "properties": {
+                            "packageUri": "'"${ZIP_URL}"'"
+                          }, 
+                          "type": "startup", 
+                        }
+                      }'
+
+
