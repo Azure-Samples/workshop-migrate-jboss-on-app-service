@@ -124,7 +124,7 @@ jobs:
         name: app
 
     - name: Set SAS token expiration
-      run: echo "expiry=`date -u -d "$EXPIRY_TIME" '+%Y-%m-%dT%H:%MZ'`" >> $GITHUB_ENV
+      run: echo "EXPIRY=`date -u -d "$EXPIRY_TIME" '+%Y-%m-%dT%H:%MZ'`" >> $GITHUB_ENV
 
     - name: Azure CLI script
       uses: azure/CLI@v1
