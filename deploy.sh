@@ -8,7 +8,7 @@ else
     SITE_URI="https://management.azure.com/subscriptions/${SUBSCRIPTION}/resourceGroups/${RESOURCE_GROUP}/providers/Microsoft.Web/sites/${WEBAPP}/extensions/onedeploy?api-version=2020-12-01"
 fi
 
-echo $SITE_URI
+echo "Site URI: ${SITE_URI}"
 
 # Deploy WAR file
 az storage blob upload      --account-name $STORAGE_ACCOUNT -c $CONTAINER -f ROOT.war
