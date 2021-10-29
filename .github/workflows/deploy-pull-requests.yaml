@@ -149,7 +149,7 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
     
     - name: Get public IP address
-      run: echo "IP_ADR=`z network public-ip show --name $PUBLIC_IP -g $RESOURCE_GROUP --query ipAddress -o tsv`" >> $GITHUB_ENV
+      run: echo "IP_ADR=`az network public-ip show --name $PUBLIC_IP -g $RESOURCE_GROUP --query ipAddress -o tsv`" >> $GITHUB_ENV
 
     - name: Comment on PR with the preview link
       uses: mshick/add-pr-comment@master
