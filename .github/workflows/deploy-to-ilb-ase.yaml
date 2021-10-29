@@ -36,7 +36,9 @@ jobs:
         path: |
           target/ROOT.war
           setup/postgresql.jar
+          setup/jboss-cli-commands.cli
           setup/startup.sh
+        if-no-files-found: error
   
   publish:
     runs-on: ubuntu-latest
@@ -65,7 +67,7 @@ jobs:
 
             az storage account create   -n $STORAGE_ACCOUNT   -g $RESOURCE_GROUP -l $LOCATION
             az storage container create -n $CONTAINER   --account-name $STORAGE_ACCOUNT
-            az storage blob upload      --account-name $STORAGE_ACCOUNT -c $CONTAINER -f ROOT.war
+            az storage blob upload      --account-name $STORAGE_ACCOUNT -c $CONTAINER -f target/ROOT.war
 
             ZIP_URL=$(az storage blob generate-sas --full-uri --permissions r --expiry ${{ env.expiry }} --account-name $STORAGE_ACCOUNT -c $CONTAINER -n ROOT.war | xargs)
 
@@ -84,7 +86,7 @@ jobs:
                       }'
           
             # Deploy database driver
-            az storage blob upload --account-name $STORAGE_ACCOUNT -c $CONTAINER -f postgresql.jar
+            az storage blob upload --account-name $STORAGE_ACCOUNT -c $CONTAINER -f setup/postgresql.jar
             ZIP_URL=$(az storage blob generate-sas --full-uri --permissions r --expiry ${{ env.expiry }} --account-name $STORAGE_ACCOUNT -c $CONTAINER -n ROOT.war | xargs)
 
             az rest --method PUT \
@@ -101,7 +103,7 @@ jobs:
                       }'
 
             # Deploy startup scripts
-            az storage blob upload --account-name $STORAGE_ACCOUNT -c $CONTAINER -f jboss-cli-commands.cli
+            az storage blob upload --account-name $STORAGE_ACCOUNT -c $CONTAINER -f setup/jboss-cli-commands.cli
             ZIP_URL=$(az storage blob generate-sas --full-uri --permissions r --expiry ${{ env.expiry }} --account-name $STORAGE_ACCOUNT -c $CONTAINER -n ROOT.war | xargs)
 
             az rest --method PUT \
