@@ -78,6 +78,6 @@ jobs:
                             "packageUri": "'"${ZIP_URL}"'"
                           }, 
                           "type": "war", 
-                          "ignorestack": true 
+                          "ignorestack": false 
                         }
                       }'
