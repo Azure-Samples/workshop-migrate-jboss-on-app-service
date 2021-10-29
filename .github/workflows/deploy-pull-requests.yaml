@@ -19,6 +19,7 @@ env:
 
 jobs:
   build:
+    name: Build the WAR
     runs-on: ubuntu-latest
 
     steps:
@@ -39,10 +40,16 @@ jobs:
         path: target/ROOT.war
 
   create-slot:
+    name: Create deployment slot and update routing rules
     runs-on: ubuntu-latest
     needs: build
     
     steps:
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
     - name: Create the slot
       run: |
         SLOT_NAME="pr-${{ github.event.number }}"
@@ -99,6 +106,7 @@ jobs:
             --address-pool "backend-pool-for-ase"
 
   publish:
+    name: Deploy WAR and supporting files to slot
     runs-on: ubuntu-latest
     needs: create-slot
     
@@ -130,6 +138,7 @@ jobs:
           source deploy.sh
 
   comment-on-pr:
+    name: Comment on PR with preview URL
     runs-on: ubuntu-latest
     needs: create-slot
 
