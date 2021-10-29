@@ -1,5 +1,7 @@
 # This script is called in the GitHub Actions workflows that deploy the app and supporting files to the ASE.
 
+ls
+
 # Deploy WAR file
 az storage blob upload      --account-name $STORAGE_ACCOUNT -c $CONTAINER -f ROOT.war
 WAR_URL=$(az storage blob generate-sas --full-uri --permissions r --expiry ${{ env.expiry }} --account-name $STORAGE_ACCOUNT -c $CONTAINER -n ROOT.war | xargs)
