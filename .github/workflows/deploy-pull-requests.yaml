@@ -7,7 +7,7 @@ on:
     - main
 
 env:
-  WEBAPP: new_ase_ase
+  WEBAPP: new-ase-ase
   GATEWAY_NAME: gateway-new-ase-ase-ilb-ase
   RESOURCE_GROUP: freeberg-fresh-ase-oct-22
   STORAGE_ACCOUNT: artifacts1010101  # This must be *globally* unique, so append your name or numbers. (Only lowercase letters and numbers allowed. No spaces, dashes, underscores.)
