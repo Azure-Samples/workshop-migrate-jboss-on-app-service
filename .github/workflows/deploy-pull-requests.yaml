@@ -100,7 +100,7 @@ jobs:
             --gateway-name ${{ env.GATEWAY_NAME }} \
             -g $RESOURCE_GROUP \
             -n "url-paths-for-${SLOT_NAME}" \
-            --path-map-name "routing-rule-for-ase-name" \
+            --path-map-name "slot-listener" \
             --paths "/${SLOT_NAME},/${SLOT_NAME}/*" \
             --http-settings $HTTP_SETTING_NAME \
             --address-pool "backend-pool-for-ase"
