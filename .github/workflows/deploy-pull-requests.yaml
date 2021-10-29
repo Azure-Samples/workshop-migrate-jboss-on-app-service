@@ -131,7 +131,7 @@ jobs:
         inlineScript: |
           SUBSCRIPTION=$(az account show --query id -o tsv)
           
-          az storage account create   -n $STORAGE_ACCOUNT   -g $GROUP -l westus
+          az storage account create   -n $STORAGE_ACCOUNT   -g $RESOURCE_GROUP -l westus
           az storage container create -n $CONTAINER --account-name $STORAGE_ACCOUNT
           
           # Deploy the app and supporting files
