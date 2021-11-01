@@ -5,9 +5,9 @@ on:
     types: [closed]
 
 env:
-  WEBAPP: new-ase-ase
-  RESOURCE_GROUP: freeberg-fresh-ase-oct-22
-  GATEWAY_NAME: gateway-new-ase-ase-ilb-ase
+  WEBAPP: <replace-with-your-webapp-name>
+  RESOURCE_GROUP: <repalce-with-your-resource-group-name>
+  GATEWAY_NAME: <repalce-with-your-gateway-name>
 
 jobs:
   delete-slot:
