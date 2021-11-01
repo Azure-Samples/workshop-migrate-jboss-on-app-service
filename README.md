@@ -37,12 +37,14 @@ Learn how to migrate an on-premises WebLogic application to JBoss EAP using the 
 1. [Set up CI workflows to deploy to staging environments](instructions/6-deploy-to-staging-slots.md)
 1. [Conclusion & Summary](instructions/7-conclusion.md)
 
-## Videos
+## Resources
+
+### Videos
 
 1. [JBoss on Azure](https://youtube.com/watch?v=XA9QELCmGZE)
 2. [JBoss on App Service](https://youtube.com/watch?v=do2y2N9iY9I)
 
-## Resources
+### Docs
 
 1. [JBoss EAP on Azure](https://docs.microsoft.com/azure/developer/java/ee/jboss-on-azure)
 2. [Migrate JBoss EAP to Azure App Service](https://docs.microsoft.com/azure/developer/java/migration/migrate-jboss-eap-to-jboss-eap-on-azure-app-service?toc=/azure/developer/java/ee/toc.json&bc=/azure/developer/breadcrumb/toc.json)
