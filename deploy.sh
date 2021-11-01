@@ -7,7 +7,7 @@ then
 else
     # Append slot to URI
     echo "Deploying to slot: ${SLOT_NAME}"
-    SITE_URI="https://management.azure.com/subscriptions/${SUBSCRIPTION}/resourceGroups/${RESOURCE_GROUP}/providers/Microsoft.Web/sites/${WEBAPP}/slots/${1}/extensions/onedeploy?api-version=2020-12-01"
+    SITE_URI="https://management.azure.com/subscriptions/${SUBSCRIPTION}/resourceGroups/${RESOURCE_GROUP}/providers/Microsoft.Web/sites/${WEBAPP}/slots/${SLOT_NAME}/extensions/onedeploy?api-version=2020-12-01"
 fi
 
 echo "Site URI: ${SITE_URI}"
