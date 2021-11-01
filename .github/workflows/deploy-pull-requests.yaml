@@ -136,11 +136,6 @@ jobs:
           
           az storage account create   -n $STORAGE_ACCOUNT   -g $RESOURCE_GROUP -l $LOCATION
           az storage container create -n $CONTAINER --account-name $STORAGE_ACCOUNT
-
-          echo "HELLO HELLO HELLO HELLO HELLO HELLO HELLO HELLO HELLO HELLO HELLO HELLO HELLO HELLO HELLO HELLO HELLO HELLO HELLO HELLO HELLO HELLO HELLO HELLO"
-          echo "${EXPIRY}"
-          echo $EXPIRY
-          echo "expiry is: ........... ${EXPIRY}"
           
           # Deploy the app and supporting files
           source deploy.sh

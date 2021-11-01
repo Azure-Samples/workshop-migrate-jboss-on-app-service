@@ -16,7 +16,6 @@ echo "Site URI: ${SITE_URI}"
 az storage blob upload --account-name $STORAGE_ACCOUNT -c $CONTAINER -f ROOT.war
 WAR_URL=$(az storage blob generate-sas --full-uri --permissions r --expiry $EXPIRY --account-name $STORAGE_ACCOUNT -c $CONTAINER -n ROOT.war | xargs)
 az rest --method PUT \
-        --debug \
         --uri $SITE_URI \
         --body '{ 
             "properties": { 
