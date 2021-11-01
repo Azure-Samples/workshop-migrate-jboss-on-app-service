@@ -7,6 +7,7 @@ on:
 env:
   WEBAPP: new-ase-ase
   RESOURCE_GROUP: freeberg-fresh-ase-oct-22
+  GATEWAY_NAME: gateway-new-ase-ase-ilb-ase
 
 jobs:
   delete-slot:
