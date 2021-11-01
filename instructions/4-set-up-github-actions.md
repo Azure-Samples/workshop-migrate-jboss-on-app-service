@@ -51,7 +51,7 @@ To accomplish this task you can go to the **Actions** tab of your fork (on githu
 
 ![Java with Maven template](../img/4-actions-tab.png)
 
-Under the **Continuous Integration Workflows** section, there will be a template workflow titled, **Java with Maven** (you may need to click the _More Continuous Integration Workflows_ button to expand the list). Once you find **Java with Maven**, click **Set up this workflow** to enter the in-browser editor to get the workflow set up.
+Under the **Workflows made for your repository** section (or possibly the **Continuous Integration Workflows** section), there will be a template workflow titled, **Java with Maven** (you may need to click the _More Continuous Integration Workflows_ button to expand the list). Once you find **Java with Maven**, click **Set up this workflow** to enter the in-browser editor to get the workflow set up.
 
 ![Java with Maven template](../img/4-card.png)
 
@@ -105,11 +105,18 @@ This will also trigger the action to deploy your app to App Service. Click on th
 
 ![Java with Maven template](../img/4-action-newrun.png)
 
-If you click on the new action, you can see the steps and output from the build and deploy.
+If you click on the new action to watch its progress, you can see the steps and output from the build and deploy:
+
+![Java with Maven template](../img/4-actions-progress.png)
+
+Wait for it to complete:
+
+![Java with Maven template](../img/4-actions-done.png)
+
 
 ## Test your application
 
-Once the GitHub action completes, after a minute or so, the application will be deployed and ready! Visit the application's URL, which you can find on the Azure Portal at _Home > All Resources > <your_app_service> > Overview_:
+Once the GitHub action completes, after a minute or so, the application will be deployed and ready! Visit the application's URL, which you can find in the above output from GitHub Actions or on the Azure Portal at _Home > All Resources > <your_app_service> > Overview_:
 
 <img src="../img/4-appsvc-url.png" width=700 align=center>
 
@@ -117,8 +124,7 @@ Click on the URL, and you should now see the Coolstore application running on Ap
 
 <img src="../img/4-appsvc-app.png" width=700 align=center>
 
-> **NOTE**: You may see the default JBoss EAP landing page instead. This is usually caused by invalid or missing setup scripts, or invalid values for the Application Settings (connection URL, username or password) from prior exercises. Double-check the values are correct and try to re-deploy the application again!
-
+> **NOTE**: You may see the default JBoss EAP landing page instead. It may take a few minutes for the app to deploy and be ready, so just give it a minute before refreshing. If you still don't see the app, check for invalid or missing setup scripts, or invalid values for the Application Settings (connection URL, username or password) from prior exercises. Double-check the values are correct and try to re-deploy the application again!
 
 > **NOTE**: You can manually trigger another workflow run by clicking on the **Actions** tab, then clicking on the action you wish to re-run, and finally click on **Re-run jobs** and selecting **Re-run all jobs**:
 

@@ -38,14 +38,18 @@ az postgres server create --resource-group $RESOURCE_GROUP \
 
 > **NOTE** This uses PostgreSQL version 11. If you need support for later versions, you'll need to deploy a Flexible Server or Hyperscale server!
 
-This will take about 1 minute to complete.
+This will take 3-4 minutes to complete. One complete, verify that the database was created with this command:
+
+```bash
+az postgres server show -g $RESOURCE_GROUP -n $SERVER_NAME
+```
 
 Now we can use `az postgres server list` to save the full name of our database to an environment variable that we will use later. Run this command:
 
 ```bash
-export SERVER_FQDN=$(az postgres server list |
-  jq -r '.[] | select (.name == "'$SERVER_NAME'") |
-  .fullyQualifiedDomainName') && echo $SERVER_FQDN
+export SERVER_FQDN=$(az postgres server show -g $RESOURCE_GROUP \
+  -n $SERVER_NAME | jq -r .fullyQualifiedDomainName) && \
+  echo $SERVER_FQDN
 ```
 
 You should see the FQDN that looks like `<server_name>-.postgres.database.azure.com`.
@@ -122,7 +126,7 @@ Click on the App Service to get details about it. Under the _Settings_ category 
 Here, you will need create 3 new settings. You can print out the values you'll need by running the following commands in a Terminal in your IDE:
 
 ```bash
-echo "POSTGRES_CONNECTION_URL --> jdbc:postgresql://${SERVER_FQDN}:5432/monolith" && \
+echo "POSTGRES_CONNECTION_URL --> jdbc:postgresql://${SERVER_FQDN}:5432/monolith?sslmode=require" && \
 echo "POSTGRES_SERVER_ADMIN_FULL_NAME --> ${DB_USERNAME}@${SERVER_NAME}" && \
 echo "POSTGRES_SERVER_ADMIN_PASSWORD --> $DB_PASSWORD"
 ```
@@ -138,7 +142,7 @@ You can also use the `az` command line to accomplish the same thing:
 
 ```bash
 az webapp config appsettings set -g $RESOURCE_GROUP -n $WEBAPP_NAME --settings \
-  "POSTGRES_CONNECTION_URL=jdbc:postgresql://$SERVER_FQDN:5432/monolith" \
+  "POSTGRES_CONNECTION_URL=jdbc:postgresql://$SERVER_FQDN:5432/monolith?sslmode=require" \
   "POSTGRES_SERVER_ADMIN_FULL_NAME=${DB_USERNAME}@${SERVER_NAME}" \
   "POSTGRES_SERVER_ADMIN_PASSWORD=$DB_PASSWORD"
 ```
