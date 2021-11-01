@@ -37,7 +37,7 @@ jobs:
         az network application-gateway url-path-map rule delete \
           --gateway-name $GATEWAY_NAME \
           -g $RESOURCE_GROUP \
-          -name "url-paths-for-${SLOT_NAME}" \
+          --name "url-paths-for-${SLOT_NAME}" \
           --path-map-name "slot-listener"
 
         az network application-gateway probe delete \
