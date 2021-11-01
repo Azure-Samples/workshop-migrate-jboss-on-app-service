@@ -132,6 +132,7 @@ jobs:
         azcliversion: 2.29.1
         inlineScript: |
           SUBSCRIPTION=$(az account show --query id -o tsv)
+          SLOT_NAME="pr-${{ github.event.number }}"
           
           az storage account create   -n $STORAGE_ACCOUNT   -g $RESOURCE_GROUP -l $LOCATION
           az storage container create -n $CONTAINER --account-name $STORAGE_ACCOUNT
@@ -142,7 +143,7 @@ jobs:
           echo "expiry is: ........... ${EXPIRY}"
           
           # Deploy the app and supporting files
-          source deploy.sh "pr-${{ github.event.number }}"
+          source deploy.sh
 
   comment-on-pr:
     name: Comment on PR with preview URL

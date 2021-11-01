@@ -1,10 +1,12 @@
 # This script is called in the GitHub Actions workflows that deploy the app and supporting files to the ASE.
 
-if [ -z "$1" ]
+if [ -z "$SLOT_NAME" ]
 then
+    echo "Not slot name given, deploying to the production slot."
     SITE_URI="https://management.azure.com/subscriptions/${SUBSCRIPTION}/resourceGroups/${RESOURCE_GROUP}/providers/Microsoft.Web/sites/${WEBAPP}/extensions/onedeploy?api-version=2020-12-01"
 else
     # Append slot to URI
+    echo "Deploying to slot: ${SLOT_NAME}"
     SITE_URI="https://management.azure.com/subscriptions/${SUBSCRIPTION}/resourceGroups/${RESOURCE_GROUP}/providers/Microsoft.Web/sites/${WEBAPP}/slots/${1}/extensions/onedeploy?api-version=2020-12-01"
 fi
 
