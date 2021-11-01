@@ -5,8 +5,8 @@ on:
     types: [closed]
 
 env:
-  WEBAPP: <your-webapp-name>
-  RESOURCE_GROUP: <your-resource-group-name>
+  WEBAPP: new-ase-ase
+  RESOURCE_GROUP: freeberg-fresh-ase-oct-22
 
 jobs:
   delete-slot-resources:
