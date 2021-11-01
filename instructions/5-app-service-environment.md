@@ -87,4 +87,4 @@ TODO
 
 ⬅️ Previous section: [4 - Setup GitHub Actions](4-set-up-github-actions.md)
 
-➡️ Next section: [6 - Deploy to Staging Slots](6-deploy-to-stagiong-slots.md)
+➡️ Next section: [6 - Deploy to Staging Slots](6-deploy-to-staging-slots.md)
