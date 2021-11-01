@@ -4,18 +4,22 @@ on:
   pull_request:
     branches:
     - master
+    - main
 
 env:
-  WEBAPP: <your-webapp-name>
-  GATEWAY_NAME: <your-app-gateway-name>
-  RESOURCE_GROUP: <your-resource-group-name>
+  WEBAPP: <replace-with-your-ase-webapp-name>
+  GATEWAY_NAME: <replace-with-your-gateway-name>
+  RESOURCE_GROUP: <replace-with-your-resource-group-name>
+  STORAGE_ACCOUNT: ""  # This must be a *globally* unique name. (Only lowercase letters and numbers allowed. No spaces, dashes, underscores.)
 
-  ACCOUNT: deploymentartifacts
-  CONTAINER: artifacts
+  LOCATION: eastus
+  CONTAINER: stagingartifacts
+  PUBLIC_IP: public-ip-address
   EXPIRY_TIME: 10 minutes
 
 jobs:
   build:
+    name: Build the WAR
     runs-on: ubuntu-latest
 
     steps:
@@ -27,19 +31,25 @@ jobs:
         java-version: 11
         
     - name: Build with Maven
-      run: mvn clean install
+      run: mvn package
       
     - name: Upload artifact for deployment jobs
       uses: actions/upload-artifact@v2
       with:
         name: app
-        path: target/ROOT.war # TODO: Update this to the right file name
+        path: target/ROOT.war
 
   create-slot:
+    name: Create deployment slot and update routing rules
     runs-on: ubuntu-latest
     needs: build
     
     steps:
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
     - name: Create the slot
       run: |
         SLOT_NAME="pr-${{ github.event.number }}"
@@ -53,6 +63,7 @@ jobs:
         ## Create slot
         az webapp deployment slot create \
             --name $WEBAPP \
+            --configuration-source $WEBAPP \
             --slot $SLOT_NAME \
             -g ${{ env.RESOURCE_GROUP }}
 
@@ -90,12 +101,13 @@ jobs:
             --gateway-name ${{ env.GATEWAY_NAME }} \
             -g $RESOURCE_GROUP \
             -n "url-paths-for-${SLOT_NAME}" \
-            --path-map-name "routing-rule-for-ase-name" \
+            --path-map-name "slot-listener" \
             --paths "/${SLOT_NAME},/${SLOT_NAME}/*" \
             --http-settings $HTTP_SETTING_NAME \
             --address-pool "backend-pool-for-ase"
 
   publish:
+    name: Deploy WAR and supporting files to slot
     runs-on: ubuntu-latest
     needs: create-slot
     
@@ -104,58 +116,50 @@ jobs:
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - uses: actions/checkout@v2
         
     - name: Download artifact
       uses: actions/download-artifact@v2
       with:
         name: app
-    
-    - name: Zip the app contents
-      uses: papeloto/action-zip@v1
-      with:
-        files: app.jar # TODO: Update this to the right file name
-        dest: app.zip
 
     - name: Set SAS token expiration
-      run: echo "expiry=`date -u -d "$EXPIRY_TIME" '+%Y-%m-%dT%H:%MZ'`" >> $GITHUB_ENV
+      run: echo "EXPIRY=`date -u -d "$EXPIRY_TIME" '+%Y-%m-%dT%H:%MZ'`" >> $GITHUB_ENV
 
     - name: Azure CLI script
       uses: azure/CLI@v1
       with:
-        azcliversion: 2.28.0
+        azcliversion: 2.29.1
         inlineScript: |
-          az storage account create   -n $ACCOUNT   -g $GROUP -l westus
-          az storage container create -n $CONTAINER --account-name $ACCOUNT
-          az storage blob upload      -f app.zip    --account-name $ACCOUNT -c $CONTAINER -n $ACCOUNT
-
-          ZIP_URL=$(az storage blob generate-sas --full-uri --permissions r --expiry ${{ env.expiry }} --account-name $ACCOUNT -c $CONTAINER -n $ACCOUNT | xargs)
           SUBSCRIPTION=$(az account show --query id -o tsv)
-
-          az rest --method PUT \
-                  --uri "https://management.azure.com/subscriptions/${SUBSCRIPTION}/resourceGroups/${GROUP}/providers/Microsoft.Web/sites/${WEBAPP}/slots/pr-${{ github.event.number }}/extensions/onedeploy?api-version=2020-12-01" \
-                  --body '{ 
-                      "properties": { 
-                        "properties": {
-                          "packageUri": "'"${ZIP_URL}"'"
-                        }, 
-                        "type": "war", 
-                        "ignorestack": true 
-                      }
-                    }'
-
-          az storage container delete -n $CONTAINER --account-name $ACCOUNT
+          SLOT_NAME="pr-${{ github.event.number }}"
+          
+          az storage account create   -n $STORAGE_ACCOUNT   -g $RESOURCE_GROUP -l $LOCATION
+          az storage container create -n $CONTAINER --account-name $STORAGE_ACCOUNT
+          
+          # Deploy the app and supporting files
+          source deploy.sh
 
   comment-on-pr:
+    name: Comment on PR with preview URL
     runs-on: ubuntu-latest
-    needs: publish
+    needs: create-slot
 
     steps:
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
+    - name: Get public IP address
+      run: echo "IP_ADR=`az network public-ip show --name $PUBLIC_IP -g $RESOURCE_GROUP --query ipAddress -o tsv`" >> $GITHUB_ENV
+
     - name: Comment on PR with the preview link
       uses: mshick/add-pr-comment@master
       with:
         message: |
-          TODO: Get public IP
-          ## Preview link: [43.23.132.2/pr-${{ github.event.number }}](43.23.132.2/pr-${{ github.event.number }})
+          ## Preview link: [${{ env.IP_ADR }}/pr-${{ github.event.number }}](http://${{ env.IP_ADR }}/pr-${{ github.event.number }})
 
           - Your changes have been deployed to the preview site. The preview site will update as you add more commits to this branch. 
           - The preview link is shareable, but will be deleted when the pull request is merged or closed.

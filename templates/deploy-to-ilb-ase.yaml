@@ -6,9 +6,11 @@ on:
   workflow_dispatch:
 
 env:
-  WEBAPP: <your-ase-webapp-name>
-  GROUP: <your-resource-group-name>
-  ACCOUNT: deploymentartifacts
+  WEBAPP: <replace-with-your-ase-webapp-name>
+  RESOURCE_GROUP: <replace-with-your-resource-group-name>
+  STORAGE_ACCOUNT: ""  # This must be a *globally* unique name. (Only lowercase letters and numbers allowed. No spaces, dashes, underscores.)
+
+  LOCATION: eastus
   CONTAINER: artifacts
   EXPIRY_TIME: 10 minutes
 
@@ -25,13 +27,14 @@ jobs:
         java-version: 11
         
     - name: Build with Maven
-      run: mvn clean install
+      run: mvn package
       
     - name: Upload artifact for deployment jobs
       uses: actions/upload-artifact@v2
       with:
         name: app
-        path: target/ROOT.war # TODO: Update this to the right file name
+        path: target/ROOT.war
+        if-no-files-found: error
   
   publish:
     runs-on: ubuntu-latest
@@ -42,43 +45,26 @@ jobs:
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - uses: actions/checkout@v2
           
       - name: Download artifact
         uses: actions/download-artifact@v2
         with:
           name: app
-      
-      - name: Zip the app contents
-        uses: papeloto/action-zip@v1
-        with:
-          files: ROOT.war
-          dest: app.zip
 
       - name: Set SAS token expiration
-        run: echo "expiry=`date -u -d "$EXPIRY_TIME" '+%Y-%m-%dT%H:%MZ'`" >> $GITHUB_ENV
+        run: echo "EXPIRY=`date -u -d "$EXPIRY_TIME" '+%Y-%m-%dT%H:%MZ'`" >> $GITHUB_ENV
 
       - name: Azure CLI script
         uses: azure/CLI@v1
         with:
-          azcliversion: 2.28.0
+          azcliversion: 2.29.1
           inlineScript: |
-            az storage account create   -n $ACCOUNT   -g $GROUP -l westus
-            az storage container create -n $CONTAINER --account-name $ACCOUNT
-            az storage blob upload      -f app.zip    --account-name $ACCOUNT -c $CONTAINER -n $ACCOUNT
-
-            ZIP_URL=$(az storage blob generate-sas --full-uri --permissions r --expiry ${{ env.expiry }} --account-name $ACCOUNT -c $CONTAINER -n $ACCOUNT | xargs)
             SUBSCRIPTION=$(az account show --query id -o tsv)
+            
+            az storage account create   -n $STORAGE_ACCOUNT   -g $RESOURCE_GROUP -l $LOCATION
+            az storage container create -n $CONTAINER   --account-name $STORAGE_ACCOUNT
 
-            az rest --method PUT \
-                    --uri "https://management.azure.com/subscriptions/${SUBSCRIPTION}/resourceGroups/${GROUP}/providers/Microsoft.Web/sites/${WEBAPP}/extensions/onedeploy?api-version=2020-12-01" \
-                    --body '{ 
-                        "properties": { 
-                          "properties": {
-                            "packageUri": "'"${ZIP_URL}"'"
-                          }, 
-                          "type": "war", 
-                          "ignorestack": true 
-                        }
-                      }'
-
-            az storage container delete -n $CONTAINER --account-name $ACCOUNT
+            # Deploy the app and supporting files
+            source deploy.sh
