@@ -1,18 +1,5 @@
----
-languages: 
-- java
-products: 
-- app-service
-- Application-Insights
-description: "Migrate a WebLogic app to JBoss EAP on an Azure App Service Environment"
-urlFragment: "/workshop-migrate-jboss-on-app-service"
----
 
-<p align="center">
-  <a href="instructions/0-environment-setup.md">
-    <h1>Start here!</h1>
-  </a>
-</p>
+<h1 align="center"><a href="instructions/0-environment-setup.md">Start here!</a></h1>
 
 # Migration workshop for JBoss on Azure
 
