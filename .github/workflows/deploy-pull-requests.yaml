@@ -159,7 +159,7 @@ jobs:
       uses: mshick/add-pr-comment@master
       with:
         message: |
-          ## Preview link: [${{ env.IP_ADR }}/pr-${{ github.event.number }}](${{ env.IP_ADR }}/pr-${{ github.event.number }})
+          ## Preview link: [${{ env.IP_ADR }}/pr-${{ github.event.number }}](http://${{ env.IP_ADR }}/pr-${{ github.event.number }})
 
           - Your changes have been deployed to the preview site. The preview site will update as you add more commits to this branch. 
           - The preview link is shareable, but will be deleted when the pull request is merged or closed.
