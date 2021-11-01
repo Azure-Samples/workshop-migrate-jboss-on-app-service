@@ -7,10 +7,10 @@ on:
     - main
 
 env:
-  WEBAPP: new-ase-ase
-  GATEWAY_NAME: gateway-new-ase-ase-ilb-ase
-  RESOURCE_GROUP: freeberg-fresh-ase-oct-22
-  STORAGE_ACCOUNT: artifacts1010101  # This must be *globally* unique, so append your name or numbers. (Only lowercase letters and numbers allowed. No spaces, dashes, underscores.)
+  WEBAPP: <repalce-with-your-webapp-name>
+  GATEWAY_NAME: <repalce-with-your-gateway-name>
+  RESOURCE_GROUP: <repalce-with-your-resource-group-name>
+  STORAGE_ACCOUNT: ""  # This must be a *globally* unique name. (Only lowercase letters and numbers allowed. No spaces, dashes, underscores.)
 
   LOCATION: eastus
   CONTAINER: stagingartifacts
