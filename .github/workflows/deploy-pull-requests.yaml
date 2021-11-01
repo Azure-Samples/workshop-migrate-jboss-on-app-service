@@ -63,6 +63,7 @@ jobs:
         ## Create slot
         az webapp deployment slot create \
             --name $WEBAPP \
+            --configuration-source $WEBAPP \
             --slot $SLOT_NAME \
             -g ${{ env.RESOURCE_GROUP }}
 
