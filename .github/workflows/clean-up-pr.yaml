@@ -9,7 +9,8 @@ env:
   RESOURCE_GROUP: freeberg-fresh-ase-oct-22
 
 jobs:
-  delete-slot-resources:
+  delete-slot:
+    name: Delete slot related resources
     runs-on: ubuntu-latest
 
     steps:
