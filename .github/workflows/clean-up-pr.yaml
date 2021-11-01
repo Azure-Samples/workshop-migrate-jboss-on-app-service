@@ -48,6 +48,3 @@ jobs:
           --gateway-name $GATEWAY_NAME \
           -g $RESOURCE_GROUP \
           -n $HTTP_SETTING_NAME
-
-        
-        
