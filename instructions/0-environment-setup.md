@@ -105,15 +105,16 @@ Later sections of this workshop will introduce and explain the App Service Envir
     az group create --name $RESOURCE_GROUP --location $LOCATION
     ```
 
-2. Next, deploy the ARM Template to that resource group (this will take 2-3 hours to complete!)
+2. Next, deploy the ARM Template to that resource group (this will take 2-3 hours to complete!). The `ASE_WEBAPP_NAME` must be globally unique, so consider using part of your name or including numbers.
 
     ```bash
+    ASE_WEBAPP_NAME=<provide a unique name>
     az deployment group create \
         --name ase_deployment \
         --resource-group $RESOURCE_GROUP \
         --template-file templates/ase-template.json \
         --no-wait \
-        --parameters webAppName=jboss-ilb-ase
+        --parameters webAppName=$ASE_WEBAPP_NAME
     ```
 
 > **Tip**: You can view the progress of your deployments in the Azure Portal by navigating to your resource group, and clicking on the **Deployments** tab.
