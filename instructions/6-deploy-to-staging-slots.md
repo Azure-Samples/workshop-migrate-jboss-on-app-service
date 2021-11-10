@@ -6,7 +6,8 @@ As the saying goes, *"Friends don't let friends deploy directly to production"*.
 
 App Service has a feature known as [Deployment Slots](https://docs.microsoft.com/azure/app-service/deploy-staging-slots), which are independent staging environments with their own configuration and file system. This means you can safely deploy your new releases to these slots, connect them to non-production services (such as a test database or message queue), and *swap* the slot into production when you're satisfied.
 
-![Slot swap diagram](../img/6-slot-swap-diagram.png)
+![Slot swap diagram](../img/6-slot-swap-diagram.PNG)
+
 > In the diagram above, a PR is merged into the main branch on a repository. This triggers a deployment to a staging slot, which is eventually swapped into production.
 
 Deployment slots are flexible: you can create slots to deploy the contents of Pull Requests to expedite the review and testing process, or you can have long-lived slots for development, QA, and UAT environments and "promote" builds through each environment. You can have up to 20 deployment slots on the IsolatedV2 and PremiumV3 compute tiers.
