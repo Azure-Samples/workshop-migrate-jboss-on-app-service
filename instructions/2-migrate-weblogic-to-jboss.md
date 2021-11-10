@@ -66,7 +66,7 @@ You already started your IDE in a previous step, and you can see that the projec
     <img src="../img/2-gitpod-explorer.png" width=900 align=center>
 </p>
 
-You can see icons on the left for navigating between project explorer, search, version control (e.g. Git), debugging, and other plugins. You’ll use these during the course of this workshop. Feel free to click on them and see what they do:
+You can see icons on the left for navigating between project explorer, search, source control  (e.g. Git), debugging, and other plugins. You’ll use these during the course of this workshop. Feel free to click on them and see what they do:
 
 <p align="center">
     <img src="../img/2-gitpod-icons.png" width=400 align=center>
@@ -170,7 +170,7 @@ In the Explorer, MTA issues use an icon to indicate their severity level and sta
 ### 2-2. View Details about the Migration Issues
 ----
 
-Let's take a look at the details about the migration issue. Right-click on `WebLogic ApplicationLifecycleListenerEvent[rule-id:xxx]` in _Hints_ of _StartupListener.java_ file. Click on `View Details`:
+Let's take a look at the details about the migration issue. Right-click on `WebLogic ApplicationLifecycleListener[rule-id:xxx]` in _Hints_ of _StartupListener.java_ file. Click on `View Details`:
 
 <p align="center">
 <img src="../img/2-mta-issue-detail.png" width=900 align=center>
@@ -184,9 +184,9 @@ MTA also provides helpful links to understand the issue deeper and offer guidanc
 
 The WebLogic `ApplicationLifecycleListener` abstract class is used to perform functions or schedule jobs in Oracle WebLogic, like server start and stop. In this case we have code in the `postStart` and `preStop` methods which are executed after WebLogic starts up and before it shuts down, respectively.
 
-In Jakarta EE, there is no equivalent to intercept these events, but you can get equivalent functionality using a _Singleton EJB_ with standard annotations, as suggested in the issue in the MTA report.
+In Jakarta EE, there is no equivalent to intercept these events so the _ApplicationLifecycleListener_ need to be removed. Instead, you can get equivalent functionality using a _Singleton EJB_ with standard annotations, as suggested in the issue in the MTA report. 
 
-We will use the `@Startup` annotation to tell the container to initialize the singleton session bean at application start. We will similarly use the `@PostConstruct` and `@PreDestroy` annotations to specify the methods to invoke at the start and end of the application lifecyle achieving the same result but without using proprietary interfaces.
+We will use the `@Startup` annotation to tell the container to initialize the singleton session bean at application start. We will similarly use the `@PostConstruct` and `@PreDestroy` annotations to specify the methods to invoke at the start and end of the application lifecycle achieving the same result but without using proprietary interfaces.
 
 Using this method makes the code much more portable.
 
@@ -199,7 +199,7 @@ In this section we're going to deal with the following two issues from the repor
 <img src="../img/2-report_applifecycle_issues.png" width=900 align=center>
 </p>
 
-To begin we are fixing the issues under the Monolith application. Right-click on `WebLogic ApplicationLifecycleListenerEvent[rule-id:xxx]` in _Hints_ of _StartupListener.java_ file. Click on `Open Code`:
+To begin we are fixing the issues under the Monolith application. Right-click on `WebLogic ApplicationLifecycleListener[rule-id:xxx]` in _Hints_ of _StartupListener.java_ file. Click on `Open Code`:
 
 <p align="center">
 <img src="../img/2-mta-issue-open-code.png" width=900 align=center>
@@ -262,13 +262,13 @@ If it builds successfully (you will see `BUILD SUCCESS`), let’s move on to the
 
 ### View the diffs
 
-You can review the changes you've made. On the left, click on the _Version Control_ icon, which shows a list of the changed files. Click on `StartupListener.java` to view the differences you've made:
+You can review the changes you've made. On the left, click on the _Source Control_ icon, which shows a list of the changed files. Click on `StartupListener.java` to view the differences you've made:
 
 <p align="center">
 <img src="../img/2-gitpod-diffs.png" width=700 align=center>
 </p>
 
-Git keeps track of the changes you make, and you can use version control to check in, update, and compare files as you change them.
+Git keeps track of the changes you make, and you can use source control  to check in, update, and compare files as you change them.
 
 For now, go back to the _Explorer_ tree and lets fix the remaining issues.
 
