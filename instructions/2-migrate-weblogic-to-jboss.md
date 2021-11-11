@@ -512,7 +512,7 @@ In this development environment (GitPod), a JBoss EAP server is already running 
 Copy the packaged application (.war file) to the running EAP server. Run the following command in the `Pre-warm Maven` Terminal:
 
 ```shell
-cp /workspace/workshop-migrate-jboss-on-app-service/target/ROOT.war /workspace/deployments/
+cp $GITPOD_REPO_ROOT/target/ROOT.war /workspace/deployments/
 ```
 
 Go back to the `Start Wildfly server` terminal where EAP was started for you, and you'll see `ROOT.war` is deployed:

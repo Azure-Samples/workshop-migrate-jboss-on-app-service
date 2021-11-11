@@ -7,7 +7,7 @@
 You can run the following command to delete the resources you created in this workshop:
 
 ```bash
-az group delete --name <your resource group name> --yes
+az group delete --name $RESOURCE_GROUP --yes
 ```
 
 ## Provide Feedback
