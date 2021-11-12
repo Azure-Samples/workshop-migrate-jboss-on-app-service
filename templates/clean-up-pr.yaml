@@ -5,7 +5,7 @@ on:
     types: [closed]
 
 env:
-  WEBAPP: <replace-with-your-webapp-name>
+  WEBAPP: <replace-with-your-ase-webapp-name>
   RESOURCE_GROUP: <replace-with-your-resource-group-name>
   GATEWAY_NAME: <replace-with-your-gateway-name>
 

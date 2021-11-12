@@ -52,7 +52,7 @@ First, we will need to create a Service Principal so that our workflow can log i
 
     ```bash
     az ad sp create-for-rbac \
-        --name "{sp-name}" \
+        --name "$SERVICE_PRINCIPAL_NAME" \
         --sdk-auth \
         --role contributor \
         --scopes /subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP
@@ -80,7 +80,7 @@ Since this is a new web app, we will need to connect it to the Postrges database
 ```bash
 az webapp config appsettings set -g $RESOURCE_GROUP -n "${WEBAPP_NAME}-ase" --settings \
   "POSTGRES_CONNECTION_URL=jdbc:postgresql://$SERVER_FQDN:5432/monolith?sslmode=require" \
-  "POSTGRES_SERVER_ADMIN_FULL_NAME=${DB_USERNAME}@${SERVER_NAME}" \
+  "POSTGRES_SERVER_ADMIN_FULL_NAME=${DB_USERNAME}@${DB_SERVER_NAME}" \
   "POSTGRES_SERVER_ADMIN_PASSWORD=$DB_PASSWORD"
 ```
 
