@@ -110,7 +110,7 @@ Right-click on *mtaConfiguration* to analyze the WebLogic application. Click on 
 <img src="../img/2-mta-run-report.png" width=700 align=center>
 </p>
 
-Migration Toolkit for Applications (MTA) CLI will be executed automatically in a new terminal and it will take a minute or less to complete the analysis. Once it's done, click on `Open Report` in the pop-up:
+Migration Toolkit for Applications (MTA) CLI will be executed automatically in a new terminal in GitPod and it will take a minute or less to complete the analysis. Once it's done, click on `Open Report` in the pop-up:
 
 <p align="center">
 <img src="../img/2-mta-analysis-complete.png" width=700 align=center>
@@ -244,7 +244,7 @@ public class StartupListener {
 ### 2-4. Test the build
 ----
 
-In the terminal, run the following command to test the build:
+In the GitPod terminal, run the following command to test the build:
 
 ```shell
 mvn -f $GITPOD_REPO_ROOT clean package
@@ -480,7 +480,7 @@ In the _Migration Toolkit for Applications_, right-click on *mtaConfiguration* t
 <img src="../img/2-mta-rerun-report.png" width=700 align=center>
 </p>
 
-Migration Toolkit for Applications (MTA) CLI will be executed automatically in a new terminal then it will take less than a minute to complete the analysis. Click on `Open Report`:
+Migration Toolkit for Applications (MTA) CLI will be executed automatically in a new terminal in GitPod then it will take less than a minute to complete the analysis. Click on `Open Report`:
 
 <p align="center">
 <img src="../img/2-mta-analysis-rerun-complete.png" width=700 align=center>
@@ -503,25 +503,25 @@ detail on Red Hat’s Application Migration strategies or contact your local Red
 ### 2-12. Test the application on JBoss EAP locally
 ----
 
-In this development environment (GitPod), a JBoss EAP server is already running with a PostgreSQL database. Click on `Start Wildfly server` terminal, take a look at if the EAP server is running properly:
+In this development environment (GitPod), a JBoss EAP server is already running with a PostgreSQL database. Click on `Start Wildfly server` terminal in GitPod, take a look at if the EAP server is running properly:
 
 <p align="center">
 <img src="../img/2-eap-running.png" width=700 align=center>
 </p>
 
-Copy the packaged application (.war file) to the running EAP server. Run the following command in the `Pre-warm Maven` Terminal:
+Copy the packaged application (.war file) to the running EAP server. Run the following command in the `Pre-warm Maven` terminal in GitPod:
 
 ```shell
 cp $GITPOD_REPO_ROOT/target/ROOT.war /workspace/deployments/
 ```
 
-Go back to the `Start Wildfly server` terminal where EAP was started for you, and you'll see `ROOT.war` is deployed:
+Go back to the `Start Wildfly server` terminal in GitPod where EAP was started for you, and you'll see `ROOT.war` is deployed:
 
 <p align="center">
 <img src="../img/2-eap-deployed.png" width=700 align=center>
 </p>
 
-You can also find out that the inventory data is created in PostgreSQL. Run the following `psql` command in a Terminal:
+You can also find out that the inventory data is created in PostgreSQL. Run the following `psql` command in the GitPod Terminal:
 
 ```shell
 PGPASSWORD=coolstore123 psql -h localhost -U coolstore monolith -c 'select itemid, quantity from INVENTORY;'
