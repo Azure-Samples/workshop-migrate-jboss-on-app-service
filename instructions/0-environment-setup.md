@@ -10,7 +10,15 @@ This workshop uses GitPod to provide a pre-configured development environment wi
 
 ![Preferences](../img/0-prefs-vscode.png)
 
-4. To create a GitPod workspace, navigate to your fork of the workshop repository on GitHub (ex: **https://github.com/JoeSmith/workshop-migrate-jboss-on-app-service**) and prefix the entire URL with **gitpod.io/#**, like this:
+4. Go to [GitPod Integrations](https://gitpod.io/integrations) and click on `Edit Permissions` in _GitHub_ provider:
+
+![Integrations](../img/0-prefs-vscode-integration.png)
+
+5. Then select the `public_repo` and `repo` permissions to access to code in public/private repositories and organizations. Click on `Update Permissions`:
+
+![Integrations-repo](../img/0-prefs-vscode-integration-repo.png)
+
+6. To create a GitPod workspace, navigate to your fork of the workshop repository on GitHub (ex: **https://github.com/JoeSmith/workshop-migrate-jboss-on-app-service**) and prefix the entire URL with **gitpod.io/#**, like this:
 
     ```text
     gitpod.io/#https://github.com/JoeSmith/workshop-migrate-jboss-on-app-service
@@ -18,7 +26,7 @@ This workshop uses GitPod to provide a pre-configured development environment wi
 
     This will open a new GitPod workspace using the configuration files in the repo.
 
-5. Once the workspace launches, you will have a cloud-based VS Code IDE!
+7. Once the workspace launches, you will have a cloud-based VS Code IDE!
 
 ## Sign into Azure
 
