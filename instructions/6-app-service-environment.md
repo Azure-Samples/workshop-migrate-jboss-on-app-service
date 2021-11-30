@@ -2,7 +2,7 @@
 
 ## Exercise: check the status of your ASE Deployment
 
-Before starting this section, run the CLI command below to confirm that the ARM template you [deployed earlier](0-environment-setup.md#Deploy-the-App-Service-Environment) is complete.
+Before starting this section, run the CLI command below to confirm that the ARM template you [deployed earlier](1-environment-setup.md#Deploy-the-App-Service-Environment) is complete.
 
 ```bash
 az deployment group show --name ase_deployment -g $RESOURCE_GROUP
@@ -32,7 +32,7 @@ App Service Environments are appropriate for applications that require:
 
 ## Exercise: Inspect your ILB ASE and Azure App Gateway
 
-[Earlier in this workshop](0-environment-setup.md#deploy-the-app-service-environment) you created an App Service Environment using an ARM Template. This template deployed a few resources:
+[Earlier in this workshop](1-environment-setup.md#deploy-the-app-service-environment) you created an App Service Environment using an ARM Template. This template deployed a few resources:
 
 - A [Virtual Network](https://docs.microsoft.com/azure/virtual-network/virtual-networks-overview) with two subnets: one for the App Service Environment, and one for the App Gateway.
 - An [App Service Environment](https://docs.microsoft.com/azure/app-service/environment/intro) with a private IP address, as well as an I1V2 App Service Plan, and a JBoss EAP web app.
@@ -75,7 +75,7 @@ The commit to add the workflow file will also trigger it, so open your browser t
 
 ## Exercise: Connect the Web App to the PostgreSQL DB
 
-Since this is a new web app, we will need to connect it to the Postrges database like in section 4. The GitHub Actions workflow will deploy the .WAR file, Postgres driver, and startup scripts. Since those files are deployed to the web app, the last thing to do is [set the necessary app settings](3-create-postgres-on-azure.md#create-application-settings) with the URL, username, and password. Run the command below to set the app settings.
+Since this is a new web app, we will need to connect it to the Postrges database like in section 4. The GitHub Actions workflow will deploy the .WAR file, Postgres driver, and startup scripts. Since those files are deployed to the web app, the last thing to do is [set the necessary app settings](4-create-postgres-on-azure.md#create-application-settings) with the URL, username, and password. Run the command below to set the app settings.
 
 ```bash
 az webapp config appsettings set -g $RESOURCE_GROUP -n "${WEBAPP_NAME}-ase" --settings \
@@ -92,6 +92,6 @@ az webapp config appsettings set -g $RESOURCE_GROUP -n "${WEBAPP_NAME}-ase" --se
 
 ---
 
-⬅️ Previous section: [4 - Setup GitHub Actions](4-set-up-github-actions.md)
+⬅️ Previous section: [4 - Setup GitHub Actions](5-set-up-github-actions.md)
 
-➡️ Next section: [6 - Deploy to Staging Slots](6-deploy-to-staging-slots.md)
+➡️ Next section: [6 - Deploy to Staging Slots](7-deploy-to-staging-slots.md)

@@ -173,6 +173,6 @@ re-visit your running app via its URL and it should now be sporting your new bis
 
 ---
 
-⬅️ Previous section: [3 - Create PostgreSQL on Azure](3-create-postgres-on-azure.md)
+⬅️ Previous section: [3 - Create PostgreSQL on Azure](4-create-postgres-on-azure.md)
 
-➡️ Next section: [5 - Create an App Service Environment](5-app-service-environment.md)
+➡️ Next section: [5 - Create an App Service Environment](6-app-service-environment.md)

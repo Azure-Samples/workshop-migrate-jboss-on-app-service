@@ -16,4 +16,4 @@ Have feedback, a suggestion, or found a typo? Please let us know by [filing an i
 
 ---
 
-⬅️ Previous section: [7 - Deploy to Staging Slots](6-deploy-to-staging-slots.md)
+⬅️ Previous section: [7 - Deploy to Staging Slots](7-deploy-to-staging-slots.md)

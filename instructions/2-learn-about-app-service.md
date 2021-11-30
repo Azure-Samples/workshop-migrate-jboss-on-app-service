@@ -18,7 +18,7 @@ Azure App Service is a proven managed platform for hosting web and API applicati
 
 ### Compliance and Operation
 
-- The [App Service Environment](https://docs.microsoft.com/azure/app-service/environment/intro) is a single-tenant variant of App Service, which allows you to meet stringent compliance requirements and secure your deployment more than the multi-tenant variant of App Service (more on this in [section 6](../instructions/5-app-service-environment.md))
+- The [App Service Environment](https://docs.microsoft.com/azure/app-service/environment/intro) is a single-tenant variant of App Service, which allows you to meet stringent compliance requirements and secure your deployment more than the multi-tenant variant of App Service (more on this in [section 6](../instructions/6-app-service-environment.md))
 - Azure Monitor provides a central storage sink to collect and store your application logs for auditing requirements
 - Azure Policy allows you to automate and enforce compliance at-scale across your organization
 
@@ -90,6 +90,6 @@ On the list of resources, you'll see your newly-created webapp (along with other
 
 ---
 
-⬅️ Previous section: [0 - Environment Setup](0-environment-setup.md)
+⬅️ Previous section: [0 - Environment Setup](1-environment-setup.md)
 
-➡️ Next section: [2 - Migrate a WebLogic app to JBoss EAP](2-migrate-weblogic-to-jboss.md)
+➡️ Next section: [2 - Migrate a WebLogic app to JBoss EAP](3-migrate-weblogic-to-jboss.md)
