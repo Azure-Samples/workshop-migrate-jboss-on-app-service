@@ -1,8 +1,8 @@
-# Stage deployments for testing
+# 7 - Stage deployments for testing
 
 As the saying goes, *"Friends don't let friends deploy directly to production"*... but until now that's exactly what we have been doing! In this section, you will set up GitHub Actions workflows to deploy your apps to a staging environment on our App Service Environment so that you can test and confirm your new build is running properly before promoting it to production.
 
-## App Service Deployment Slots
+## 7.1 - App Service Deployment Slots
 
 App Service has a feature known as [Deployment Slots](https://docs.microsoft.com/azure/app-service/deploy-staging-slots), which are independent staging environments with their own configuration and file system. This means you can safely deploy your new releases to these slots, connect them to non-production services (such as a test database or message queue), and *swap* the slot into production when you're satisfied.
 
@@ -14,7 +14,7 @@ Deployment slots are flexible: you can create slots to deploy the contents of Pu
 
 The ARM Template that you deployed earlier in this workshop already has a deployment slot created for you, called **staging**. You can browse to this staging environment by appending `/staging` to the public IP address of your App gateway.
 
-## Exercise: Create workflows to deploy Pull Requests
+## 7.2 - Exercise: Create workflows to deploy Pull Requests
 
 In this exercise we will set up GitHub Actions workflows to build and deploy our app whenever a **Pull Request** is opened and targets our main branch. This allows dev teams to review the pull request before merging into production.
 
@@ -38,7 +38,7 @@ The second workflow, [`clean-up-pr.yaml`](../templates/clean-up-pr.yaml), will r
 
 Once you have copied the workflow files to `.github/workflows/` and replaced the placeholder values, create a Pull Request to test it out (you can modify any file, such as the README). Once you have created a Pull Request, go the **Actions** tab of your repository on the GitHub web UI to monitor the progress of the workflows.
 
-## A note on Asymmetric Routing
+## 7.3 - A note on Asymmetric Routing
 
 This section used asymmetric routing on the App Gateway to route requests from the specified paths (`/stage`, `/pr-1`) to the domain on the slot (`stage.internal`,`pr-1.internal`), which is **not** recommended in production. In the *real world*, you would use (sub)domains to route to these different environments:
 

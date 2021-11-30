@@ -1,6 +1,6 @@
-# About Azure App Service
+# 2 - Learn About Azure App Service
 
-## Introduction
+## 2.1 - Introduction
 
 Azure App Service is a proven managed platform for hosting web and API applications for businesses large and small. App Service has multiple pricing tiers to fit the needs of any organization, and has a number of features for development, management, compliance, and operation:
 
@@ -22,14 +22,14 @@ Azure App Service is a proven managed platform for hosting web and API applicati
 - Azure Monitor provides a central storage sink to collect and store your application logs for auditing requirements
 - Azure Policy allows you to automate and enforce compliance at-scale across your organization
 
-## Architecture
+## 2.2 - Architecture
 
 Let's cover a few key terms about App Service:
 
 - [App Service Plans](https://docs.microsoft.com/azure/app-service/overview-hosting-plans): Your web apps will always run in an App Service Plan. The Plan defines the size of your compute, the OS, the region, and pricing tier. For example, you can create a Linux Premium 1 V3 Plan, which has 2 cores and 8GB of memory, in the Central US region. You can then host *multiple* Web Apps on this Plan. The Plan is also where you will define your scaling rules.
 - [Azure Web App](https://docs.microsoft.com/azure/app-service/): The Web App is resource that runs on top of the App Service Plan, defines the runtime and configuration for your site, and is the resource that you will actually deploy your code to.
 
-## Exercise: Create an Azure Web App
+## 2.3 - Exercise: Create an Azure Web App
 
 To get started, let's create a JBoss EAP web app using the Azure CLI.
 
@@ -74,7 +74,7 @@ You should see the following on the web app:
 
 <img src="../img/1-landing.png" width=700 align=center>
 
-## The Azure Portal
+## 2.4 - The Azure Portal
 
 So far we have used the Azure CLI to create resources, but you can also use the Azure Portal to create and manage resources. Head to [https://portal.azure.com/](https://portal.azure.com/) and sign in if you haven't already. After logging in, you will see the dashboard, which lists your subscription's resources and has links to some common tools like the Marketplace and Tutorials. [The Dashboard is customizable](https://docs.microsoft.com/azure/azure-portal/azure-portal-dashboards), you can add tiles to display metrics for high-priority resources, list your resource groups, and more.
 

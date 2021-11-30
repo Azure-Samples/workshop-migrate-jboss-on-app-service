@@ -1,6 +1,6 @@
-# Deploy with GitHub Actions
+# 5 - Deploy with GitHub Actions
 
-## Overview of GitHub Actions
+## 5.1 - Overview of GitHub Actions
 
 GitHub Actions help you automate tasks within your software development life cycle. GitHub Actions are event-driven, meaning that you can run a series of commands after a specified event has occurred. For example, every time someone creates a pull request for a repository, you can automatically run a command that executes a software testing script. GitHub Actions is based on `.yaml` files in the `.github/workflows/` directory of your application which describe the automation to be run. Let's learn more about the terminology and hierarchy of GitHub Actions...
 
@@ -43,7 +43,7 @@ jobs:
       run: mvn clean install
 ```
 
-## Exercise: Add a CI workflow for Pull Requests
+## 5.2 - Exercise: Add a CI workflow for Pull Requests
 
 To get introduced to GitHub Actions, let's set up some simple CI checks for your repository. Create a workflow file in your repository that runs whenever a PR is opened for the main branch and whenever a commit is pushed to the main branch. The workflow should run set up Java 11 and use Maven to build the application, essentially adding minimal CI checks to the repo.
 
@@ -67,7 +67,7 @@ Details are shown, including the _build_ Job that was run. Click on the build jo
 
 ![Java with Maven template](../img/4-action-firstrundeets.png)
 
-## Exercise: Add a workflow to deploy your application
+## 5.3 - Exercise: Add a workflow to deploy your application
 
 Now that we have a simple CI workflow to build and test our application for Pull Requests, let's add another workflow file to build and *deploy* our Cool Store application to JBoss EAP on App Service whenever there is a commit on the main branch.
 
@@ -91,9 +91,9 @@ Click **Preview file** to see what the newly created file will look like:
 
 This action will:
 
-* Checkout the latest revision of the code
-* Build it with `mvn clean install`
-* Deploy it to our existing JBoss EAP App service with the `azure/webapps-deploy` action using the secrets created as part of this process
+- Checkout the latest revision of the code
+- Build it with `mvn clean install`
+- Deploy it to our existing JBoss EAP App service with the `azure/webapps-deploy` action using the secrets created as part of this process
 
 Finally, click **Save** at the top:
 
@@ -113,8 +113,7 @@ Wait for it to complete:
 
 ![Java with Maven template](../img/4-actions-done.png)
 
-
-## Test your application
+## 5.4 - Test your application
 
 Once the GitHub action completes, after a minute or so, the application will be deployed and ready! Visit the application's URL, which you can find in the above output from GitHub Actions or on the Azure Portal at _Home > All Resources > <your_app_service> > Overview_:
 
@@ -130,7 +129,7 @@ Click on the URL, and you should now see the Coolstore application running on Ap
 
 <img src="../img/4-rerun.png" width=700 align=center>
 
-## Exercise: Make a code change and see it automatically deployed
+## 5.5 - Exercise: Make a code change and see it automatically deployed
 
 Let's exercise our Action by making a code change and committing it, to trigger another workflow run. Head back to your developer CLI. The first thing to do is to update our local source to reflect the changes that we made via github.com and the Azure Portal. On the _Source Control_ page, click on the sub-menu and select **Pull** to pull in all of those changes we made outside our IDE.
 

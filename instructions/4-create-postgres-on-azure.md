@@ -1,10 +1,10 @@
-# Create and Configure PostgreSQL on Azure
+# 4 - Create and Configure PostgreSQL on Azure
 
 In the previous exercise, you migrated a Jakarta EE app to JBoss EAP and ran it in your developer environment with a pre-provisioned database.
 
 In this exercise we'll deploy [Azure Database for PostgreSQL](https://azure.microsoft.com/en-us/services/postgresql) and reconfigure our application to use it when deploying to our already-created Azure App Service instance of JBoss EAP.
 
-## Overview of Postgres pricing tiers
+## 4.1 - Overview of Postgres pricing tiers
 
 Azure Database for PostgreSQL offers several options to meet your data needs.
 
@@ -16,7 +16,7 @@ Azure Database for PostgreSQL offers several options to meet your data needs.
 
 [Learn more about Azure Database for Postgres Pricing](https://azure.microsoft.com/en-us/pricing/details/postgresql/server/).
 
-## Exercise: Create Postgres DB
+## 4.2 - Exercise: Create Postgres DB
 
 You can create Postgres databases using the Azure Portal or Azure CLI. Let's use the Azure CLI. 
 
@@ -66,7 +66,7 @@ az postgres db create -g $RESOURCE_GROUP -s $DB_SERVER_NAME -n monolith
 
 Now that we have the database, let's move on to configuring our App Service to use it!
 
-## Configure EAP on App Service for Postgres
+## 4.3 - Configure EAP on App Service for Postgres
 
 When EAP is deployed to App Service, it is deployed as a read-only image that isn't designed to be manually configured as you would a traditional on-prem EAP deployment, because if the service is restarted, those changes will disappear. But there is a _startup hook_ and a writeable filesystem (that does not reset between reboots) you can use to configure EAP with custom settings. We'll use this for our database configuration.
 
@@ -105,6 +105,7 @@ It should report:
 ```
 <path>/setup/postgresql.jar: Java archive data (JAR)
 ```
+
 ### Create Application Settings
 
 The scripts above refer to a number of environment variables that must be set on the EAP App Service. On the Azure Portal, navigate to _Home > All Resources_ once again, and you should see your _App Service_ that you created earlier, alongside your Postgres Database.
@@ -156,7 +157,7 @@ az webapp deploy --resource-group $RESOURCE_GROUP --name $WEBAPP_NAME \
 
 The `--type` argument informs where the files are placed on the app service. This will also trigger the app to restart to apply the new configuration. We should now have a fully deployed EAP instance on App Service with support for PostgreSQL.
 
-## Exercise: Push your changes to your repository
+## 4.4 - Exercise: Push your changes to your repository
 
 In this exercise you've made several changes to key source files for the Java application, as well as some configuration files. Let's push all of that to your personal repository fork.
 
@@ -185,4 +186,3 @@ If you then browse your your GitHub repository in a separate tab (e.g. _https://
 ⬅️ Previous section: [3 - Migrate a WebLogic app to JBoss EAP](3-migrate-weblogic-to-jboss.md)
 
 ➡️ Next section: [5 - Deploy with GitHub Actions](5-set-up-github-actions.md)
-
