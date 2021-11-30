@@ -139,4 +139,4 @@ Later sections of this workshop will introduce and explain the App Service Envir
 
 ---
 
-➡️ Next section: [1 - Learn about Azure App Service](2-learn-about-app-service.md)
+➡️ Next section: [2 - Learn about Azure App Service](2-learn-about-app-service.md)

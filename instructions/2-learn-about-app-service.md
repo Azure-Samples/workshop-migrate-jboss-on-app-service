@@ -90,6 +90,6 @@ On the list of resources, you'll see your newly-created webapp (along with other
 
 ---
 
-⬅️ Previous section: [0 - Environment Setup](1-environment-setup.md)
+⬅️ Previous section: [1 - Environment Setup](1-environment-setup.md)
 
-➡️ Next section: [2 - Migrate a WebLogic app to JBoss EAP](3-migrate-weblogic-to-jboss.md)
+➡️ Next section: [3 - Migrate a WebLogic app to JBoss EAP](3-migrate-weblogic-to-jboss.md)
