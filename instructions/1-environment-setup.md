@@ -124,7 +124,7 @@ You should see the same values you entered. Now each new Terminal you open will 
 > the file is saved by clicking into the file, and using `CTRL-S` (or `CMD-S` on a Mac), then close the
 > newly-opened Terminal and open a new one and try the above command again until it shows correct values.
 
-## Deploy the App Service Environment
+## 1.4 Deploy the App Service Environment
 
 > **Warning:**
 >

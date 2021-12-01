@@ -4,7 +4,7 @@
 
 GitHub Actions help you automate tasks within your software development life cycle. GitHub Actions are event-driven, meaning that you can run a series of commands after a specified event has occurred. For example, every time someone creates a pull request for a repository, you can automatically run a command that executes a software testing script. GitHub Actions is based on `.yaml` files in the `.github/workflows/` directory of your application which describe the automation to be run. Let's learn more about the terminology and hierarchy of GitHub Actions...
 
-### GitHub Actions Terminology
+### 5.1.1 - GitHub Actions Terminology
 
 The first step in getting started with GitHub Actions is to create a **workflow file** in the `.github/workflows/` directory of your repository. The workflow file is composed of one or more **jobs**, and jobs are composed of one or more **steps**. The diagram below illustrates the hierarchy of these terms:
 
@@ -16,7 +16,7 @@ The first step in getting started with GitHub Actions is to create a **workflow 
 - **Steps**: A step is an individual task that can run commands in a job. A step can be either an **action** or a shell command. Each step in a job executes on the same runner, allowing the actions in that job to share data with each other.
 - **Actions**: Actions are standalone commands that are combined into steps to create a job. Actions are the smallest portable building block of a workflow. You can create your own actions, or use actions created by the GitHub community. To use an action in a workflow, you must include it as a step.
 
-### Example workflow
+### 5.1.2 - Example workflow
 
 This is a simple example workflow that is triggered whenever a pull request is opened, and whenever a new commit is pushed to an open PR.
 

@@ -4,19 +4,19 @@
 
 Azure App Service is a proven managed platform for hosting web and API applications for businesses large and small. App Service has multiple pricing tiers to fit the needs of any organization, and has a number of features for development, management, compliance, and operation:
 
-### Developer features
+### 2.1.1 - Developer features
 
 - Integration with all kinds of developer tools to empower developers to be more productive, including IntelliJ, Eclipse, Maven, Gradle, GitHub Actions, Azure DevOps, and more.
 - [Staging environments](https://docs.microsoft.com/azure/app-service/deploy-staging-slots) to deploy new code or test configuration changes safely before rolling out to production.
 - A guided troubleshooting experience to help developers diagnose and solve configuration errors, slow applications, and more.
 
-### Management features
+### 2.1.2 - Management features
 
 - Integration with Application Insights makes it easy to monitor your production applications, set up alerts for slow or failing requests, and view a live map of your entire deployment and the connections between your services
 - Integration with Azure Monitor to ingest your logs across multiple resources, query them, route to 3rd-party services, and set up logs.
 - Networking features to isolate your application from the public internet, securely connect to on-prem resources, and connect to supporting services securely through a Virtual Network.
 
-### Compliance and Operation
+### 2.1.3 - Compliance and Operation
 
 - The [App Service Environment](https://docs.microsoft.com/azure/app-service/environment/intro) is a single-tenant variant of App Service, which allows you to meet stringent compliance requirements and secure your deployment more than the multi-tenant variant of App Service (more on this in [section 6](../instructions/6-app-service-environment.md))
 - Azure Monitor provides a central storage sink to collect and store your application logs for auditing requirements

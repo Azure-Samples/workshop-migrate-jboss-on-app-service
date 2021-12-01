@@ -21,7 +21,7 @@ In this exercise we will set up GitHub Actions workflows to build and deploy our
 1. Copy the [`deploy-pull-requests.yaml`](../templates/deploy-pull-requests.yaml) and [`clean-up-pr.yaml`](../templates/clean-up-pr.yaml) files into your `.github/workflows/` directory.
 2. In each of these files, there will be placeholders in the `env:` section. Replace these placeholders with the name of your ASE web app name, resource group, and app gateway name.
 
-### deploy-pull-requests.yaml
+### 7.2.1 - deploy-pull-requests.yaml
 
 The first workflow, [`deploy-pull-requests.yaml`](../templates/deploy-pull-requests.yaml), will run whenever a PR is opened and targets the main branch. When this workflow executes, it will create a new slot, add a custom internal domain, and wire up the App Gateway with a new routing rule to forward traffic to the slot. The slots will always be named with the PR number, such as `pr-1`, `pr-2`, etc. And the routing rules will forward any requests on those paths to the slot. For example `42.31.131.32/pr-1` will forward to the root path of the slot hosting pull request #1, and `42.31.131.32/pr-1` will forward to the root path of the slot hosting pull request #1.
 
@@ -30,11 +30,11 @@ The first workflow, [`deploy-pull-requests.yaml`](../templates/deploy-pull-reque
 
 The workflow uses the same deployment flow as in section five (publishing to a storage account and pulling from a temporary SAS URL).
 
-### clean-up-pr.yaml
+### 7.2.2 - clean-up-pr.yaml
 
 The second workflow, [`clean-up-pr.yaml`](../templates/clean-up-pr.yaml), will run whenever a Pull Request targeting the main branch is closed. This workflow will delete the deployment slot associated with the pull request and delete the relevant routing rules and HTTP probes on the App Gateway.  
 
-### Try it out
+### 7.2.3 - Exercise: Trigger the workflows
 
 Once you have copied the workflow files to `.github/workflows/` and replaced the placeholder values, create a Pull Request to test it out (you can modify any file, such as the README). Once you have created a Pull Request, go the **Actions** tab of your repository on the GitHub web UI to monitor the progress of the workflows.
 

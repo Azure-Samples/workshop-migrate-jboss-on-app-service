@@ -12,7 +12,7 @@ az deployment group show --name ase_deployment -g $RESOURCE_GROUP
 
 In Section 1 you created an Azure Web App on the Premium V3 tier. The Premium V3 is a high-performance option for production applications, but for workloads that require even greater scale and security, there is the App Service Environment. The App Service Environment (ASE) is a single-tenant variant of App Service, meaning that the infrastructure components like the load balancers, storage, and VMs are dedicated to only your deployment.
 
-### Internal and External ASE
+### 6.2.1 - Internal and External ASE
 
 ASE's can be deployed with an internet-routable IP address or deployed within a VNet, making its IP address accessible only from other resources within the virtual network:
 
@@ -21,7 +21,7 @@ ASE's can be deployed with an internet-routable IP address or deployed within a 
 
 ![Internal VS External ASE](../img/5-internal-vs-external-ase.png)
 
-### Features over multi-tenant App Service
+### 6.2.2 - Features over multi-tenant App Service
 
 App Service Environments are appropriate for applications that require:
 
