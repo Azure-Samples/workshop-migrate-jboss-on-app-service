@@ -1,18 +1,18 @@
-# The App Service Environment
+# 6 - The App Service Environment
 
-## Exercise: check the status of your ASE Deployment
+## 6.1 - Exercise: check the status of your ASE Deployment
 
-Before starting this section, run the CLI command below to confirm that the ARM template you [deployed earlier](0-environment-setup.md#Deploy-the-App-Service-Environment) is complete.
+Before starting this section, run the CLI command below to confirm that the ARM template you [deployed earlier](1-environment-setup.md#Deploy-the-App-Service-Environment) is complete.
 
 ```bash
 az deployment group show --name ase_deployment -g $RESOURCE_GROUP
 ```
 
-## Overview of the App Service Environment
+## 6.2 - Overview of the App Service Environment
 
 In Section 1 you created an Azure Web App on the Premium V3 tier. The Premium V3 is a high-performance option for production applications, but for workloads that require even greater scale and security, there is the App Service Environment. The App Service Environment (ASE) is a single-tenant variant of App Service, meaning that the infrastructure components like the load balancers, storage, and VMs are dedicated to only your deployment.
 
-### Internal and External ASE
+### 6.2.1 - Internal and External ASE
 
 ASE's can be deployed with an internet-routable IP address or deployed within a VNet, making its IP address accessible only from other resources within the virtual network:
 
@@ -21,7 +21,7 @@ ASE's can be deployed with an internet-routable IP address or deployed within a 
 
 ![Internal VS External ASE](../img/5-internal-vs-external-ase.png)
 
-### Features over multi-tenant App Service
+### 6.2.2 - Features over multi-tenant App Service
 
 App Service Environments are appropriate for applications that require:
 
@@ -30,9 +30,9 @@ App Service Environments are appropriate for applications that require:
 - **High memory utilization**: The Isolated App Service Plans offer 2, 4, and 8 core machines with 8, 16, and 32 GB of memory respectively.
 - **Zone redundancy**: ASEs can be [deployed into Availability Zones](https://azure.github.io/AppService/2019/12/12/App-Service-Environment-Support-for-Availability-Zones.html) to ensure a highly available deployment. Availability Zones are unique physical locations *within* an Azure Region. There are a minimum of three separate zones in supported regions, meaning if one zone suffers an outage, your applications will be available on the remaining zone.
 
-## Exercise: Inspect your ILB ASE and Azure App Gateway
+## 6.3 - Exercise: Inspect your ILB ASE and Azure App Gateway
 
-[Earlier in this workshop](0-environment-setup.md#deploy-the-app-service-environment) you created an App Service Environment using an ARM Template. This template deployed a few resources:
+[Earlier in this workshop](1-environment-setup.md#deploy-the-app-service-environment) you created an App Service Environment using an ARM Template. This template deployed a few resources:
 
 - A [Virtual Network](https://docs.microsoft.com/azure/virtual-network/virtual-networks-overview) with two subnets: one for the App Service Environment, and one for the App Gateway.
 - An [App Service Environment](https://docs.microsoft.com/azure/app-service/environment/intro) with a private IP address, as well as an I1V2 App Service Plan, and a JBoss EAP web app.
@@ -42,7 +42,7 @@ App Service Environments are appropriate for applications that require:
 
 When the deployment template is complete, you can get the public IP address from the **Overview** section your App Gateway in the Portal. Browse to that IP address in the Portal and you should see the default landing page for your JBoss site! The following exercise will guide you through deploying to this network-isolated site.
 
-## Exercise: Update Actions Workflow to deploy to ASE
+## 6.4 - Exercise: Update Actions Workflow to deploy to ASE
 
 Now that our site is secured behind an App Gateway within a Virtual Network, we cannot simply push our code from GitHub Actions as we did previously. Now we will need to update our GitHub Actions workflow to publish the artifacts to a Storage Account, and trigger the site to *pull* the artifacts from the Storage Account. The site is still allowed outbound access, so it is able to pull the code from storage.
 
@@ -73,9 +73,9 @@ Now that the Service Principal is set as a secret in our repository, we can upda
 
 The commit to add the workflow file will also trigger it, so open your browser to the **Actions** tab of your repository to view the workflow's progress.
 
-## Exercise: Connect the Web App to the PostgreSQL DB
+## 6.5 - Exercise: Connect the Web App to the PostgreSQL DB
 
-Since this is a new web app, we will need to connect it to the Postrges database like in section 4. The GitHub Actions workflow will deploy the .WAR file, Postgres driver, and startup scripts. Since those files are deployed to the web app, the last thing to do is [set the necessary app settings](3-create-postgres-on-azure.md#create-application-settings) with the URL, username, and password. Run the command below to set the app settings.
+Since this is a new web app, we will need to connect it to the Postrges database like in section 4. The GitHub Actions workflow will deploy the .WAR file, Postgres driver, and startup scripts. Since those files are deployed to the web app, the last thing to do is [set the necessary app settings](4-create-postgres-on-azure.md#create-application-settings) with the URL, username, and password. Run the command below to set the app settings.
 
 ```bash
 az webapp config appsettings set -g $RESOURCE_GROUP -n "${WEBAPP_NAME}-ase" --settings \
@@ -84,7 +84,7 @@ az webapp config appsettings set -g $RESOURCE_GROUP -n "${WEBAPP_NAME}-ase" --se
   "POSTGRES_SERVER_ADMIN_PASSWORD=$DB_PASSWORD"
 ```
 
-## Resources
+## 6.6 - Resources
 
 1. [Overview of ASEv3](https://docs.microsoft.com/azure/app-service/environment/overview)
 2. [How-To configure App Gateway with an ILB ASE](https://docs.microsoft.com/azure/app-service/environment/integrate-with-application-gateway)
@@ -92,6 +92,6 @@ az webapp config appsettings set -g $RESOURCE_GROUP -n "${WEBAPP_NAME}-ase" --se
 
 ---
 
-⬅️ Previous section: [4 - Setup GitHub Actions](4-set-up-github-actions.md)
+⬅️ Previous section: [5 - Setup GitHub Actions](5-set-up-github-actions.md)
 
-➡️ Next section: [6 - Deploy to Staging Slots](6-deploy-to-staging-slots.md)
+➡️ Next section: [7 - Deploy to Staging Slots](7-deploy-to-staging-slots.md)

@@ -1,8 +1,8 @@
-# Set up your environment
+# 1 - Set up your environment
 
 This workshop uses GitPod to provide a pre-configured development environment with Java, JBoss, and the Red Hat VS Code extensions ready-to-go! This section will guide you through the process of setting up a GitPod account and workspace.
 
-## GitPod Setup
+## 1.1 - GitPod Setup
 
 1. Fork [the workshop repository](https://github.com/Azure-Samples/workshop-migrate-jboss-on-app-service) into your personal GitHub account.
 2. Go to [https://gitpod.io/](https://gitpod.io/) and create an account. You can use the Single-Sign-On to create a GitPod account from your GitHub account.
@@ -38,7 +38,7 @@ This workshop uses GitPod to provide a pre-configured development environment wi
 
 Once the workspace launches, you will have a cloud-based VS Code IDE!
 
-## Sign into Azure
+## 1.2 - Sign into Azure
 
 The exercises in this workshop will involve creating and configuring resources from the Azure CLI and Azure Portal. The GitPod workspace already has the Azure CLI installed, but you will have to sign in from the CLI.
 
@@ -62,7 +62,7 @@ The exercises in this workshop will involve creating and configuring resources f
 
 > If you couldn't authenticate using the browser window, you can log in using your username and password directly in the command, `az login -u johndoe@contoso.com -p verySecretPassword`. This only works if your account does **not** have 2FA enabled.
 
-## Configure the workspace
+## 1.3 - Configure the workspace
 
 Let's set some environment variables for later use. Press `F1` to open the command search window, and type `settings` into the search box, then select **Preferences: Open Workspace Settings (JSON)**. This will open a mostly empty file:
 
@@ -124,7 +124,7 @@ You should see the same values you entered. Now each new Terminal you open will 
 > the file is saved by clicking into the file, and using `CTRL-S` (or `CMD-S` on a Mac), then close the
 > newly-opened Terminal and open a new one and try the above command again until it shows correct values.
 
-## Deploy the App Service Environment
+## 1.4 - Deploy the App Service Environment
 
 > **Warning:**
 >
@@ -157,4 +157,4 @@ Later sections of this workshop will introduce and explain the App Service Envir
 
 ---
 
-➡️ Next section: [1 - Learn about Azure App Service](1-learn-about-app-service.md)
+➡️ Next section: [2 - Learn about Azure App Service](2-learn-about-app-service.md)

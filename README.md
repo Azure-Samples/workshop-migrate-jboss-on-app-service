@@ -1,5 +1,5 @@
 
-<h1 align="center"><a href="instructions/0-environment-setup.md">Start here!</a></h1>
+<h1 align="center"><a href="instructions/1-environment-setup.md">Start here!</a></h1>
 
 # Migration workshop for JBoss on Azure
 
@@ -15,14 +15,14 @@ Learn how to migrate an on-premises WebLogic application to JBoss EAP using the 
 
 ### Instructions
 
-1. [Set up your environment](instructions/0-environment-setup.md)
-1. [Learn about and create an Azure App Service](instructions/1-learn-about-app-service.md)
-1. [Migrate an on-prem WebLogic app to JBoss on App Service using the Migration Toolkit for Apps](instructions/2-migrate-weblogic-to-jboss.md)
-1. [Create and connect a PostgreSQL application](instructions/3-create-postgres-on-azure.md)
-1. [Set up GitHub Actions to build and deploy your JBoss app to App Service](instructions/4-set-up-github-actions.md)
-1. [Deploy your application to the App Service Environment](instructions/5-app-service-environment.md)
-1. [Set up CI workflows to deploy to staging environments](instructions/6-deploy-to-staging-slots.md)
-1. [Conclusion & Summary](instructions/7-conclusion.md)
+1. [Set up your environment](instructions/1-environment-setup.md)
+1. [Learn about and create an Azure App Service](instructions/2-learn-about-app-service.md)
+1. [Migrate an on-prem WebLogic app to JBoss on App Service using the Migration Toolkit for Apps](instructions/3-migrate-weblogic-to-jboss.md)
+1. [Create and connect a PostgreSQL application](instructions/4-create-postgres-on-azure.md)
+1. [Set up GitHub Actions to build and deploy your JBoss app to App Service](instructions/5-set-up-github-actions.md)
+1. [Deploy your application to the App Service Environment](instructions/6-app-service-environment.md)
+1. [Set up CI workflows to deploy to staging environments](instructions/7-deploy-to-staging-slots.md)
+1. [Conclusion & Summary](instructions/8-conclusion.md)
 
 ## Resources
 
