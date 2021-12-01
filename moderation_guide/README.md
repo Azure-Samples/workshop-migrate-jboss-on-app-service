@@ -47,3 +47,8 @@ Here are some common mistakes that participants may make during your session:
 
 1. **Cannot make commits from GitPod to their fork of the repo.** If users follow the setup instructions described in [](../instructions/1-environment-setup.md#1.1-GitPod-Setup), then they shouldn't run into this. If they somehow do, they can go to **Settings > Integrations > GitHub > Edit Permission** and enable "repo" permissions.
 2. **User can't create the multi-tenant webapp due to naming conflict**. The participants will create an ASE before the workshop using the ARM template. The ASE webapp can't have the same name as the one created in section 2. So have the user use a different name fot the multi-tenant web app.
+
+## Tips
+
+1. Let participants know they can quickly copy the code/commands using the **copy** button in the code blocks:
+    ![GitHub Copy button](https://user-images.githubusercontent.com/18747768/141175280-4dbe66a3-320b-42e9-9e96-b1dff586af92.png)
