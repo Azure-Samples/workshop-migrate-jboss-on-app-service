@@ -73,7 +73,7 @@ You can see icons on the left for navigating between project explorer, search, s
     <img src="../img/2-gitpod-icons.png" width=400 align=center>
 </p>
 
-### 3.3.2 Use the configuration editor to setup the analysis
+### 3.3.2 - Use the configuration editor to setup the analysis
 
 ----
 
@@ -119,7 +119,7 @@ Migration Toolkit for Applications (MTA) CLI will be executed automatically in a
 <img src="../img/2-mta-analysis-complete.png" width=700 align=center>
 </p>
 
-### 3.3.4 Review the report
+### 3.3.4 - Review the report
 
 ----
 
@@ -135,7 +135,7 @@ The main landing page of the report lists the applications that were processed. 
 <img src="../img/2-mta_project_overview.png" width=900 align=center>
 </p>
 
-### 3.3.5 Understanding the report
+### 3.3.5 - Understanding the report
 
 ----
 

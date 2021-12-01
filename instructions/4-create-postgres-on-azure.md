@@ -106,7 +106,7 @@ It should report:
 <path>/setup/postgresql.jar: Java archive data (JAR)
 ```
 
-### 4.3.1 Create Application Settings
+### 4.3.1 - Create Application Settings
 
 The scripts above refer to a number of environment variables that must be set on the EAP App Service. On the Azure Portal, navigate to _Home > All Resources_ once again, and you should see your _App Service_ that you created earlier, alongside your Postgres Database.
 
