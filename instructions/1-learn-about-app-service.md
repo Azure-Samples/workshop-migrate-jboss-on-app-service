@@ -6,7 +6,7 @@ Azure App Service is a proven managed platform for hosting web and API applicati
 
 ### Developer features
 
-- Integration with all kinds of developer tools to empower developers to be more productive, including IntelliJ and Eclipse, Maven and Gradle, GitHub Actions and Azure DevOps, and more.
+- Integration with all kinds of developer tools to empower developers to be more productive, including IntelliJ, Eclipse, Maven, Gradle, GitHub Actions, Azure DevOps, and more.
 - [Staging environments](https://docs.microsoft.com/azure/app-service/deploy-staging-slots) to deploy new code or test configuration changes safely before rolling out to production.
 - A guided troubleshooting experience to help developers diagnose and solve configuration errors, slow applications, and more.
 
