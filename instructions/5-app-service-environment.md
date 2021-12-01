@@ -2,7 +2,7 @@
 
 ## Exercise: check the status of your ASE Deployment
 
-Before starting this section, run the CLI command below to confirm that the ARM template you [deployed earlier](0-environment-setup.md#Deploy-the-App-Service-Environment).
+Before starting this section, run the CLI command below to confirm that the ARM template you [deployed earlier](0-environment-setup.md#Deploy-the-App-Service-Environment) is complete.
 
 ```bash
 az deployment group show --name ase_deployment -g $RESOURCE_GROUP
@@ -52,7 +52,7 @@ First, we will need to create a Service Principal so that our workflow can log i
 
     ```bash
     az ad sp create-for-rbac \
-        --name "{sp-name}" \
+        --name "$SERVICE_PRINCIPAL_NAME" \
         --sdk-auth \
         --role contributor \
         --scopes /subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP
@@ -75,7 +75,14 @@ The commit to add the workflow file will also trigger it, so open your browser t
 
 ## Exercise: Connect the Web App to the PostgreSQL DB
 
-TODO
+Since this is a new web app, we will need to connect it to the Postrges database like in section 4. The GitHub Actions workflow will deploy the .WAR file, Postgres driver, and startup scripts. Since those files are deployed to the web app, the last thing to do is [set the necessary app settings](3-create-postgres-on-azure.md#create-application-settings) with the URL, username, and password. Run the command below to set the app settings.
+
+```bash
+az webapp config appsettings set -g $RESOURCE_GROUP -n "${WEBAPP_NAME}-ase" --settings \
+  "POSTGRES_CONNECTION_URL=jdbc:postgresql://$SERVER_FQDN:5432/monolith?sslmode=require" \
+  "POSTGRES_SERVER_ADMIN_FULL_NAME=${DB_USERNAME}@${DB_SERVER_NAME}" \
+  "POSTGRES_SERVER_ADMIN_PASSWORD=$DB_PASSWORD"
+```
 
 ## Resources
 

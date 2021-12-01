@@ -6,7 +6,8 @@ As the saying goes, *"Friends don't let friends deploy directly to production"*.
 
 App Service has a feature known as [Deployment Slots](https://docs.microsoft.com/azure/app-service/deploy-staging-slots), which are independent staging environments with their own configuration and file system. This means you can safely deploy your new releases to these slots, connect them to non-production services (such as a test database or message queue), and *swap* the slot into production when you're satisfied.
 
-![Slot swap diagram](../img/6-slot-swap-diagram.png)
+![Slot swap diagram](../img/6-slot-swap-diagram.PNG)
+
 > In the diagram above, a PR is merged into the main branch on a repository. This triggers a deployment to a staging slot, which is eventually swapped into production.
 
 Deployment slots are flexible: you can create slots to deploy the contents of Pull Requests to expedite the review and testing process, or you can have long-lived slots for development, QA, and UAT environments and "promote" builds through each environment. You can have up to 20 deployment slots on the IsolatedV2 and PremiumV3 compute tiers.
@@ -17,8 +18,8 @@ The ARM Template that you deployed earlier in this workshop already has a deploy
 
 In this exercise we will set up GitHub Actions workflows to build and deploy our app whenever a **Pull Request** is opened and targets our main branch. This allows dev teams to review the pull request before merging into production.
 
-1. Copy the `deploy-pull-requests.yaml` and `clean-up-pr.yaml` files into your `.github/workflows/` directory.
-2. In each of these files, there will be placeholders in the `env:` section. Replace these placeholders with the name of your web app name, resource group, and app gateway name.
+1. Copy the [`deploy-pull-requests.yaml`](../templates/deploy-pull-requests.yaml) and [`clean-up-pr.yaml`](../templates/clean-up-pr.yaml) files into your `.github/workflows/` directory.
+2. In each of these files, there will be placeholders in the `env:` section. Replace these placeholders with the name of your ASE web app name, resource group, and app gateway name.
 
 ### deploy-pull-requests.yaml
 

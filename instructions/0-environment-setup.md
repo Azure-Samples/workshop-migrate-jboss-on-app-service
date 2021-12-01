@@ -6,19 +6,37 @@ This workshop uses GitPod to provide a pre-configured development environment wi
 
 1. Fork [the workshop repository](https://github.com/Azure-Samples/workshop-migrate-jboss-on-app-service) into your personal GitHub account.
 2. Go to [https://gitpod.io/](https://gitpod.io/) and create an account. You can use the Single-Sign-On to create a GitPod account from your GitHub account.
-3. On your [GitPod Preferences](https://gitpod.io/preferences) page, select the **Insiders** VSCode version, which enables a few features used in this workshop, as shown:
+    ![Log into GitPod with GitHub](../img/gitpod-login-prompt.png)
 
-![Preferences](../img/0-prefs-vscode.png)
+3. On the next screen, select **New Project**
 
-4. To create a GitPod workspace, navigate to your fork of the workshop repository on GitHub (ex: **https://github.com/JoeSmith/workshop-migrate-jboss-on-app-service**) and prefix the entire URL with **gitpod.io/#**, like this:
+    ![Select new project](../img/gitpod-new-project-prompt.png)
 
-    ```text
-    gitpod.io/#https://github.com/JoeSmith/workshop-migrate-jboss-on-app-service
-    ```
+4. Next, select **Authorize**
 
-    This will open a new GitPod workspace using the configuration files in the repo.
+    ![Click authorize](../img/gitpod-authorize-prompt.png)
 
-5. Once the workspace launches, you will have a cloud-based VS Code IDE!
+5. The next screen will ask which account(s) you want to authorize the application in. Select **your personal account**, which should be first in the list.
+
+   ![Select personal account](../img/gitpod-choose-account-prompt.png)
+
+6. Then select your fork of the workshop repository, this will give GitPod permissions to read and write to your repo. Click **Install**.
+
+   ![Install app](../img/gitpod-select-repository-prompt.png)
+
+7. On the next screen, select the **workshop-migrate-jboss-on-app-service** project.
+
+    ![Select workshop-migrate-jboss-on-app-service](../img/gitpod-select-proejct.png)
+
+8. Then select your personal account as the team to instantiate the project into.
+
+    ![Click your personal account](../img/gitpod-select-team.png)
+
+9. Lastly, click **New workspace**. This will start the dev container and takes about one minute.
+
+    ![Click New Workspace](../img/gitpod-start-workspace.png)
+
+Once the workspace launches, you will have a cloud-based VS Code IDE!
 
 ## Sign into Azure
 
@@ -50,34 +68,50 @@ Let's set some environment variables for later use. Press `F1` to open the comma
 
 ![Preferences](../img/0-prefs.png)
 
-Replace the entire file with the below content, and then replace the placeholder values in `[]` with your unique values (Azure Subscription ID and your initials, as these must be unique). You can optionally use a different `LOCATION` (the Azure region in which your resources will be deployed later on) if you want it to be closer to your geographic location.
-
-```json
-{
-    "terminal.integrated.env.linux": {
-        "SUBSCRIPTION_ID": "[Replace this with your Azure Subscription ID]",
-        "WEBAPP_NAME": "[Replace this with your initials]-webapp",
-        "RESOURCE_GROUP": "jboss-rg",
-        "LOCATION": "eastus"
-    }
-}
-```
+Replace the entire file with the below content, and then replace the placeholder values in `[]` with your unique values. Note that some of these must be globally unique, so consider adding your name or initials to them. You can optionally use a different `LOCATION` (the Azure region in which your resources will be deployed later on) if you want it to be closer to your geographic location.
 
 > **HINT**: Valid values for `LOCATION` can be discovered by running `az account list-locations|jq '.[].name'` in the terminal.
 
 > **HINT**: You can discover your Subscription ID with `az account show | jq -r .id`
 
-Close your existing bash Terminal since it will not have these new settings (careful not to close the others!):
+```json
+{
+    "terminal.integrated.env.linux": {
+        // Obtain your subscription ID with hint above
+        "SUBSCRIPTION_ID": "[Your Azure Subscription ID]",
+
+        // these must be unique to you, consider using initials of your name
+        "DB_SERVER_NAME": "[Your initials]-postgres-database",
+        "WEBAPP_NAME": "[Your initials]-webapp",
+
+        // this must be unique to you, and different from WEBAPP_NAME
+        "ASE_WEBAPP_NAME": "[Your initials]-ase-webapp",
+
+        // these are OK to be hard-coded
+        "RESOURCE_GROUP": "jboss-rg",
+        "SERVICE_PRINCIPAL_NAME": "jboss-ase-sp",
+        "DB_USERNAME": "cooladmin",
+        "DB_PASSWORD": "EAPonAzure1",
+
+        // use this default, or use a location closer to you
+        "LOCATION": "eastus"
+    }
+}
+```
+
+Save the file, then close your existing bash Terminal since it will not have these new settings (careful not to close the others!):
 
 <img src="../img/0-bash-kill.png" width=650 align=center>
 
 Next, open a new Terminal using the `＋` button and confirm the values are correct by running this command in the new Terminal:
 
 ```sh
-echo "Subscription ID: $SUBSCRIPTION_ID" && \
-echo "Web App Name: $WEBAPP_NAME" && \
-echo "Resource Group: $RESOURCE_GROUP" && \
-echo "Location: $LOCATION"
+for var in $(cat $GITPOD_REPO_ROOT/.vscode/settings.json \
+    | grep -v '//' \
+    | jq -r '."terminal.integrated.env.linux"
+    | keys | join(" ")') ; do 
+        val=$(eval echo \$$var); echo $var = $val
+done
 ```
 
 ![Preferences](../img/0-env-test.png)
@@ -105,15 +139,16 @@ Later sections of this workshop will introduce and explain the App Service Envir
     az group create --name $RESOURCE_GROUP --location $LOCATION
     ```
 
-2. Next, deploy the ARM Template to that resource group (this will take 2-3 hours to complete!)
+2. Next, deploy the ARM Template to that resource group (this will take 2-3 hours to complete!). The `ASE_WEBAPP_NAME` must be globally unique, so consider using part of your name or including numbers.
 
     ```bash
+    ASE_WEBAPP_NAME=<provide a unique name>
     az deployment group create \
         --name ase_deployment \
         --resource-group $RESOURCE_GROUP \
         --template-file templates/ase-template.json \
         --no-wait \
-        --parameters webAppName=jboss-ilb-ase
+        --parameters webAppName=$ASE_WEBAPP_NAME
     ```
 
 > **Tip**: You can view the progress of your deployments in the Azure Portal by navigating to your resource group, and clicking on the **Deployments** tab.

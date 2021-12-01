@@ -1,22 +1,9 @@
----
-languages: 
-- java
-products: 
-- app-service
-- Application-Insights
-description: "Migrate a WebLogic app to JBoss EAP on an Azure App Service Environment"
-urlFragment: "/workshop-migrate-jboss-on-app-service"
----
 
-<p align="center">
-  <a href="instructions/0-environment-setup.md">
-    <h1>Start here!</h1>
-  </a>
-</p>
+<h1 align="center"><a href="instructions/0-environment-setup.md">Start here!</a></h1>
 
 # Migration workshop for JBoss on Azure
 
-Learn how to migrate an on-premises WebLogic application to JBoss EAP using the RedHat Migration Toolkit, then set up GitHub Action workflows to deploy your app to staging environments, and secure your app using the App Service Environment.
+Learn how to migrate an on-premises WebLogic application to JBoss EAP using the Migration Toolkit for Applications, then set up GitHub Action workflows to deploy your app to staging environments, and secure your app using the App Service Environment.
 
 ## Get Started
 
@@ -50,7 +37,3 @@ Learn how to migrate an on-premises WebLogic application to JBoss EAP using the 
 2. [Migrate JBoss EAP to Azure App Service](https://docs.microsoft.com/azure/developer/java/migration/migrate-jboss-eap-to-jboss-eap-on-azure-app-service?toc=/azure/developer/java/ee/toc.json&bc=/azure/developer/breadcrumb/toc.json)
 3. [JBoss on App Service quickstart](https://aka.ms/jboss-quickstart)
 4. [JBoss module on MS Learn](https://aka.ms/jakarta-ee)
-
-
-
-TEST CHANGE FROM GITPOD3

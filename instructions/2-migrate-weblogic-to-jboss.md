@@ -10,7 +10,7 @@ JBoss EAP includes everything needed to build, run, deploy, and manage enterpris
 
 More features and benefits of JBoss EAP are here:
 
-* **Java certified** - Support the leading Java standards and specifications including Jakarta EE 8, Java SE 11 ([OpenJDK](https://developers.redhat.com/products/openjdk/overview) and OracleJDK), and Eclipse MicroProfile.
+* **Java certified** - Support the leading Java standards and specifications including Jakarta EE 8, Java SE 11 ([OpenJDK](https://developers.redhat.com/products/openjdk/overview) and Oracle JDK), and Eclipse MicroProfile.
 * **Optimizing for the Cloud** - Highly efficient and optimized for container and cloud deployments including [Red Hat OpenShift](https://developers.redhat.com/products/openshift/overview). JBoss EAP offers an extremely low memory footprint, fast start-up times, and efficient resource utilization.
 * **Modular and lightweight** - Provide a modular structure that allows service enabling only when required, improving startup speed to build a modern application platform.
 * **Enterprise performance** - Provide a flexible web server, Undertow, as well as enterprise features such as failover, clustering, caching, intelligent load balancing, and distributed deployment performance-tuned for highly transactional applications.
@@ -66,7 +66,7 @@ You already started your IDE in a previous step, and you can see that the projec
     <img src="../img/2-gitpod-explorer.png" width=900 align=center>
 </p>
 
-You can see icons on the left for navigating between project explorer, search, version control (e.g. Git), debugging, and other plugins. You’ll use these during the course of this workshop. Feel free to click on them and see what they do:
+You can see icons on the left for navigating between project explorer, search, source control  (e.g. Git), debugging, and other plugins. You’ll use these during the course of this workshop. Feel free to click on them and see what they do:
 
 <p align="center">
     <img src="../img/2-gitpod-icons.png" width=400 align=center>
@@ -110,7 +110,7 @@ Right-click on *mtaConfiguration* to analyze the WebLogic application. Click on 
 <img src="../img/2-mta-run-report.png" width=700 align=center>
 </p>
 
-Migration Toolkit for Applications (MTA) CLI will be executed automatically in a new terminal and it will take a minute or less to complete the analysis. Once it's done, click on `Open Report` in the pop-up:
+Migration Toolkit for Applications (MTA) CLI will be executed automatically in a new terminal in GitPod and it will take a minute or less to complete the analysis. Once it's done, click on `Open Report` in the pop-up:
 
 <p align="center">
 <img src="../img/2-mta-analysis-complete.png" width=700 align=center>
@@ -153,7 +153,7 @@ In this step you will migrate some WebLogic-specific code in the app to use stan
 ### 2-1. Jump to Code
 ----
 
-Let's jump to code containing identified migration issues. Expand the **workshop-migrate-jboss-on-app-service** source project in the MTA explorer and navigate to `workshop-migrate-jboss-on-app-service > src > main > java > com > redhat > coolstore > utils > StartupListener.java`. Be sure to click the arrow next to the actual class name `StartupListener.java` to expand and show the Hints:
+Let's jump to code containing identified migration issues. Expand the **workshop-migrate-jboss-on-app-service** source project in the _Migration Toolkit for Applications_ and navigate to `workshop-migrate-jboss-on-app-service > src > main > java > com > redhat > coolstore > utils > StartupListener.java`. Be sure to click the arrow next to the actual class name `StartupListener.java` to expand and show the Hints:
 
 **_TIP:_** You can use [CTRL+p] (or [CMD+p] on macOS) to quickly open a file. Simply start typing the name of the file in the text box that appears and select your file from the list that is produced.
 
@@ -170,7 +170,7 @@ In the Explorer, MTA issues use an icon to indicate their severity level and sta
 ### 2-2. View Details about the Migration Issues
 ----
 
-Let's take a look at the details about the migration issue. Right-click on `WebLogic ApplicationLifecycleListenerEvent[rule-id:xxx]` in _Hints_ of _StartupListener.java_ file. Click on `View Details`:
+Let's take a look at the details about the migration issue. Right-click on `WebLogic ApplicationLifecycleListener[rule-id:xxx]` in _Hints_ of _StartupListener.java_ file. Click on `View Details`:
 
 <p align="center">
 <img src="../img/2-mta-issue-detail.png" width=900 align=center>
@@ -184,9 +184,9 @@ MTA also provides helpful links to understand the issue deeper and offer guidanc
 
 The WebLogic `ApplicationLifecycleListener` abstract class is used to perform functions or schedule jobs in Oracle WebLogic, like server start and stop. In this case we have code in the `postStart` and `preStop` methods which are executed after WebLogic starts up and before it shuts down, respectively.
 
-In Jakarta EE, there is no equivalent to intercept these events, but you can get equivalent functionality using a _Singleton EJB_ with standard annotations, as suggested in the issue in the MTA report.
+In Jakarta EE, there is no equivalent to intercept these events so the _ApplicationLifecycleListener_ need to be removed. Instead, you can get equivalent functionality using a _Singleton EJB_ with standard annotations, as suggested in the issue in the MTA report. 
 
-We will use the `@Startup` annotation to tell the container to initialize the singleton session bean at application start. We will similarly use the `@PostConstruct` and `@PreDestroy` annotations to specify the methods to invoke at the start and end of the application lifecyle achieving the same result but without using proprietary interfaces.
+We will use the `@Startup` annotation to tell the container to initialize the singleton session bean at application start. We will similarly use the `@PostConstruct` and `@PreDestroy` annotations to specify the methods to invoke at the start and end of the application lifecycle achieving the same result but without using proprietary interfaces.
 
 Using this method makes the code much more portable.
 
@@ -199,7 +199,7 @@ In this section we're going to deal with the following two issues from the repor
 <img src="../img/2-report_applifecycle_issues.png" width=900 align=center>
 </p>
 
-To begin we are fixing the issues under the Monolith application. Right-click on `WebLogic ApplicationLifecycleListenerEvent[rule-id:xxx]` in _Hints_ of _StartupListener.java_ file. Click on `Open Code`:
+To begin we are fixing the issues under the Monolith application. Right-click on `WebLogic ApplicationLifecycleListener[rule-id:xxx]` in _Hints_ of _StartupListener.java_ file. Click on `Open Code`:
 
 <p align="center">
 <img src="../img/2-mta-issue-open-code.png" width=900 align=center>
@@ -244,7 +244,7 @@ public class StartupListener {
 ### 2-4. Test the build
 ----
 
-In the terminal, run the following command to test the build:
+In the GitPod terminal, run the following command to test the build:
 
 ```shell
 mvn -f $GITPOD_REPO_ROOT clean package
@@ -262,13 +262,13 @@ If it builds successfully (you will see `BUILD SUCCESS`), let’s move on to the
 
 ### View the diffs
 
-You can review the changes you've made. On the left, click on the _Version Control_ icon, which shows a list of the changed files. Click on `StartupListener.java` to view the differences you've made:
+You can review the changes you've made. On the left, click on the _Source Control_ icon, which shows a list of the changed files. Click on `StartupListener.java` to view the differences you've made:
 
 <p align="center">
 <img src="../img/2-gitpod-diffs.png" width=700 align=center>
 </p>
 
-Git keeps track of the changes you make, and you can use version control to check in, update, and compare files as you change them.
+Git keeps track of the changes you make, and you can use source control  to check in, update, and compare files as you change them.
 
 For now, go back to the _Explorer_ tree and lets fix the remaining issues.
 
@@ -474,13 +474,13 @@ If builds successfully (you will see `BUILD SUCCESS`). If it does not compile, v
 
 In this step we will re-run the MTA report to verify our migration was successful.
 
-In the MTA explorer, right-click on *mtaConfiguration* to analyze the WebLogic application once again. Click on `Run` in the popup menu:
+In the _Migration Toolkit for Applications_, right-click on *mtaConfiguration* to analyze the WebLogic application once again. Click on `Run` in the popup menu:
 
 <p align="center">
 <img src="../img/2-mta-rerun-report.png" width=700 align=center>
 </p>
 
-Migration Toolkit for Applications (MTA) CLI will be executed automatically in a new terminal then it will take less than a minute to complete the analysis. Click on `Open Report`:
+Migration Toolkit for Applications (MTA) CLI will be executed automatically in a new terminal in GitPod then it will take less than a minute to complete the analysis. Click on `Open Report`:
 
 <p align="center">
 <img src="../img/2-mta-analysis-rerun-complete.png" width=700 align=center>
@@ -503,25 +503,25 @@ detail on Red Hat’s Application Migration strategies or contact your local Red
 ### 2-12. Test the application on JBoss EAP locally
 ----
 
-In this development environment (GitPod), a JBoss EAP server is already running with a PostgreSQL database. Click on `Start Wildfly server` terminal, take a look at if the EAP server is running properly:
+In this development environment (GitPod), a JBoss EAP server is already running with a PostgreSQL database. Click on `Start Wildfly server` terminal in GitPod, take a look at if the EAP server is running properly:
 
 <p align="center">
 <img src="../img/2-eap-running.png" width=700 align=center>
 </p>
 
-Copy the packaged application (.war file) to the running EAP server. Run the following command in the `Pre-warm Maven` Terminal:
+Copy the packaged application (.war file) to the running EAP server. Run the following command in the `Pre-warm Maven` terminal in GitPod:
 
 ```shell
-cp /workspace/workshop-migrate-jboss-on-app-service/target/ROOT.war /workspace/deployments/
+cp $GITPOD_REPO_ROOT/target/ROOT.war /workspace/deployments/
 ```
 
-Go back to the `Start Wildfly server` terminal where EAP was started for you, and you'll see `ROOT.war` is deployed:
+Go back to the `Start Wildfly server` terminal in GitPod where EAP was started for you, and you'll see `ROOT.war` is deployed:
 
 <p align="center">
 <img src="../img/2-eap-deployed.png" width=700 align=center>
 </p>
 
-You can also find out that the inventory data is created in PostgreSQL. Run the following `psql` command in a Terminal:
+You can also find out that the inventory data is created in PostgreSQL. Run the following `psql` command in the GitPod Terminal:
 
 ```shell
 PGPASSWORD=coolstore123 psql -h localhost -U coolstore monolith -c 'select itemid, quantity from INVENTORY;'
