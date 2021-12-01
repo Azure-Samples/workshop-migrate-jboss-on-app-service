@@ -9,7 +9,7 @@ I hope you are excited for our upcoming JBoss EAP migration workshop! Before the
 3. On the night before the workshop, run the following Azure CLI command to create a few big resources that we will need in the workshop. This deployment will take 2-3 hours to complete. The `ASE_WEBAPP_NAME` must be globally unique, so consider using part of your name or including numbers.
 
     ```bash
-    UNIQUE_NAME=<provide a unique name>
+    UNIQUE_NAME=<provide a unique name>  # upper and lowercase letters, numbers, and dashes OK
     LOCATION=eastus
     RESOURCE_GROUP=jboss-rg
     az group create --name $RESOURCE_GROUP --location $LOCATION
