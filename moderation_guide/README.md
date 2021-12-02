@@ -52,3 +52,26 @@ Here are some common mistakes that participants may make during your session:
 
 1. Let participants know they can quickly copy the code/commands using the **copy** button in the code blocks:
     ![GitHub Copy button](https://user-images.githubusercontent.com/18747768/141175280-4dbe66a3-320b-42e9-9e96-b1dff586af92.png)
+
+## Modules
+
+Delivering the full workshop (sections 1 to 8) will take half a day 3-5 hours depending if the group takes breaks and if they work independently or if the moderator does every section on-screen. Alternatively you can also take a subset of these sections to deliver a shorter workshop
+
+### 30 minutes to 1 hour
+
+The application can actually run on EAP with no code changes, so you can skip the WebLogic to EAP migration and just deploy the application.
+
+1. [Environment setup](../instructions/1-environment-setup.md)
+1. [Learn About App Service](../instructions/2-learn-about-app-service.md)
+1. [Create PostgreSQL](../instructions/4-create-postgres-on-azure.md)
+1. [Set up GitHub Actions](../instructions/5-set-up-github-actions.md)
+
+### 2 to 3 hours
+
+You can remove the App Service Environment Sections to save time and just use the multi-tenant version of App Service.
+
+1. [Environment setup](../instructions/1-environment-setup.md)
+1. [Learn About App Service](../instructions/2-learn-about-app-service.md)
+1. [Migrate Weblogic to EAP](../instructions/3-migrate-weblogic-to-jboss.md)
+1. [Create PostgreSQL](../instructions/4-create-postgres-on-azure.md)
+1. [Set up GitHub Actions](../instructions/5-set-up-github-actions.md)
