@@ -6,6 +6,7 @@ This workshop uses GitPod to provide a pre-configured development environment wi
 
 1. Fork [the workshop repository](https://github.com/Azure-Samples/workshop-migrate-jboss-on-app-service) into your personal GitHub account.
 2. Go to [https://gitpod.io/](https://gitpod.io/) and create an account. You can use the Single-Sign-On to create a GitPod account from your GitHub account.
+
     ![Log into GitPod with GitHub](../img/gitpod-login-prompt.png)
 
 3. On the next screen, select **New Project**
@@ -142,13 +143,14 @@ Later sections of this workshop will introduce and explain the App Service Envir
 2. Next, deploy the ARM Template to that resource group (this will take 2-3 hours to complete!). The `ASE_WEBAPP_NAME` must be globally unique, so consider using part of your name or including numbers.
 
     ```bash
-    ASE_WEBAPP_NAME=<provide a unique name>
+    UNIQUE_NAME=<provide a unique name>  # upper and lowercase letters, numbers, and dashes OK
+    az group create --name $RESOURCE_GROUP --location $LOCATION
     az deployment group create \
         --name ase_deployment \
         --resource-group $RESOURCE_GROUP \
-        --template-file templates/ase-template.json \
+        --template-uri https://raw.githubusercontent.com/Azure-Samples/workshop-migrate-jboss-on-app-service/main/templates/ase-template.json \
         --no-wait \
-        --parameters webAppName=$ASE_WEBAPP_NAME
+        --parameters webAppName=${UNIQUE_NAME}-ase-webapp
     ```
 
 > **Tip**: You can view the progress of your deployments in the Azure Portal by navigating to your resource group, and clicking on the **Deployments** tab.
