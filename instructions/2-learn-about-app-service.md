@@ -35,7 +35,7 @@ To get started, let's create a JBoss EAP web app using the Azure CLI.
 
 First, we will need a new resource group to house the resources we will create in this lab. You have already configured values for `WEBAPP_NAME`, `LOCATION` and `RESOURCE_GROUP` in the previous section and you will use them here.
 
-1. Create a new resource group:
+1. Create a new resource group. If you already created a resource group when you deployed the ASE, then you can skip this step.
 
     ```bash
     az group create --location $LOCATION --resource-group $RESOURCE_GROUP
