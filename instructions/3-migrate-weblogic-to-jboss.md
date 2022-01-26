@@ -538,6 +538,8 @@ Go back to the `Start Wildfly server` terminal in GitPod where EAP was started f
 <img src="../img/2-eap-deployed.png" width=700 align=center>
 </p>
 
+> **Hint:** If you accidentally closed the terminal that was running Wildfly, you can restart Wildfly with `$JBOSS_HOME/bin/standalone.sh -b 0.0.0.0`
+
 You can also find out that the inventory data is created in PostgreSQL. Run the following `psql` command in the GitPod Terminal:
 
 ```shell
