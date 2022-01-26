@@ -2,11 +2,13 @@
 
 ## 6.1 - Exercise: check the status of your ASE Deployment
 
-Before starting this section, run the CLI command below to confirm that the ARM template you [deployed earlier](1-environment-setup.md#1.4-Deploy-the-App-Service-Environment) is complete.
+Before starting this section, run the CLI command below to confirm that the ARM template you [deployed earlier](1-environment-setup.md#1.4-Deploy-the-App-Service-Environment) is complete. 
 
 ```bash
 az deployment group show --name ase_deployment -g $RESOURCE_GROUP
 ```
+
+Check the `provisioningState` property in the JSON output.
 
 ## 6.2 - Overview of the App Service Environment
 
