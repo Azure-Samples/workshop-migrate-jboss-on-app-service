@@ -583,4 +583,4 @@ Now that you have migrated an existing Java EE app on JBoss EAP, you are ready t
 
 ⬅️ Previous section: [2 - Learn about Azure App Service](2-learn-about-app-service.md)
 
-➡️ Next section: [4 - Deploy to App Service](4-create-postgres-on-azure.md)
+➡️ Next section: [4 - Create and Configure PostgreSQL on Azure](4-create-postgres-on-azure.md)
