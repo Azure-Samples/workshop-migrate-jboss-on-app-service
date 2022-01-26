@@ -143,14 +143,17 @@ These values will be read by the scripts and EAP to configure Postgres. To make 
 ```bash
 az webapp deploy --resource-group $RESOURCE_GROUP --name $WEBAPP_NAME \
     --src-path $GITPOD_REPO_ROOT/setup/postgresql.jar  \
-    --target-path /home/site/libs/postgresql.jar --type lib && \
+    --target-path /home/site/libs/postgresql.jar --type lib --restart false && \
 \
 az webapp deploy --resource-group $RESOURCE_GROUP --name $WEBAPP_NAME \
     --src-path $GITPOD_REPO_ROOT/setup/jboss-cli-commands.cli  \
-    --target-path /home/site/libs/jboss-cli-commands.cli --type lib && \
+    --target-path /home/site/libs/jboss-cli-commands.cli --type lib --restart false && \
 \
 az webapp deploy --resource-group $RESOURCE_GROUP --name $WEBAPP_NAME \
-  --src-path $GITPOD_REPO_ROOT/setup/startup.sh  --type startup
+  --src-path $GITPOD_REPO_ROOT/setup/startup.sh  --type startup --restart false && \
+\
+az webapp deploy --resource-group $RESOURCE_GROUP --name $WEBAPP_NAME \
+  --src-path $GITPOD_REPO_ROOT/target/ROOT.war --type war
 ```
 
 The `--type` argument informs where the files are placed on the app service. This will also trigger the app to restart to apply the new configuration. We should now have a fully deployed EAP instance on App Service with support for PostgreSQL.
