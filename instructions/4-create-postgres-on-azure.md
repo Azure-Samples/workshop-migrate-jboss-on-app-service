@@ -8,11 +8,9 @@ In this exercise we'll deploy [Azure Database for PostgreSQL](https://azure.micr
 
 Azure Database for PostgreSQL offers several options to meet your data needs.
 
-*Single Server* is a preconfigured database server and is best for workloads where the database have minimal customization requirements. This is what we will use in today's workshop.
-
-*Flexible Server* provides maximum control for your database with a simplified developer experience and is best for workloads that require things like custom maintenance windows, zone redunant high availability, and start/stop capabilities or burstable SKUs for cost optimization.
-
-*Hyperscale* provides horizontal scale-out capability to hundreds of nodes and is best for high performance workloads that require dynamic scalability, or require transactional and analytical queries to run on the same database.
+- *Single Server* is a preconfigured database server and is best for workloads where the database have minimal customization requirements. This is what we will use in today's workshop.
+- *Flexible Server* provides maximum control for your database with a simplified developer experience and is best for workloads that require things like custom maintenance windows, zone redunant high availability, and start/stop capabilities or burstable SKUs for cost optimization.
+- *Hyperscale* provides horizontal scale-out capability to hundreds of nodes and is best for high performance workloads that require dynamic scalability, or require transactional and analytical queries to run on the same database.
 
 [Learn more about Azure Database for Postgres Pricing](https://azure.microsoft.com/en-us/pricing/details/postgresql/server/).
 
