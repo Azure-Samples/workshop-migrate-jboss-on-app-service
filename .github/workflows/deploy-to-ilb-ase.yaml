@@ -59,7 +59,7 @@ jobs:
       - name: Azure CLI script
         uses: azure/CLI@v1
         with:
-          azcliversion: 2.29.1
+          azcliversion: 2.31.0
           inlineScript: |
             SUBSCRIPTION=$(az account show --query id -o tsv)
             
