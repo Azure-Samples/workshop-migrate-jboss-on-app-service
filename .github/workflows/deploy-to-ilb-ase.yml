@@ -44,6 +44,7 @@ jobs:
       - name: Azure Login
         uses: azure/login@v1
         with:
+          azcliversion: 2.29.1
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - uses: actions/checkout@v2
