@@ -11,3 +11,6 @@
 [x-ng-click] {
 	cursor: pointer;
 }
+.navbar-header {
+    background: bisque
+}
