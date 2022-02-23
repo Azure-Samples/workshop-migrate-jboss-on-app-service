@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  WEBAPP: ph-webapp
+  WEBAPP: deewhyEAP-Azure-ase-webapp
   RESOURCE_GROUP: jboss-rg
   STORAGE_ACCOUNT: phstorageeap  # This must be a *globally* unique name. (Only lowercase letters and numbers allowed. No spaces, dashes, underscores.)
 
