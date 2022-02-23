@@ -8,7 +8,7 @@ on:
 env:
   WEBAPP: deewhyEAP-Azure-ase-webapp
   RESOURCE_GROUP: jboss-rg
-  STORAGE_ACCOUNT: ""  # This must be a *globally* unique name. (Only lowercase letters and numbers allowed. No spaces, dashes, underscores.)
+  STORAGE_ACCOUNT: "phdeewhyeap"  # This must be a *globally* unique name. (Only lowercase letters and numbers allowed. No spaces, dashes, underscores.)
 
   LOCATION: eastus
   CONTAINER: artifacts
