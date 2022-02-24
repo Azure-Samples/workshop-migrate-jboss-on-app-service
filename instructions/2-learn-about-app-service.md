@@ -100,24 +100,32 @@ Return to **Log Stream** to observe the restart and the typical JBoss EAP startu
 
 You can also access the log stream from the CLI with the following command:
 
-    ```bash
+   ```bash
     az webapp log tail \
         --name $WEBAPP_NAME \
         --resource-group $RESOURCE_GROUP
-    ```
+   ```
 
 Type `CTRL-C` to end the stream.
 
 You can also download all of the log files as a `.zip` archive:
 
-    ```bash
+   ```bash
     az webapp log download \
         --name $WEBAPP_NAME \
         --resource-group $RESOURCE_GROUP \
         --log-file /tmp/logs.zip
-    ```
+   ```
 
-Which will cause a new file called `/tmp/logs.zip` to be created in your local workspace containing the system log files and JBoss EAP log files. You can see the various logs contained using `unzip -l /tmp/logs.zip`. The EAP log content is found in the `LogFiles/Application/server.xxxxx.log` file.
+Which will cause a new file called `/tmp/logs.zip` to be created in your local workspace containing the system log files and JBoss EAP log files.
+
+You can see the various logs contained using the `unzip` utility:
+
+   ```bash
+   unzip -l /tmp/logs.zip
+   ```
+
+The EAP log content is found in the `LogFiles/Application/server.xxxxx.log` file.
 
 > **NOTE** Logs can be configured with a number of options. Consult the [az webapp log docs](https://docs.microsoft.com/en-us/cli/azure/webapp/log?view=azure-cli-latest) for more details.
 
