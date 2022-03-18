@@ -11,7 +11,7 @@ ENV JAVA_DIST="https://github.com/adoptium/temurin11-binaries/releases/download/
 
 USER root
 
-RUN wget -O /tmp/jdk.tar.gz $JAVA_DIST && \
+RUN wget -q -O /tmp/jdk.tar.gz $JAVA_DIST && \
   rm -rf /home/gitpod/.sdkman/candidates/java/11.0.12.fx-zulu/* && \
   cd /usr/local && \
   tar -xzvf /tmp/jdk.tar.gz && \
@@ -21,22 +21,22 @@ ENV JAVA_HOME=/usr/local/jdk-11.0.12+7
 ENV PATH=$JAVA_HOME/bin:$PATH
 
 # maven
-ENV MVN_DIST=https://dlcdn.apache.org/maven/maven-3/3.8.2/binaries/apache-maven-3.8.2-bin.tar.gz
+ENV MVN_DIST=https://dlcdn.apache.org/maven/maven-3/3.8.5/binaries/apache-maven-3.8.5-bin.tar.gz
 
-RUN wget -O /tmp/maven.tar.gz $MVN_DIST && \
+RUN wget -q -O /tmp/maven.tar.gz $MVN_DIST && \
     cd /usr/local && \
     tar -xvzf /tmp/maven.tar.gz && \
     rm -rf /tmp/maven.tar.gz
 
-ENV PATH=/usr/local/apache-maven-3.8.2/bin:$PATH
+ENV PATH=/usr/local/apache-maven-3.8.5/bin:$PATH
 
 # docker
 RUN curl -o /var/lib/apt/dazzle-marks/docker.gpg -fsSL https://download.docker.com/linux/ubuntu/gpg \
     && apt-key add /var/lib/apt/dazzle-marks/docker.gpg \
     && add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" \
-    && install-packages docker-ce=5:19.03.15~3-0~ubuntu-focal docker-ce-cli=5:19.03.15~3-0~ubuntu-focal containerd.io
+    && install-packages docker-ce containerd.io
 
-RUN curl -o /usr/bin/slirp4netns -fsSL https://github.com/rootless-containers/slirp4netns/releases/download/v1.1.11/slirp4netns-$(uname -m) \
+RUN curl -o /usr/bin/slirp4netns -fsSL https://github.com/rootless-containers/slirp4netns/releases/download/v1.1.12/slirp4netns-$(uname -m) \
     && chmod +x /usr/bin/slirp4netns
 
 RUN curl -o /usr/local/bin/docker-compose -fsSL https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64 \
