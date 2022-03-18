@@ -1,4 +1,5 @@
-image: quay.io/eap-appservice-workshop/gitpod-image:latest
+image:
+  file: .gitpod.Dockerfile
 
 ports:
   - port: 8080
