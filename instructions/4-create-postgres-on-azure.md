@@ -180,7 +180,7 @@ With your commit done, you can now _push_ that commit up to your GitHub reposito
 
 If you then browse your your GitHub repository in a separate tab (e.g. _https://github.com/JoeSmith/workshop-migrate-jboss-on-app-service_), you should see your newest commit at the top with the same comment you entered. Congratulations! You can repeat this step as you make changes.
 
-**Congratulations!** You now have deployed a PostgreSQL database and enabled it for use in JBoss EAP, but you have not yet deployed the Cool Store application to App Service. In the next section, you will set up automation to deploy and redeploy the app each time you wish to make a change.
+**Congratulations!** You now have deployed a PostgreSQL database and connected it to your JBoss EAP instance running on App Service, but you have not yet deployed any application to EAP. In the next section, you will set up automation to deploy and redeploy the app each time you wish to make a change.
 
 ---
 
