@@ -47,10 +47,6 @@
             "type": "string",
             "defaultValue": "ilb-ase-vnet"
         },
-        "location": {
-            "type": "string",
-            "defaultValue": "eastus"
-        },
         "dedicatedHostCount": {
             "type": "string",
             "defaultValue": "0"
@@ -124,6 +120,7 @@
     },
     "variables": {
         "aseName": "[concat(parameters('webAppName'),'-ilb-ase')]",
+        "location": "[resourceGroup().location]",
         "hostingPlanName": "[concat(parameters('webAppName'),'-plan')]",
         "privateZoneName": "[concat(variables('aseName'),'.appserviceenvironment.net')]",
         "virtualNetworkId": "[resourceId(subscription().subscriptionId, resourceGroup().name, 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
@@ -142,7 +139,7 @@
             "apiVersion": "2018-04-01",
             "type": "Microsoft.Network/virtualNetworks",
             "name": "[parameters('virtualNetworkName')]",
-            "location": "[parameters('location')]",
+            "location": "[variables('location')]",
             "properties": {
                 "addressSpace": {
                     "addressPrefixes": [
@@ -179,10 +176,10 @@
             "type": "Microsoft.Web/hostingEnvironments",
             "name": "[variables('aseName')]",
             "kind": "ASEV3",
-            "location": "[parameters('location')]",
+            "location": "[variables('location')]",
             "properties": {
                 "name": "[variables('aseName')]",
-                "location": "[parameters('location')]",
+                "location": "[variables('location')]",
                 "dedicatedHostCount": "[parameters('dedicatedHostCount')]",
                 "zoneRedundant": "[parameters('zoneRedundant')]",
                 "InternalLoadBalancingMode": "[parameters('ilbMode')]",
@@ -199,7 +196,7 @@
             "apiVersion": "2018-11-01",
             "name": "[variables('hostingPlanName')]",
             "type": "Microsoft.Web/serverfarms",
-            "location": "[parameters('location')]",
+            "location": "[variables('location')]",
             "kind": "linux",
             "tags": null,
             "dependsOn": [
@@ -222,7 +219,7 @@
             "apiVersion": "2018-11-01",
             "name": "[parameters('webAppName')]",
             "type": "Microsoft.Web/sites",
-            "location": "[parameters('location')]",
+            "location": "[variables('location')]",
             "dependsOn": [
                 "[concat('Microsoft.Web/serverfarms/', variables('hostingPlanName'))]"
             ],
@@ -276,7 +273,7 @@
             "type": "Microsoft.Web/sites/hostNameBindings",
             "apiVersion": "2021-01-15",
             "name": "[concat(parameters('webAppName'), '/', variables('customDomainName'))]",
-            "location": "[parameters('location')]",
+            "location": "[variables('location')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/sites', parameters('webAppName'))]"
             ],
@@ -382,7 +379,7 @@
             "name": "[variables('applicationGatewayName')]",
             "type": "Microsoft.Network/applicationGateways",
             "apiVersion": "2019-09-01",
-            "location": "[parameters('location')]",
+            "location": "[variables('location')]",
             "zones": "[parameters('zones')]",
             "dependsOn": [
                 "[concat('Microsoft.Network/publicIPAddresses/', parameters('publicIpAddressName'))]"
@@ -578,7 +575,7 @@
             "apiVersion": "2020-08-01",
             "type": "Microsoft.Network/publicIPAddresses",
             "name": "[parameters('publicIpAddressName')]",
-            "location": "[parameters('location')]",
+            "location": "[variables('location')]",
             "sku": {
                 "name": "[parameters('gatewaySku')]"
             },
