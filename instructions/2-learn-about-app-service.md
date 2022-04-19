@@ -86,7 +86,50 @@ On the list of resources, you'll see your newly-created webapp (along with other
 
 ![The Azure Portal](../img/1-allresources.png)
 
-*Congratulations!* You created a new Azure Web App. Click the link below to go to the next section to migrate a WebLogic app to JBoss EAP.
+## 2.5 - Exercise: view JBoss EAP logs
+
+You can view the log files directly in the Azure Portal. On the webapp details screen for your webapp, click on **Log Stream**. This will show an inline view of the stream of the log coming from EAP and Azure Portal:
+
+![Log Stream](../img/1-logstream.png)
+
+You may not see any activity if the app is already started. To watch the EAP log, navigate back to the overview page and click **Restart** to force EAP to restart:
+
+![Log Stream](../img/1-restart.png)
+
+Return to **Log Stream** to observe the restart and the typical JBoss EAP startup log output.
+
+You can also access the log stream from the CLI with the following command:
+
+   ```bash
+    az webapp log tail \
+        --name $WEBAPP_NAME \
+        --resource-group $RESOURCE_GROUP
+   ```
+
+Type `CTRL-C` to end the stream.
+
+You can also download all of the log files as a `.zip` archive:
+
+   ```bash
+    az webapp log download \
+        --name $WEBAPP_NAME \
+        --resource-group $RESOURCE_GROUP \
+        --log-file /tmp/logs.zip
+   ```
+
+Which will cause a new file called `/tmp/logs.zip` to be created in your local workspace containing the system log files and JBoss EAP log files.
+
+You can see the various logs contained using the `unzip` utility:
+
+   ```bash
+   unzip -l /tmp/logs.zip
+   ```
+
+The EAP log content is found in the `LogFiles/Application/server.xxxxx.log` file.
+
+> **NOTE** Logs can be configured with a number of options. Consult the [az webapp log docs](https://docs.microsoft.com/en-us/cli/azure/webapp/log?view=azure-cli-latest) for more details.
+
+*Congratulations!* You created a new Azure Web App running JBoss EAP, but you have not deployed any app to it yet. Click the link below to go to the next section to migrate a WebLogic app to JBoss EAP.
 
 ---
 
