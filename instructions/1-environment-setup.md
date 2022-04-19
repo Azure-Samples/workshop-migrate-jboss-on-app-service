@@ -1,11 +1,12 @@
-# Set up your environment
+# 1 - Set up your environment
 
 This workshop uses GitPod to provide a pre-configured development environment with Java, JBoss, and the Red Hat VS Code extensions ready-to-go! This section will guide you through the process of setting up a GitPod account and workspace.
 
-## GitPod Setup
+## 1.1 - GitPod Setup
 
 1. Fork [the workshop repository](https://github.com/Azure-Samples/workshop-migrate-jboss-on-app-service) into your personal GitHub account.
 2. Go to [https://gitpod.io/](https://gitpod.io/) and create an account. You can use the Single-Sign-On to create a GitPod account from your GitHub account.
+
     ![Log into GitPod with GitHub](../img/gitpod-login-prompt.png)
 
 3. On the next screen, select **New Project**
@@ -38,7 +39,7 @@ This workshop uses GitPod to provide a pre-configured development environment wi
 
 Once the workspace launches, you will have a cloud-based VS Code IDE!
 
-## Sign into Azure
+## 1.2 - Sign into Azure
 
 The exercises in this workshop will involve creating and configuring resources from the Azure CLI and Azure Portal. The GitPod workspace already has the Azure CLI installed, but you will have to sign in from the CLI.
 
@@ -62,7 +63,7 @@ The exercises in this workshop will involve creating and configuring resources f
 
 > If you couldn't authenticate using the browser window, you can log in using your username and password directly in the command, `az login -u johndoe@contoso.com -p verySecretPassword`. This only works if your account does **not** have 2FA enabled.
 
-## Configure the workspace
+## 1.3 - Configure the workspace
 
 Let's set some environment variables for later use. Press `F1` to open the command search window, and type `settings` into the search box, then select **Preferences: Open Workspace Settings (JSON)**. This will open a mostly empty file:
 
@@ -74,7 +75,7 @@ Replace the entire file with the below content, and then replace the placeholder
 
 > **HINT**: You can discover your Subscription ID with `az account show | jq -r .id`
 
-```json
+```jsonc
 {
     "terminal.integrated.env.linux": {
         // Obtain your subscription ID with hint above
@@ -84,7 +85,7 @@ Replace the entire file with the below content, and then replace the placeholder
         "DB_SERVER_NAME": "[Your initials]-postgres-database",
         "WEBAPP_NAME": "[Your initials]-webapp",
 
-        // this must be unique to you, and different from WEBAPP_NAME
+        // this must be the same name from the ARM template you deployed earlier, and different from WEBAPP_NAME
         "ASE_WEBAPP_NAME": "[Your initials]-ase-webapp",
 
         // these are OK to be hard-coded
@@ -124,7 +125,7 @@ You should see the same values you entered. Now each new Terminal you open will 
 > the file is saved by clicking into the file, and using `CTRL-S` (or `CMD-S` on a Mac), then close the
 > newly-opened Terminal and open a new one and try the above command again until it shows correct values.
 
-## Deploy the App Service Environment
+## 1.4 - Deploy the App Service Environment
 
 > **Warning:**
 >
@@ -142,13 +143,14 @@ Later sections of this workshop will introduce and explain the App Service Envir
 2. Next, deploy the ARM Template to that resource group (this will take 2-3 hours to complete!). The `ASE_WEBAPP_NAME` must be globally unique, so consider using part of your name or including numbers.
 
     ```bash
-    ASE_WEBAPP_NAME=<provide a unique name>
+    UNIQUE_NAME=<provide a unique name>  # upper and lowercase letters, numbers, and dashes OK
+    az group create --name $RESOURCE_GROUP --location $LOCATION
     az deployment group create \
         --name ase_deployment \
         --resource-group $RESOURCE_GROUP \
-        --template-file templates/ase-template.json \
+        --template-uri https://raw.githubusercontent.com/Azure-Samples/workshop-migrate-jboss-on-app-service/main/templates/ase-template.json \
         --no-wait \
-        --parameters webAppName=$ASE_WEBAPP_NAME
+        --parameters webAppName=${UNIQUE_NAME}-ase-webapp
     ```
 
 > **Tip**: You can view the progress of your deployments in the Azure Portal by navigating to your resource group, and clicking on the **Deployments** tab.
@@ -157,4 +159,4 @@ Later sections of this workshop will introduce and explain the App Service Envir
 
 ---
 
-➡️ Next section: [1 - Learn about Azure App Service](1-learn-about-app-service.md)
+➡️ Next section: [2 - Learn about Azure App Service](2-learn-about-app-service.md)

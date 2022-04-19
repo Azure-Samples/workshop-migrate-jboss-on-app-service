@@ -1,41 +1,41 @@
-# About Azure App Service
+# 2 - Learn About Azure App Service
 
-## Introduction
+## 2.1 - Introduction
 
 Azure App Service is a proven managed platform for hosting web and API applications for businesses large and small. App Service has multiple pricing tiers to fit the needs of any organization, and has a number of features for development, management, compliance, and operation:
 
-### Developer features
+### 2.1.1 - Developer features
 
 - Integration with all kinds of developer tools to empower developers to be more productive, including IntelliJ, Eclipse, Maven, Gradle, GitHub Actions, Azure DevOps, and more.
 - [Staging environments](https://docs.microsoft.com/azure/app-service/deploy-staging-slots) to deploy new code or test configuration changes safely before rolling out to production.
 - A guided troubleshooting experience to help developers diagnose and solve configuration errors, slow applications, and more.
 
-### Management features
+### 2.1.2 - Management features
 
 - Integration with Application Insights makes it easy to monitor your production applications, set up alerts for slow or failing requests, and view a live map of your entire deployment and the connections between your services
 - Integration with Azure Monitor to ingest your logs across multiple resources, query them, route to 3rd-party services, and set up logs.
 - Networking features to isolate your application from the public internet, securely connect to on-prem resources, and connect to supporting services securely through a Virtual Network.
 
-### Compliance and Operation
+### 2.1.3 - Compliance and Operation
 
-- The [App Service Environment](https://docs.microsoft.com/azure/app-service/environment/intro) is a single-tenant variant of App Service, which allows you to meet stringent compliance requirements and secure your deployment more than the multi-tenant variant of App Service (more on this in [section 6](../instructions/5-app-service-environment.md))
+- The [App Service Environment](https://docs.microsoft.com/azure/app-service/environment/intro) is a single-tenant variant of App Service, which allows you to meet stringent compliance requirements and secure your deployment more than the multi-tenant variant of App Service (more on this in [section 6](../instructions/6-app-service-environment.md))
 - Azure Monitor provides a central storage sink to collect and store your application logs for auditing requirements
 - Azure Policy allows you to automate and enforce compliance at-scale across your organization
 
-## Architecture
+## 2.2 - Architecture
 
 Let's cover a few key terms about App Service:
 
 - [App Service Plans](https://docs.microsoft.com/azure/app-service/overview-hosting-plans): Your web apps will always run in an App Service Plan. The Plan defines the size of your compute, the OS, the region, and pricing tier. For example, you can create a Linux Premium 1 V3 Plan, which has 2 cores and 8GB of memory, in the Central US region. You can then host *multiple* Web Apps on this Plan. The Plan is also where you will define your scaling rules.
 - [Azure Web App](https://docs.microsoft.com/azure/app-service/): The Web App is resource that runs on top of the App Service Plan, defines the runtime and configuration for your site, and is the resource that you will actually deploy your code to.
 
-## Exercise: Create an Azure Web App
+## 2.3 - Exercise: Create an Azure Web App
 
 To get started, let's create a JBoss EAP web app using the Azure CLI.
 
 First, we will need a new resource group to house the resources we will create in this lab. You have already configured values for `WEBAPP_NAME`, `LOCATION` and `RESOURCE_GROUP` in the previous section and you will use them here.
 
-1. Create a new resource group:
+1. Create a new resource group. If you already created a resource group when you deployed the ASE, then you can skip this step.
 
     ```bash
     az group create --location $LOCATION --resource-group $RESOURCE_GROUP
@@ -74,7 +74,7 @@ You should see the following on the web app:
 
 <img src="../img/1-landing.png" width=700 align=center>
 
-## The Azure Portal
+## 2.4 - The Azure Portal
 
 So far we have used the Azure CLI to create resources, but you can also use the Azure Portal to create and manage resources. Head to [https://portal.azure.com/](https://portal.azure.com/) and sign in if you haven't already. After logging in, you will see the dashboard, which lists your subscription's resources and has links to some common tools like the Marketplace and Tutorials. [The Dashboard is customizable](https://docs.microsoft.com/azure/azure-portal/azure-portal-dashboards), you can add tiles to display metrics for high-priority resources, list your resource groups, and more.
 
@@ -90,6 +90,6 @@ On the list of resources, you'll see your newly-created webapp (along with other
 
 ---
 
-⬅️ Previous section: [0 - Environment Setup](0-environment-setup.md)
+⬅️ Previous section: [1 - Environment Setup](1-environment-setup.md)
 
-➡️ Next section: [2 - Migrate a WebLogic app to JBoss EAP](2-migrate-weblogic-to-jboss.md)
+➡️ Next section: [3 - Migrate a WebLogic app to JBoss EAP](3-migrate-weblogic-to-jboss.md)
