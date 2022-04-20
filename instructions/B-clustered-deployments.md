@@ -7,4 +7,3 @@
   - Deploy template from quickstart
   - Deploy demo app
   - Click the button, notice the values change and dont change
-
