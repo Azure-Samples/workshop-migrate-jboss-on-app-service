@@ -37,7 +37,6 @@ Now that Application Insights is enabled, let's explore some of the features tha
 
 - [Performance](#a31---performance)
 - [Live metrics](#a32---view-live-metrics)
-- [App Map](#a33---view-app-map)
 
 First, open your Application Insights resource. If you're still viewing your App Service resource, go to **Applicatio Insights** and click **View Application Insights data** at the top of the blade.
 
@@ -46,6 +45,18 @@ First, open your Application Insights resource. If you're still viewing your App
 ### A.3.1 - Performance
 
 Azure Application Insights collects telemetry from your application to help analyze its operation and performance. You can [use this information](https://docs.microsoft.com/azure/azure-monitor/app/tutorial-performance) to identify problems that may be occurring or to identify improvements to the application that would most impact users.
+
+1. Select the Performance menu item
+2. The Operations tab will show requests to the APIs of the CoolStore webapp, click `GET /services/products`
+3. Click "Drill into Samples" at the bottom of the tab, and select the "Suggested" sample
+
+    ![Browse performance information](../img/A-performance.png)
+
+4. This new blade will show the complete transaction details for that API request. Click on the line items, and the panel on the right will show the verbatim SQL commands.
+
+    ![Browse transaction details](../img/A-transaction-details.png)
+
+    From this, we can see that most of the request duration is due to the transit time to the database since our connection is currently over the public internet. The connection will be much faster if we connected the database over a Virtual Network.
 
 ### A.3.2 - View Live Metrics
 
@@ -60,7 +71,3 @@ done
 ```
 
 Watch the metrics in the Portal and you should see them reflect the simulated traffic from your shell script.
-
-### A.3.3 - View App Map
-
-ToDo
