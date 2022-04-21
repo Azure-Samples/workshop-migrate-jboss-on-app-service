@@ -52,13 +52,13 @@ First, we will need a new resource group to house the resources we will create i
         --is-linux
     ```
 
-2. Once the App Service Plan is created, create a JBoss EAP web app on the Plan.
+1. Once the App Service Plan is created, create a JBoss EAP web app on the Plan.
 
     ```bash
     az webapp create \
         --name $WEBAPP_NAME \
         --resource-group $RESOURCE_GROUP \
-        --runtime "JBOSSEAP|7.3-java11" \
+        --runtime "JBOSSEAP|7-java11" \
         --plan "workshop-app-service-plan"
     ```
 
