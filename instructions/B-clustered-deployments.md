@@ -1,5 +1,7 @@
 # B - Clustered Deployments
 
+> Note: Complete [section 1](1-environment-setup.md) before starting this section.
+
 ## B.1 - About EAP Clustering
 
 In JBoss EAP, clustering is a broad term which encompasses services such as load balancing between instances, failover, sharing session state, managing transactions, and more. There are two operating modes for EAP clusters: **managed domain** clusters and **standalone** clusters. The same capabilities are available in either operating mode, they are only different in how you manage the servers.

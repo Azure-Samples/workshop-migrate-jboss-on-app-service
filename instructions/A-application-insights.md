@@ -1,7 +1,7 @@
 
 # A - Application Insights
 
-> Note: Complete modules 1 through 5 before starting this section. You will need a JBoss EAP Azure web app and Java EE application deployed for this section.
+> Note: Complete sections [1 through 5](../README.md#core-sections) before starting this section, as you will need a JBoss EAP Azure web app and Java EE application deployed for this section.
 
 # A.1 - Learn about Application Insights
 
