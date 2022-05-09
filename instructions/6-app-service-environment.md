@@ -85,7 +85,7 @@ The commit to add the workflow file will also trigger it, so open your browser t
 Since this is a new web app, we will need to connect it to the Postrges database like in section 4. The GitHub Actions workflow will deploy the .WAR file, Postgres driver, and startup scripts. Since those files are deployed to the web app, the last thing to do is [set the necessary app settings](4-create-postgres-on-azure.md#4.3.1-create-application-settings) with the URL, username, and password. Run the command below to set the app settings.
 
 ```bash
-az webapp config appsettings set -g $RESOURCE_GROUP -n "${WEBAPP_NAME}-ase" --settings \
+az webapp config appsettings set -g $RESOURCE_GROUP -n $ASE_WEBAPP_NAME --settings \
   "POSTGRES_CONNECTION_URL=jdbc:postgresql://$SERVER_FQDN:5432/monolith?sslmode=require" \
   "POSTGRES_SERVER_ADMIN_FULL_NAME=${DB_USERNAME}@${DB_SERVER_NAME}" \
   "POSTGRES_SERVER_ADMIN_PASSWORD=$DB_PASSWORD"
