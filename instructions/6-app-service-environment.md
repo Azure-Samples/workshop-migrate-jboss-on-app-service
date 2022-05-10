@@ -76,7 +76,7 @@ Now that the Service Principal is set as a secret in our repository, we can upda
 
 1. Copy the template file, [`deploy-to-ilb-ase.yaml`](../templates/deploy-to-ilb-ase.yaml) and paste it as a new workflow file under `.github/workflows/depoy-to-ilb-ase.yaml`.
 2. Replace the placeholders at the top of the file with your webapp name and resource group name.
-3. Commit this as a new workflow file on the main branch.
+3. Commit this as a new workflow file on the main branch and push these commits to your GitHub fork.
 
 The commit to add the workflow file will also trigger it, so open your browser to the **Actions** tab of your repository to view the workflow's progress.
 
