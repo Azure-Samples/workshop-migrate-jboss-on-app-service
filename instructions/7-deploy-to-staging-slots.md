@@ -20,6 +20,7 @@ In this exercise we will set up GitHub Actions workflows to build and deploy our
 
 1. Copy the [`deploy-pull-requests.yaml`](../templates/deploy-pull-requests.yaml) and [`clean-up-pr.yaml`](../templates/clean-up-pr.yaml) files into your `.github/workflows/` directory.
 2. In each of these files, there will be placeholders in the `env:` section. Replace these placeholders with the name of your ASE web app name, resource group, and app gateway name.
+3. Commit these files to your main branch and push these commits into your GitHub fork.
 
 ### 7.2.1 - deploy-pull-requests.yaml
 
