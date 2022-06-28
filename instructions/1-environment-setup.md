@@ -49,13 +49,13 @@ The exercises in this workshop will involve creating and configuring resources f
 
     <img src="../img/0-terminal.png" width=650 align=center>
 
-2. Run the following command to start the authentication flow.
+2. Run the following command to get a device authorization code and open a browser tab to the device login page.
 
     ```bash
-    az login
+    az login --use-device-code & gp preview --external https://microsoft.com/devicelogin
     ```
-
-    Follow the instructions in the terminal output to login in.
+    
+    Copy the device login code from the terminal output and paste it into the device login page. Follow the instructions on the login page.
 
 3. To confirm your CLI is authenticated, run the following command. This will output summary information about your Azure Subscription.
 
