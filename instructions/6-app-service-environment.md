@@ -49,8 +49,13 @@ When the deployment template is complete, you can get the public IP address from
 Now that our site is secured behind an App Gateway within a Virtual Network, we cannot simply push our code from GitHub Actions as we did previously. Now we will need to update our GitHub Actions workflow to publish the artifacts to a Storage Account, and trigger the site to *pull* the artifacts from the Storage Account. The site is still allowed outbound access, so it is able to pull the code from storage.
 
 First, we will need to create a Service Principal so that our workflow can log into our Azure Subscription to create and manage the storage account.
+1. Add the Microsoft.Storage resource provider to your subscription.
 
-1. Create a Service Principle for the resource group:
+    ```bash
+    az provider register -n Microsoft.Storage --wait
+    ```
+
+2. Create a Service Principle for the resource group:
 
     ```bash
     az ad sp create-for-rbac \
@@ -60,18 +65,18 @@ First, we will need to create a Service Principal so that our workflow can log i
         --scopes /subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP
     ```
 
-   Copy the output, you will need it in step 4.
+   Copy the output, you will need it in step 5.
 
-2. Open a browser to your fork of the repository on GitHub.
-3. On the repository, go to **Settings** > **Secrets** > **New repository secret**.
-4. Under **Name**, enter `AZURE_CREDENTIALS`. Under **Value**, paste the output from the Azure CLI command you ran on step one.
-5. Click **Add secret**
+3. Open a browser to your fork of the repository on GitHub.
+4. On the repository, go to **Settings** > **Secrets** > **New repository secret**.
+5. Under **Name**, enter `AZURE_CREDENTIALS`. Under **Value**, paste the output from the Azure CLI command you ran on step two.
+6. Click **Add secret**
 
 Now that the Service Principal is set as a secret in our repository, we can update our GitHub Actions workflow to use the credentials to log in.
 
 1. Copy the template file, [`deploy-to-ilb-ase.yaml`](../templates/deploy-to-ilb-ase.yaml) and paste it as a new workflow file under `.github/workflows/depoy-to-ilb-ase.yaml`.
 2. Replace the placeholders at the top of the file with your webapp name and resource group name.
-3. Commit this as a new workflow file on the main branch.
+3. Commit this as a new workflow file on the main branch and push these commits to your GitHub fork.
 
 The commit to add the workflow file will also trigger it, so open your browser to the **Actions** tab of your repository to view the workflow's progress.
 
@@ -80,7 +85,7 @@ The commit to add the workflow file will also trigger it, so open your browser t
 Since this is a new web app, we will need to connect it to the Postrges database like in section 4. The GitHub Actions workflow will deploy the .WAR file, Postgres driver, and startup scripts. Since those files are deployed to the web app, the last thing to do is [set the necessary app settings](4-create-postgres-on-azure.md#4.3.1-create-application-settings) with the URL, username, and password. Run the command below to set the app settings.
 
 ```bash
-az webapp config appsettings set -g $RESOURCE_GROUP -n "${ASE_WEBAPP_NAME}" --settings \
+az webapp config appsettings set -g $RESOURCE_GROUP -n $ASE_WEBAPP_NAME --settings \
   "POSTGRES_CONNECTION_URL=jdbc:postgresql://$SERVER_FQDN:5432/monolith?sslmode=require" \
   "POSTGRES_SERVER_ADMIN_FULL_NAME=${DB_USERNAME}@${DB_SERVER_NAME}" \
   "POSTGRES_SERVER_ADMIN_PASSWORD=$DB_PASSWORD"

@@ -20,10 +20,11 @@ In this exercise we will set up GitHub Actions workflows to build and deploy our
 
 1. Copy the [`deploy-pull-requests.yaml`](../templates/deploy-pull-requests.yaml) and [`clean-up-pr.yaml`](../templates/clean-up-pr.yaml) files into your `.github/workflows/` directory.
 2. In each of these files, there will be placeholders in the `env:` section. Replace these placeholders with the name of your ASE web app name, resource group, and app gateway name.
+3. Commit these files to your main branch and push these commits into your GitHub fork.
 
 ### 7.2.1 - deploy-pull-requests.yaml
 
-The first workflow, [`deploy-pull-requests.yaml`](../templates/deploy-pull-requests.yaml), will run whenever a PR is opened and targets the main branch. When this workflow executes, it will create a new slot, add a custom internal domain, and wire up the App Gateway with a new routing rule to forward traffic to the slot. The slots will always be named with the PR number, such as `pr-1`, `pr-2`, etc. And the routing rules will forward any requests on those paths to the slot. For example `42.31.131.32/pr-1` will forward to the root path of the slot hosting pull request #1, and `42.31.131.32/pr-1` will forward to the root path of the slot hosting pull request #1.
+The first workflow, [`deploy-pull-requests.yaml`](../templates/deploy-pull-requests.yaml), will run whenever a PR is opened and targets the main branch. When this workflow executes, it will create a new slot, add a custom internal domain, and wire up the App Gateway with a new routing rule to forward traffic to the slot. The slots will always be named with the PR number, such as `pr-1`, `pr-2`, etc. And the routing rules will forward any requests on those paths to the slot. For example `42.31.131.32/pr-1` will forward to the root path of the slot hosting pull request #1, and `42.31.131.32/pr-2` will forward to the root path of the slot hosting pull request #2.
 
 ![Asymmetric Routing Rules for Deployment Slots](../img/6-asymmetric-routing-rules.png)
 > The App Gateway will forward requests to the deployment slots by matching the URL path.

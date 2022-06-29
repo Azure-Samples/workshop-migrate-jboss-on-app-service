@@ -1,6 +1,6 @@
 # 1 - Set up your environment
 
-This workshop uses GitPod to provide a pre-configured development environment with Java, JBoss, and the Red Hat VS Code extensions ready-to-go! This section will guide you through the process of setting up a GitPod account and workspace.
+This workshop uses GitPod to provide a pre-configured development environment with Java, JBoss, and the Red Hat VS Code extensions ready-to-go! This section will guide you through the process of setting up a GitPod account and project.
 
 ## 1.1 - GitPod Setup
 
@@ -12,6 +12,8 @@ This workshop uses GitPod to provide a pre-configured development environment wi
 3. On the next screen, select **New Project**
 
     ![Select new project](../img/gitpod-new-project-prompt.png)
+
+    > Make sure you select **New Project** at this point, and not **New Workspace**.
 
 4. Next, select **Authorize**
 
@@ -47,13 +49,13 @@ The exercises in this workshop will involve creating and configuring resources f
 
     <img src="../img/0-terminal.png" width=650 align=center>
 
-2. Run the following command to start the authentication flow.
+2. Run the following command to get a device authorization code and open a browser tab to the device login page.
 
     ```bash
-    az login
+    az login --use-device-code & gp preview --external https://microsoft.com/devicelogin
     ```
-
-    Follow the instructions in the terminal output to login in.
+    
+    Copy the device login code from the terminal output and paste it into the device login page. Follow the instructions on the login page.
 
 3. To confirm your CLI is authenticated, run the following command. This will output summary information about your Azure Subscription.
 

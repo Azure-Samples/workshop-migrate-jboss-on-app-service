@@ -150,13 +150,10 @@ az webapp deploy --resource-group $RESOURCE_GROUP --name $WEBAPP_NAME \
     --target-path /home/site/libs/jboss-cli-commands.cli --type lib --restart false && \
 \
 az webapp deploy --resource-group $RESOURCE_GROUP --name $WEBAPP_NAME \
-  --src-path $GITPOD_REPO_ROOT/setup/startup.sh  --type startup --restart false && \
-\
-az webapp deploy --resource-group $RESOURCE_GROUP --name $WEBAPP_NAME \
-  --src-path $GITPOD_REPO_ROOT/target/ROOT.war --type war
+  --src-path $GITPOD_REPO_ROOT/setup/startup.sh  --type startup --restart true
 ```
 
-The `--type` argument informs where the files are placed on the app service. This will also trigger the app to restart to apply the new configuration. We should now have a fully deployed EAP instance on App Service with support for PostgreSQL.
+The `--type` argument informs where the files are placed on the app service. This will also trigger the app to restart to apply the new configuration. In the next section you will set up GitHub Actions to continiously build and deploy your CoolStore application to App Service.
 
 ## 4.4 - Exercise: Push your changes to your repository
 
@@ -180,7 +177,7 @@ With your commit done, you can now _push_ that commit up to your GitHub reposito
 
 If you then browse your your GitHub repository in a separate tab (e.g. _https://github.com/JoeSmith/workshop-migrate-jboss-on-app-service_), you should see your newest commit at the top with the same comment you entered. Congratulations! You can repeat this step as you make changes.
 
-**Congratulations!** You now have deployed a PostgreSQL database and enabled it for use in JBoss EAP, but you have not yet deployed the Cool Store application to App Service. In the next section, you will set up automation to deploy and redeploy the app each time you wish to make a change.
+**Congratulations!** You now have deployed a PostgreSQL database and connected it to your JBoss EAP instance running on App Service, but you have not yet deployed any application to EAP. In the next section, you will set up automation to deploy and redeploy the app each time you wish to make a change.
 
 ---
 
