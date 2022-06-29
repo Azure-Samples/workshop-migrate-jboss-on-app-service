@@ -15,6 +15,8 @@ Learn how to migrate an on-premises Jakarta EE application to JBoss EAP using th
 
 ### Instructions
 
+#### Core Sections
+
 1. [Set up your environment](instructions/1-environment-setup.md)
 1. [Learn about and create an Azure App Service](instructions/2-learn-about-app-service.md)
 1. [Migrate an on-prem WebLogic app to JBoss on App Service using the Migration Toolkit for Apps](instructions/3-migrate-weblogic-to-jboss.md)
@@ -23,6 +25,11 @@ Learn how to migrate an on-premises Jakarta EE application to JBoss EAP using th
 1. [Deploy your application to the App Service Environment](instructions/6-app-service-environment.md)
 1. [Set up CI workflows to deploy to staging environments](instructions/7-deploy-to-staging-slots.md)
 1. [Conclusion & Summary](instructions/8-conclusion.md)
+
+#### Optional Sections
+
+- [A: Enable Application Insights](instructions/A-application-insights.md)
+- [B: Deploy a clustered application](instructions/B-clustered-deployments.md)
 
 ## Resources
 
