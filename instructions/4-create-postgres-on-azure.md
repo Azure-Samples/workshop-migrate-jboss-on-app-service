@@ -150,13 +150,10 @@ az webapp deploy --resource-group $RESOURCE_GROUP --name $WEBAPP_NAME \
     --target-path /home/site/libs/jboss-cli-commands.cli --type lib --restart false && \
 \
 az webapp deploy --resource-group $RESOURCE_GROUP --name $WEBAPP_NAME \
-  --src-path $GITPOD_REPO_ROOT/setup/startup.sh  --type startup --restart false && \
-\
-az webapp deploy --resource-group $RESOURCE_GROUP --name $WEBAPP_NAME \
-  --src-path $GITPOD_REPO_ROOT/target/ROOT.war --type war
+  --src-path $GITPOD_REPO_ROOT/setup/startup.sh  --type startup --restart true
 ```
 
-The `--type` argument informs where the files are placed on the app service. This will also trigger the app to restart to apply the new configuration. We should now have a fully deployed EAP instance on App Service with support for PostgreSQL.
+The `--type` argument informs where the files are placed on the app service. This will also trigger the app to restart to apply the new configuration. In the next section you will set up GitHub Actions to continiously build and deploy your CoolStore application to App Service.
 
 ## 4.4 - Exercise: Push your changes to your repository
 
