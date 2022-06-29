@@ -85,7 +85,7 @@ Replace the entire file with the below content, and then replace the placeholder
         "DB_SERVER_NAME": "[Your initials]-postgres-database",
         "WEBAPP_NAME": "[Your initials]-webapp",
 
-        // this must be the same as in the ARM template you will deploy in section 1.4, and different from WEBAPP_NAME
+        // this must be the same name from the ARM template you deployed earlier, and different from WEBAPP_NAME
         "ASE_WEBAPP_NAME": "[Your initials]-ase-webapp",
 
         // these are OK to be hard-coded
