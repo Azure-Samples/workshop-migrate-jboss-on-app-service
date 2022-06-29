@@ -145,14 +145,12 @@ Later sections of this workshop will introduce and explain the App Service Envir
 2. Next, deploy the ARM Template to that resource group (this will take 2-3 hours to complete!). The `ASE_WEBAPP_NAME` must be globally unique, so consider using part of your name or including numbers.
 
     ```bash
-    UNIQUE_NAME=<provide a unique name>  # upper and lowercase letters, numbers, and dashes OK
-    az group create --name $RESOURCE_GROUP --location $LOCATION
     az deployment group create \
         --name ase_deployment \
         --resource-group $RESOURCE_GROUP \
         --template-uri https://raw.githubusercontent.com/Azure-Samples/workshop-migrate-jboss-on-app-service/main/templates/ase-template.json \
         --no-wait \
-        --parameters webAppName=${UNIQUE_NAME}-ase-webapp
+        --parameters webAppName=${ASE_WEBAPP_NAME}
     ```
 
 > **Tip**: You can view the progress of your deployments in the Azure Portal by navigating to your resource group, and clicking on the **Deployments** tab.
