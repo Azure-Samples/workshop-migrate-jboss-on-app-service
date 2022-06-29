@@ -26,7 +26,6 @@ Enabling Application Insights on App Service is easy since no code changes are r
 
     ![](../img/A-enable-app-insights.png)
 
-1. (Optional) use the language tabs at the bottom for .NET, .NET Core, and Java to configure the agent
 1. Click **Apply** to save your changes
 
 That's it! When you save the settings your web app will restart, the App Insights agent will attach to the Java process, and the agent will begin sending information to the Application Insights resource. The next section will provide a tour of Application Insights.
