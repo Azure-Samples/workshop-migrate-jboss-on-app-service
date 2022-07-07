@@ -28,3 +28,14 @@ html {
   width: 100%;
   min-height: 75vh;
 }
+
+.quote-container {
+  background-color: #424242;
+  color: white;
+  width: 100%;
+  margin-bottom: 2%;
+}
+
+.quote-text {
+  max-width: 900px;
+}
