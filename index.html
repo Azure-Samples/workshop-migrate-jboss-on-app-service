@@ -19,22 +19,26 @@
 
 <body>
 
+  <!-- navbar -->
   <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-    <h5 class="my-0 mr-md-auto font-weight-normal">Microsoft | Red Hat</h5>
+    <a class="navbar-brand my-0 mr-md-auto font-weight-normal" href="/index.html">
+        <img src="assets/img/Microsoft-logo_rgb_c-gray.png" height="36">| <img
+            src="assets/img/Asset-Red_Hat-Logo_page-Logo-RGB.svg" height="30">
+    </a>
     <nav class="my-2 my-md-0 mr-md-3">
-      <a class="p-2 text-dark" href="https://azure.microsoft.com/en-us/services/app-service/web/">Features</a>
-      <a class="p-2 text-dark" href="#">Enterprise</a>
-      <a class="p-2 text-dark" href="#">Support</a>
-      <a class="p-2 text-dark" href="https://azure.microsoft.com/pricing/details/app-service/linux/">Pricing</a>
+        <a class="p-2 text-dark" href="https://azure.microsoft.com/en-us/services/app-service/web/">Features</a>
+        <a class="p-2 text-dark" href="#">Support</a>
+        <a class="p-2 text-dark" href="https://azure.microsoft.com/pricing/details/app-service/linux/">Pricing</a>
     </nav>
-    <a class="btn btn-outline-primary" href="#">Sign up</a>
+    <a class="btn btn-outline-primary" href="https://azure.microsoft.com/overview/sales-number/">Contact Sales</a>
   </div>
+  <!-- end navbar -->
 
   <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <h1 class="display-4">Migrate Jakarta EE apps to Azure</h1>
-    <p class="lead">This hands-on lab shows customers how to migrate Jakarta EE applications to Azure's
-      Platform-as-a-Service offer for JBoss EAP. The workshop comes with a pre-configured cloud IDE environment and
-      Azure resources.</p>
+    <h1 class="display-4">Jakarta EE Migration Workshop</h1>
+    <p class="lead">This hands-on lab demonstrates how to migrate Jakarta EE applications to Azure's
+        Platform-as-a-Service for JBoss EAP. The workshop comes with a pre-configured cloud IDE and
+        Azure subscription.</p>
   </div>
 
   <div class="container">
@@ -49,7 +53,6 @@
             <li>Have your cost center information</li>
             <li>Expected number of attendees</li>
             <li>Geographic region (time zone)</li>
-            <li>????</li>
           </ul>
           <a
             href="mailto:someone@spektra.com?cc=msft_field@microsoft.com&subject=Request for EAP Migration Workshop (MSFT)&body=(Please provide information about your expected number of attendees, geographic region, and cost center code.)"><button
@@ -64,39 +67,55 @@
           <img src="assets/img/redhat.jfif" height="50px">
           <ul class="list-unstyled mt-3 mb-4">
             <li>Have your cost center information</li>
-            <li>???</li>
-            <li>???</li>
-            <li>?????</li>
+            <li>Expected number of attendees</li>
+            <li>Geographic region (time zone)</li>
           </ul>
           <button type="button" class="btn btn-lg btn-block btn-primary">Get started</button>
         </div>
       </div>
       <div class="card mb-4 box-shadow">
         <div class="card-header">
-          <h4 class="my-0 font-weight-normal">Service Integrators & Partners</h4>
+          <h4 class="my-0 font-weight-normal">Partners</h4>
         </div>
         <div class="card-body">
-          <!-- <h1 class="card-title pricing-card-title">$29 <small class="text-muted">/ mo</small></h1> -->
+          <img src="assets/img/handshake-icon.png" height="50px">
           <ul class="list-unstyled mt-3 mb-4">
-            <li>30 users included</li>
-            <li>15 GB of storage</li>
-            <li>Phone and email support</li>
-            <li>Help center access</li>
+            <li>Have payment method ready</li>
+            <li>Partner with RH or MSFT field</li>
+            <li>Get support from product team</li>
           </ul>
-          <button type="button" class="btn btn-lg btn-block btn-primary">Contact us</button>
+          <a href="/form_page.html">
+            <button type="button" class="btn btn-lg btn-block btn-primary">Contact us</button>
+          </a>
         </div>
       </div>
     </div>
 
-    <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <div class="text-center embed-responsive embed-responsive-16by9">
-            <iframe class="" src="https://www.youtube.com/embed/do2y2N9iY9I" title="YouTube video player"
-              frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen>
-            </iframe>
-          </div>
+    <div class="card-deck text-center">
+      <div class="card mb-4 box-shadow">
+        <div class="card-header">
+          <h4 class="my-0 font-weight-normal">External Customers</h4>
+        </div>
+        <div class="card-body">
+          <ul class="list-unstyled mt-3 mb-4">
+            <li>Get connected with Microsoft and Red Hat</li>
+            <li>Have your organization complete this migration training at no cost to you!</li>
+          </ul>
+          <a
+            href="mailto:someone@spektra.com?cc=msft_field@microsoft.com&subject=Request for EAP Migration Workshop (MSFT)&body=(Please provide information about your expected number of attendees, geographic region, and cost center code.)"><button
+              type="button" class="btn btn-lg btn-block btn-primary">Get Started</button></a>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="row">
+      <div class="col-12">
+        <h2 class="display-5 text-center">Learn about JBoss EAP on Azure App Service</h2>
+        <div class="text-center embed-responsive embed-responsive-16by9">
+          <iframe class="" src="https://www.youtube.com/embed/do2y2N9iY9I" title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
         </div>
       </div>
     </div>
@@ -110,24 +129,32 @@
         <div class="col-6 col-md">
           <h5>Features</h5>
           <ul class="list-unstyled text-small">
-            <li><a class="text-muted" href="#">Cool stuff</a></li>
-            <li><a class="text-muted" href="#">Random feature</a></li>
-            <li><a class="text-muted" href="#">Team feature</a></li>
-            <li><a class="text-muted" href="#">Stuff for developers</a></li>
-            <li><a class="text-muted" href="#">Another one</a></li>
-            <li><a class="text-muted" href="#">Last time</a></li>
+            <li><a class="text-muted"
+                href="https://docs.microsoft.com/en-us/azure/azure-monitor/autoscale/autoscale-get-started">Automatic
+                Scaling</a></li>
+            <li><a class="text-muted"
+                href="https://docs.microsoft.com/en-us/azure/azure-monitor/app/azure-web-apps">Turn-key
+                instrumentation</a></li>
+            <li><a class="text-muted"
+                href="https://techcommunity.microsoft.com/t5/apps-on-azure-blog/clustering-support-for-jboss-eap-on-azure-app-service-public/ba-p/3252898">Clustered
+                EAP deployments</a></li>
+            <li><a class="text-muted" href="#">Joint support</a></li>
           </ul>
         </div>
         <div class="col-6 col-md">
           <h5>Resources</h5>
           <ul class="list-unstyled text-small">
-            <li><a class="text-muted" href="#">Resource</a></li>
-            <li><a class="text-muted" href="#">Resource name</a></li>
-            <li><a class="text-muted" href="#">Another resource</a></li>
-            <li><a class="text-muted" href="#">Final resource</a></li>
+            <li><a class="text-muted" href="https://azure.microsoft.com/services/app-service/web/">Pricing</a></li>
+            <li><a class="text-muted"
+                href="https://docs.microsoft.com/azure/cost-management-billing/reservations/prepay-app-service">Pre-paid
+                reservations</a></li>
+            <li><a class="text-muted"
+                href="https://docs.microsoft.com/azure/app-service/configure-language-java?pivots=platform-linux">Documentation</a>
+            </li>
+            <li><a class="text-muted" href="https://azure.microsoft.com/overview/sales-number/">Contact Sales</a></li>
           </ul>
         </div>
-        <div class="col-6 col-md">
+        <!-- <div class="col-6 col-md">
           <h5>About</h5>
           <ul class="list-unstyled text-small">
             <li><a class="text-muted" href="#">Team</a></li>
@@ -135,7 +162,7 @@
             <li><a class="text-muted" href="#">Privacy</a></li>
             <li><a class="text-muted" href="#">Terms</a></li>
           </ul>
-        </div>
+        </div> -->
       </div>
     </footer>
   </div>
