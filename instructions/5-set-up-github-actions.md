@@ -51,7 +51,7 @@ To accomplish this task you can go to the **Actions** tab of your fork (on githu
 
 ![Java with Maven template](../img/4-actions-tab.png)
 
-Under the **Workflows made for your repository** section (or possibly the **Continuous Integration Workflows** section), there will be a template workflow titled, **Java with Maven** (you may need to click the _More Continuous Integration Workflows_ button to expand the list). Once you find **Java with Maven**, click **Set up this workflow** to enter the in-browser editor to get the workflow set up.
+Under the **Suggested for this repository** section (or possibly the **Continuous Integration** section), there will be a template workflow titled, **Java with Maven** (you can also just search for it with the search box). Once you find **Java with Maven**, click **Configure** to enter the in-browser editor to get the workflow set up.
 
 ![Java with Maven template](../img/4-card.png)
 
@@ -123,9 +123,16 @@ Click on the URL, and you should now see the Coolstore application running on Ap
 
 <img src="../img/4-appsvc-app.png" width=700 align=center>
 
-> **NOTE**: You may see the default JBoss EAP landing page instead. It may take a few minutes for the app to deploy and be ready, so just give it a minute before refreshing. If you still don't see the app, check for invalid or missing setup scripts, or invalid values for the Application Settings (connection URL, username or password) from prior exercises. Double-check the values are correct and try to re-deploy the application again!
+> **NOTE**: You may see the default JBoss EAP landing page instead, or perhaps even a blank page.It may take a few minutes for the app to deploy and be ready, so just give it a minute before refreshing. If you still don't see the app, check for invalid or missing setup scripts, or invalid values for the Application Settings (connection URL, username or password) from prior exercises. Double-check the values are correct and try to re-deploy the application again! You can also manually deploy the app using the Azure CLI with the following command:
+> ```bash
+> az webapp deploy \
+>   --resource-group $RESOURCE_GROUP \
+>   --name $WEBAPP_NAME \
+>   --src-path target/ROOT.war \
+>   --type war
+> ```
 
-> **NOTE**: You can manually trigger another workflow run by clicking on the **Actions** tab, then clicking on the action you wish to re-run, and finally click on **Re-run jobs** and selecting **Re-run all jobs**:
+> **NOTE**: You can also manually trigger another workflow run by clicking on the **Actions** tab, then clicking on the action you wish to re-run, and finally click on **Re-run jobs** and selecting **Re-run all jobs**:
 
 <img src="../img/4-rerun.png" width=700 align=center>
 

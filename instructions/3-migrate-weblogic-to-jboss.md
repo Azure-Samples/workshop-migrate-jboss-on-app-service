@@ -10,7 +10,7 @@ JBoss EAP includes everything needed to build, run, deploy, and manage enterpris
 
 More features and benefits of JBoss EAP are here:
 
-* **Java certified** - Support the leading Java standards and specifications including Jakarta EE 8, Java SE 11 ([OpenJDK](https://developers.redhat.com/products/openjdk/overview) and Oracle JDK), and Eclipse MicroProfile.
+* **Java certified** - Support the leading Java standards and specifications including Jakarta EE 8, Java SE 8, 11 and 17 ([OpenJDK](https://developers.redhat.com/products/openjdk/overview) and Oracle JDK), and Eclipse MicroProfile.
 * **Optimizing for the Cloud** - Highly efficient and optimized for container and cloud deployments including [Red Hat OpenShift](https://developers.redhat.com/products/openshift/overview). JBoss EAP offers an extremely low memory footprint, fast start-up times, and efficient resource utilization.
 * **Modular and lightweight** - Provide a modular structure that allows service enabling only when required, improving startup speed to build a modern application platform.
 * **Enterprise performance** - Provide a flexible web server, Undertow, as well as enterprise features such as failover, clustering, caching, intelligent load balancing, and distributed deployment performance-tuned for highly transactional applications.
@@ -191,7 +191,7 @@ MTA also provides helpful links to understand the issue deeper and offer guidanc
 
 The WebLogic `ApplicationLifecycleListener` abstract class is used to perform functions or schedule jobs in Oracle WebLogic, like server start and stop. In this case we have code in the `postStart` and `preStop` methods which are executed after WebLogic starts up and before it shuts down, respectively.
 
-In Jakarta EE, there is no equivalent to intercept these events so the _ApplicationLifecycleListener_ need to be removed. Instead, you can get equivalent functionality using a _Singleton EJB_ with standard annotations, as suggested in the issue in the MTA report. 
+In Jakarta EE, there is no equivalent to intercept these events so the _ApplicationLifecycleListener_ need to be removed. Instead, you can get equivalent functionality using a _Singleton EJB_ with standard annotations, as suggested in the issue in the MTA report.
 
 We will use the `@Startup` annotation to tell the container to initialize the singleton session bean at application start. We will similarly use the `@PostConstruct` and `@PreDestroy` annotations to specify the methods to invoke at the start and end of the application lifecycle achieving the same result but without using proprietary interfaces.
 
@@ -565,7 +565,7 @@ The output should look like:
 
 ## 3.5 - Summary
 
-Let's open a simple browser then access the application. Click on `Remote Explorer` on the left, you will see open ports. Then, click on `Open Browser` icon next to port `8080` (the default web server port for JBoss EAP):
+Let's open a simple browser then access the application. Click on the list of ports at the very bottom of the screen (see below), or press `F1` and select `View: Toggle Ports`. Then, click on the small globe icon next to port `8080` (the default web server port for JBoss EAP):
 
 <p align="center">
 <img src="../img/2-open-browser.png" width=700 align=center>
