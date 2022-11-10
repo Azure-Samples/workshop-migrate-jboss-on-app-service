@@ -13,7 +13,7 @@ fi
 echo "Site URI: ${SITE_URI}"
 
 # Deploy WAR file
-az storage blob upload --account-name $STORAGE_ACCOUNT -c $CONTAINER -f ROOT.war
+az storage blob upload --account-name $STORAGE_ACCOUNT -c $CONTAINER -f ROOT.war --overwrite
 WAR_URL=$(az storage blob generate-sas --full-uri --permissions r --expiry $EXPIRY --account-name $STORAGE_ACCOUNT -c $CONTAINER -n ROOT.war | xargs)
 az rest --method PUT \
         --uri $SITE_URI \
@@ -30,7 +30,7 @@ az rest --method PUT \
         }'
 
 # Deploy database driver
-az storage blob upload --account-name $STORAGE_ACCOUNT -c $CONTAINER -f setup/postgresql.jar
+az storage blob upload --account-name $STORAGE_ACCOUNT -c $CONTAINER -f setup/postgresql.jar --overwrite
 DRIVER_URL=$(az storage blob generate-sas --full-uri --permissions r --expiry $EXPIRY --account-name $STORAGE_ACCOUNT -c $CONTAINER -n postgresql.jar | xargs)
 az rest --method PUT \
         --uri $SITE_URI \
@@ -46,7 +46,7 @@ az rest --method PUT \
         }'
 
 # Deploy JBoss scripts
-az storage blob upload --account-name $STORAGE_ACCOUNT -c $CONTAINER -f setup/jboss-cli-commands.cli
+az storage blob upload --account-name $STORAGE_ACCOUNT -c $CONTAINER -f setup/jboss-cli-commands.cli --overwrite
 SCRIPTS_URL=$(az storage blob generate-sas --full-uri --permissions r --expiry $EXPIRY --account-name $STORAGE_ACCOUNT -c $CONTAINER -n jboss-cli-commands.cli | xargs)
 az rest --method PUT \
         --uri $SITE_URI \
@@ -62,7 +62,7 @@ az rest --method PUT \
         }'
 
 # Deploy startup script
-az storage blob upload --account-name $STORAGE_ACCOUNT -c $CONTAINER -f setup/startup.sh
+az storage blob upload --account-name $STORAGE_ACCOUNT -c $CONTAINER -f setup/startup.sh --overwrite
 STARTUP_URL=$(az storage blob generate-sas --full-uri --permissions r --expiry $EXPIRY --account-name $STORAGE_ACCOUNT -c $CONTAINER -n startup.sh | xargs)
 az rest --method PUT \
         --uri $SITE_URI \
