@@ -21,7 +21,7 @@ ENV JAVA_HOME=/usr/local/jdk-11.0.12+7
 ENV PATH=$JAVA_HOME/bin:$PATH
 
 # maven
-ENV MVN_DIST=https://dlcdn.apache.org/maven/maven-3/3.8.5/binaries/apache-maven-3.8.5-bin.tar.gz
+ENV MVN_DIST=https://dlcdn.apache.org/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.tar.gz
 
 RUN wget -q -O /tmp/maven.tar.gz $MVN_DIST && \
     cd /usr/local && \
