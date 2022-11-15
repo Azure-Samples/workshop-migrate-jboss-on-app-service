@@ -22,7 +22,7 @@ github:
 
 vscode:
   extensions:
-    - redhat.mta-vscode-extension@0.0.79
+    - https://download.jboss.org/jbosstools/vscode/snapshots/mta-vscode-extension/mta-vscode-extension-0.0.92-337.vsix
 
 tasks:
   - name: Pre-warm Maven
