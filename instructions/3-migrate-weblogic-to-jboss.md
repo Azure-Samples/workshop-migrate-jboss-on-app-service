@@ -28,13 +28,13 @@ JBoss EAP is based upon the popular open source project [WildFly](https://jbosso
 | 7.1      | 11       |
 | 7.0      | 10       |
 
-## 3.2 - What is the Migration Toolkit for Applications?
+## 3.2 - What is the Migration Toolkit for Runtimes?
 
 <p align="center">
-    <img src="../img/2-mta_logo.png" width=500 align=center>
+    <img src="../img/2-mtr_icon.png" align=center>
 </p>
 
-__Migration Toolkit for Applications (MTA)__ is an extensible and customizable rule-based tool that helps simplify migration of Java applications.
+__Migration Toolkit for Runtimes (MTR)__ is an extensible and customizable rule-based tool that helps simplify migration of Java applications.
 
 It is used by organizations for:
 
@@ -45,15 +45,15 @@ It is used by organizations for:
 * Rule extensibility and customization
 * Ability to analyze source code or application archives
 
-Read more about it in the [MTA documentation](https://access.redhat.com/documentation/en-us/migration_toolkit_for_applications/)
+Read more about it in the [MTR documentation](https://developers.redhat.com/products/mtr/getting-started)
 
-## 3.3 - Exercise: Analyze app using MTA IDE Plugin
+## 3.3 - Exercise: Analyze app using MTR IDE Plugin
 
 In this step we will analyze a monolithic application built for use with Oracle WebLogic Server (WLS). This application is a Java EE application using a number of different technologies, including standard Java EE APIs as well as proprietary WebLogic APIs and best practices.
 
-For this lab, we will use the MTA [IDE Plugin](https://access.redhat.com/documentation/en-us/migration_toolkit_for_applications/5.1/html-single/ide_plugin_guide/index) based on [Gitpod](https://www.gitpod.io/docs/).
+For this lab, we will use the MTR [Visual Studio Code Extension](https://access.redhat.com/documentation/en-us/migration_toolkit_for_runtimes/1.0/html-single/visual_studio_code_extension_guide) based on [Gitpod](https://www.gitpod.io/docs/).
 
-The IDE Plugin for the Migration Toolkit for Applications provides assistance directly in Gitpod for developers making changes for a migration or modernization effort. It analyzes your projects using MTA, marks migration issues in the source code, provides guidance to fix the issues, and offers automatic code replacement when possible.
+The IDE Plugin for the Migration Toolkit for Applications provides assistance directly in Gitpod for developers making changes for a migration or modernization effort. It analyzes your projects using MTR, marks migration issues in the source code, provides guidance to fix the issues, and offers automatic code replacement when possible.
 
 ### 3.3.1 - Access Your Development Environment
 
@@ -77,7 +77,7 @@ You can see icons on the left for navigating between project explorer, search, s
 
 ----
 
-Click on `MTA Explorer` icon on the left, you will see a new MTA configuration is automatically added. To input source files and directories, click on `Add` then select `Open File Explorer`:
+Click on `MTR Explorer` icon on the left, you will see a new MTR configuration is automatically added. To input source files and directories, click on `Add` then select `Open File Explorer`:
 
 <p align="center">
 <img src="../img/2-mta-add-input.png" width=700 align=center>
@@ -107,13 +107,13 @@ Find and click on the `--source` checkbox then select `weblogic` to indicate tha
 
 ----
 
-Right-click on *mtaConfiguration* to analyze the WebLogic application. Click on `Run` in the popup menu:
+Click on the `arrow` button on the *configuration* to analyze the WebLogic application.
 
 <p align="center">
 <img src="../img/2-mta-run-report.png" width=700 align=center>
 </p>
 
-Migration Toolkit for Applications (MTA) CLI will be executed automatically in a new terminal in GitPod and it will take a minute or less to complete the analysis. Once it's done, click on `Open Report` in the pop-up:
+CLI will be executed automatically in a new terminal in GitPod and it will take a minute or less to complete the analysis. Once it's done, click on `Open Report` in the pop-up:
 
 <p align="center">
 <img src="../img/2-mta-analysis-complete.png" width=700 align=center>
@@ -167,7 +167,7 @@ Let's jump to code containing identified migration issues. Expand the **workshop
 <img src="../img/2-mta_project_issues.png" width=500 align=center>
 </p>
 
-In the Explorer, MTA issues use an icon to indicate their severity level and status. The following table describes the meaning of the various icons:
+In the Explorer, MTR issues use an icon to indicate their severity level and status. The following table describes the meaning of the various icons:
 
 <p align="center">
 <img src="../img/2-mta-issues-table.png" width=700 align=center>
@@ -183,7 +183,7 @@ Let's take a look at the details about the migration issue. Right-click on `WebL
 <img src="../img/2-mta-issue-detail.png" width=900 align=center>
 </p>
 
-MTA also provides helpful links to understand the issue deeper and offer guidance for the migration when you click on `Open Report`:
+MTR also provides helpful links to understand the issue deeper and offer guidance for the migration when you click on `Open Report`:
 
 <p align="center">
 <img src="../img/2-mta-issue-open-report.png" width=900 align=center>
@@ -191,7 +191,7 @@ MTA also provides helpful links to understand the issue deeper and offer guidanc
 
 The WebLogic `ApplicationLifecycleListener` abstract class is used to perform functions or schedule jobs in Oracle WebLogic, like server start and stop. In this case we have code in the `postStart` and `preStop` methods which are executed after WebLogic starts up and before it shuts down, respectively.
 
-In Jakarta EE, there is no equivalent to intercept these events so the _ApplicationLifecycleListener_ need to be removed. Instead, you can get equivalent functionality using a _Singleton EJB_ with standard annotations, as suggested in the issue in the MTA report.
+In Jakarta EE, there is no equivalent to intercept these events so the _ApplicationLifecycleListener_ need to be removed. Instead, you can get equivalent functionality using a _Singleton EJB_ with standard annotations, as suggested in the issue in the MTR report.
 
 We will use the `@Startup` annotation to tell the container to initialize the singleton session bean at application start. We will similarly use the `@PostConstruct` and `@PreDestroy` annotations to specify the methods to invoke at the start and end of the application lifecycle achieving the same result but without using proprietary interfaces.
 
@@ -445,7 +445,7 @@ Much of WebLogic’s interfaces for EJB components like MDBs reside in WebLogic 
 `src/main/webapp/WEB-INF/weblogic-ejb-jar.xml` to see one of these descriptors. There are many different configuration possibilities for EJBs and MDBs in this file, but luckily our application only uses one of them, namely it configures `<trans-timeout-seconds>` to 30, which means that if a given transaction within an MDB operation takes too long to complete (over 30 seconds), then the transaction is rolled back and exceptions are thrown. This interface is WebLogic-specific so we’ll
 need to find an equivalent in JBoss.
 
-Remove the unneeded `weblogic-ejb-jar.xml` file from the **Project Explorer** (not the **MTA Explorer**). This file is proprietary to WebLogic and not recognized or processed by JBoss EAP. Delete the file by right-clicking on the `src/main/webapp/WEB-INF/weblogic-ejb-jar.xml` file from the **Project Explorer** and choosing **Delete**, and click **OK**.
+Remove the unneeded `weblogic-ejb-jar.xml` file from the **Project Explorer** (not the **MTR Explorer**). This file is proprietary to WebLogic and not recognized or processed by JBoss EAP. Delete the file by right-clicking on the `src/main/webapp/WEB-INF/weblogic-ejb-jar.xml` file from the **Project Explorer** and choosing **Delete**, and click **OK**.
 
 > **_TIP:_** If you have the tab for the `weblogic-ejb-jar.xml` file open (or handy) you can quickly find it in the Project Explorer by right-clicking on the tab and then selecting **Reveal in Explorer** as shown.
 
@@ -483,19 +483,19 @@ mvn -f $GITPOD_REPO_ROOT clean package
 
 If builds successfully (you will see `BUILD SUCCESS`). If it does not compile, verify you made all the changes correctly and try the build again.
 
-### 3.4.11 - Re-run the MTA report
+### 3.4.11 - Re-run the MTR report
 
 ----
 
-In this step we will re-run the MTA report to verify our migration was successful.
+In this step we will re-run the MTR report to verify our migration was successful.
 
-In the _Migration Toolkit for Applications_, right-click on *mtaConfiguration* to analyze the WebLogic application once again. Click on `Run` in the popup menu:
+In the _MTR Explorer_, Click on the `arrow` button on the *configuration* once again:
 
 <p align="center">
 <img src="../img/2-mta-rerun-report.png" width=700 align=center>
 </p>
 
-Migration Toolkit for Applications (MTA) CLI will be executed automatically in a new terminal in GitPod then it will take less than a minute to complete the analysis. Click on `Open Report`:
+Windup CLI will be executed automatically in a new terminal in GitPod then it will take less than a minute to complete the analysis. Click on `Open Report`:
 
 <p align="center">
 <img src="../img/2-mta-analysis-rerun-complete.png" width=700 align=center>
@@ -513,8 +513,7 @@ You have successfully migrated this app to JBoss EAP, congratulations!
 <img src="../img/2-mta_project_issues_story.png" width=700 align=center>
 </p>
 
-**_NOTE:_** You should be aware that this type of migration is more involved than the previous steps, and in real world applications it will rarely be as simple as changing one line at a time for a migration. Consult the [MTA documentation](https://access.redhat.com/documentation/en-us/migration_toolkit_for_applications/) for more
-detail on Red Hat’s Application Migration strategies or contact your local Red Hat representative to learn more about how Red Hat can help you on your migration path.
+**_NOTE:_** You should be aware that this type of migration is more involved than the previous steps, and in real world applications it will rarely be as simple as changing one line at a time for a migration. Consult the [Migration Toolkit for Applications (Productized MTR) documentation](https://access.redhat.com/documentation/en-us/migration_toolkit_for_applications/) for more detail on Red Hat’s Application Migration strategies or contact your local Red Hat representative to learn more about how Red Hat can help you on your migration path.
 
 ### 3.4.13 - Test the application on JBoss EAP locally
 
