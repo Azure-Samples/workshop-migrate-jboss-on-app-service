@@ -28,7 +28,7 @@ RUN wget -q -O /tmp/maven.tar.gz $MVN_DIST && \
     tar -xvzf /tmp/maven.tar.gz && \
     rm -rf /tmp/maven.tar.gz
 
-ENV PATH=/usr/local/apache-maven-3.8.6/bin:$PATH
+ENV PATH=/usr/local/apache-maven-3.8.7/bin:$PATH
 
 # docker
 RUN curl -o /var/lib/apt/dazzle-marks/docker.gpg -fsSL https://download.docker.com/linux/ubuntu/gpg \
