@@ -1,0 +1,51 @@
+name: Delete slot on staging site
+
+on:
+  pull_request:
+    types: [closed]
+
+env:
+  WEBAPP: redhattestxatnoiziyoduy
+  RESOURCE_GROUP: Jbossonapp-872369
+  GATEWAY_NAME: gateway-redhattestxatnoiziyoduy-ilb-ase
+
+jobs:
+  delete-slot:
+    name: Delete slot related resources
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Log into Azure CLI with service principal
+      uses: azure/login@v1.1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
+    - name: Delete slot on staging site
+      run: | 
+        az webapp deployment slot delete \
+          --resource-group ${{ env.RESOURCE_GROUP }} \
+          --name {{env.WEBAPP}} \
+          --slot pr-${{ github.event.number }}
+
+    - name: Clean up routing rules on App Gateway
+      run: |
+        SLOT_NAME="pr-${{ github.event.number }}"
+        PROBE_NAME="probe-for-${SLOT_NAME}"
+        HTTP_SETTING_NAME="http-setting-for-${SLOT_NAME}"
+        URL_PATHS="url-paths-for-${SLOT_NAME}"
+
+        az network application-gateway url-path-map rule delete \
+          --gateway-name $GATEWAY_NAME \
+          -g $RESOURCE_GROUP \
+          --name "url-paths-for-${SLOT_NAME}" \
+          --path-map-name "slot-listener"
+          
+        az network application-gateway http-settings delete \
+          --gateway-name $GATEWAY_NAME \
+          -g $RESOURCE_GROUP \
+          -n $HTTP_SETTING_NAME
+        
+        az network application-gateway probe delete \
+          --gateway-name ${{ env.GATEWAY_NAME }} \
+          -g $RESOURCE_GROUP \
+          --name $PROBE_NAME
