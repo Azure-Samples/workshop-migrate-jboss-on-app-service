@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  WEBAPP: redhattestxatnoiziyoduy-ilb-ase
+  WEBAPP: redhattestxatnoiziyoduy
   RESOURCE_GROUP: Jbossonapp-872369
   STORAGE_ACCOUNT: "contoso872369"  # This must be a *globally* unique name. (Only lowercase letters and numbers allowed. No spaces, dashes, underscores.)
 
