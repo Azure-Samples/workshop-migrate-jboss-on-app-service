@@ -17,12 +17,14 @@ github:
   prebuilds:
     # enable for the default branch (defaults to true)
     master: true
-    # enable for all branches in this repo (defaults to false)
+# enable for all branches in this repo (defaults to false)
     branches: true
 
 vscode:
   extensions:
     - https://download.jboss.org/jbosstools/vscode/snapshots/mtr-vscode-extension/mtr-vscode-extension-0.0.993-494.vsix
+
+    - vscjava.vscode-maven
 
 tasks:
   - name: Pre-warm Maven
