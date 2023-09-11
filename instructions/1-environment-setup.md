@@ -15,7 +15,7 @@ This workshop uses GitPod to provide a pre-configured development environment wi
 
     ![Select new project](../img/gitpod-new-project-prompt.png)
 
-    > Make sure you select **VS Code 1.76.0 Browser Latest**:
+    > Make sure you select **VS Code 1.82.0 Browser Latest**:
 
     ![VS Code](../img/vscode-latest.png)
 
