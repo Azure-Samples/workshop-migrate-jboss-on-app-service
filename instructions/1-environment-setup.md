@@ -4,7 +4,7 @@ This workshop uses GitPod to provide a pre-configured development environment wi
 
 ## 1.1 - GitPod Setup
 
-1. Fork [the workshop repository](https://github.com/Azure-Samples/workshop-migrate-jboss-on-app-service) into your personal GitHub account.
+1. Fork [the workshop repository](https://github.com/Azure-Samples/workshop-migrate-jboss-on-app-service){:target="_blank"} into your personal GitHub account.
 2. Go to [https://gitpod.io/](https://gitpod.io/) and create an account. You can use the Single-Sign-On to create a GitPod account from your GitHub account.
 
     ![Log into GitPod with GitHub](../img/gitpod-login-prompt.png)
