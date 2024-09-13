@@ -1,7 +1,11 @@
 FROM gitpod/workspace-full:latest
 
 USER gitpod
-RUN sdk default java 17.0.12.fx-zulu
+
+RUN bash -c ". /home/gitpod/.sdkman/bin/sdkman-init.sh && \
+    sdk install java 17.0.12.fx-zulu && \
+    sdk default java 17.0.12.fx-zulu"
+
 
 ### Java ###
 ## Place '.gradle' and 'm2-repository' in /workspace because (1) that's a fast volume, (2) it survives workspace-restarts and (3) it can be warmed-up by pre-builds.
