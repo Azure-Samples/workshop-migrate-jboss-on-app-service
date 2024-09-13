@@ -6,6 +6,7 @@ RUN bash -c ". /home/gitpod/.sdkman/bin/sdkman-init.sh && \
     sdk install java 17.0.12.fx-zulu && \
     sdk default java 17.0.12.fx-zulu"
 
+RUN java --version 
 
 ### Java ###
 ## Place '.gradle' and 'm2-repository' in /workspace because (1) that's a fast volume, (2) it survives workspace-restarts and (3) it can be warmed-up by pre-builds.
@@ -76,9 +77,11 @@ RUN cat ${SETUP_DIR}/config.cli
 
 ENV JBOSS_HOME /opt/jboss/wildfly/wildfly-${WILDFLY_VERSION}
 
-RUN $JBOSS_HOME/bin/jboss-cli.sh --echo-command --file=${SETUP_DIR}/config.cli \
-    && rm -rf $JBOSS_HOME/standalone/configuration/standalone_xml_history \
-    && chown -R gitpod:0 ${JBOSS_HOME} \
+RUN chown -R gitpod:0 ${JBOSS_HOME} \
     && chmod -R g+rw ${JBOSS_HOME}
 
 USER gitpod
+
+RUN $JBOSS_HOME/bin/jboss-cli.sh --echo-command --file=${SETUP_DIR}/config.cli
+
+RUN rm -rf $JBOSS_HOME/standalone/configuration/standalone_xml_history
