@@ -73,4 +73,3 @@ RUN $JBOSS_HOME/bin/jboss-cli.sh --echo-command --file=${SETUP_DIR}/config.cli \
     && chmod -R g+rw ${JBOSS_HOME}
 
 USER gitpod
-
