@@ -7,7 +7,7 @@ USER gitpod
 RUN bash -c "mkdir /home/gitpod/.m2 \
              && printf '<settings>\n  <localRepository>/workspace/m2-repository/</localRepository>\n</settings>\n' > /home/gitpod/.m2/settings.xml"
 
-RUN sdk default java 17.0.12.fx-zulu
+
 # ENV JAVA_DIST="https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.9%2B9/OpenJDK17U-jdk_x64_linux_hotspot_17.0.9_9.tar.gz" 
 
 USER root
@@ -75,3 +75,5 @@ RUN $JBOSS_HOME/bin/jboss-cli.sh --echo-command --file=${SETUP_DIR}/config.cli \
     && chmod -R g+rw ${JBOSS_HOME}
 
 USER gitpod
+
+RUN sdk default java 17.0.12.fx-zulu
