@@ -7,28 +7,27 @@ USER gitpod
 RUN bash -c "mkdir /home/gitpod/.m2 \
              && printf '<settings>\n  <localRepository>/workspace/m2-repository/</localRepository>\n</settings>\n' > /home/gitpod/.m2/settings.xml"
 
-ENV JAVA_DIST="https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.12%2B7/OpenJDK11U-jdk_x64_linux_hotspot_11.0.12_7.tar.gz"
+ENV JAVA_DIST="https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.9%2B9/OpenJDK17U-jdk_x64_linux_hotspot_17.0.9_9.tar.gz"
 
 USER root
 
 RUN wget -q -O /tmp/jdk.tar.gz $JAVA_DIST && \
-  rm -rf /home/gitpod/.sdkman/candidates/java/11.0.12.fx-zulu/* && \
   cd /usr/local && \
   tar -xzvf /tmp/jdk.tar.gz && \
-  rm -rf jdk-11/ /tmp/jdk.tar.gz
+  rm -rf /tmp/jdk.tar.gz
 
-ENV JAVA_HOME=/usr/local/jdk-11.0.12+7
+ENV JAVA_HOME=/usr/local/jdk-17.0.9+9
 ENV PATH=$JAVA_HOME/bin:$PATH
 
 # maven
-ENV MVN_DIST=https://dlcdn.apache.org/maven/maven-3/3.8.8/binaries/apache-maven-3.8.8-bin.tar.gz
+ENV MVN_DIST=https://dlcdn.apache.org/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz
 
 RUN wget -q -O /tmp/maven.tar.gz $MVN_DIST && \
     cd /usr/local && \
     tar -xvzf /tmp/maven.tar.gz && \
     rm -rf /tmp/maven.tar.gz
 
-ENV PATH=/usr/local/apache-maven-3.8.8/bin:$PATH
+ENV PATH=/usr/local/apache-maven-3.9.9/bin:$PATH
 
 # docker
 RUN curl -o /var/lib/apt/dazzle-marks/docker.gpg -fsSL https://download.docker.com/linux/ubuntu/gpg \

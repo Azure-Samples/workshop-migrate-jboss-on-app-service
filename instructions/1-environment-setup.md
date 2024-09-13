@@ -4,46 +4,28 @@ This workshop uses GitPod to provide a pre-configured development environment wi
 
 ## 1.1 - GitPod Setup
 
-1. Fork [the workshop repository](https://github.com/Azure-Samples/workshop-migrate-jboss-on-app-service){:target="_blank"} into your personal GitHub account.
-2. Go to [https://gitpod.io/](https://gitpod.io/) and create an account. You can use the Single-Sign-On to create a GitPod account from your GitHub account.
+1. Fork [the workshop repository](https://github.com/Azure-Samples/workshop-migrate-jboss-on-app-service) into your personal **GitHub** account.
+2. Go to [GitPod](https://gitpod.io/) and create an account. You can use the Single-Sign-On to create a GitPod account from your **GitHub** account.
 
     ![Log into GitPod with GitHub](../img/gitpod-login-prompt.png)
 
-3. On the next screen, select **New Project**
+3. On the next screen, select **Configure your own repository**.
 
-    > Make sure you select **New Project** at this point, and not **New Workspace**.
+    ![Configure your own repository](../img/gitpod-configure-repo.png)
 
-    ![Select new project](../img/gitpod-new-project-prompt.png)
+4. Select a repository and key in your forked workshop repository.
 
-    > Make sure you select **VS Code 1.82.0 Browser Latest**:
+    > Leave the other configurations (e.g., VS Code version, Standard) by default
 
-    ![VS Code](../img/vscode-latest.png)
+    ![Select a repository](../img/gitpod-select-repo.png)
 
-4. Next, select **Authorize**
+4. Next, select **Contiute**.
 
-    ![Click authorize](../img/gitpod-authorize-prompt.png)
+    > It takes a few minutes to create a new workspace.
 
-5. The next screen will ask which account(s) you want to authorize the application in. Select **your personal account**, which should be first in the list.
+5. The next screen will show a new cloud IDE based on VS Code.
 
-   ![Select personal account](../img/gitpod-choose-account-prompt.png)
-
-6. Then select your fork of the workshop repository, this will give GitPod permissions to read and write to your repo. Click **Install**.
-
-   ![Install app](../img/gitpod-select-repository-prompt.png)
-
-7. On the next screen, select the **workshop-migrate-jboss-on-app-service** project.
-
-    ![Select workshop-migrate-jboss-on-app-service](../img/gitpod-select-proejct.png)
-
-8. Then select your personal account as the team to instantiate the project into.
-
-    ![Click your personal account](../img/gitpod-select-team.png)
-
-9. Lastly, click **New workspace**. This will start the dev container and takes about one minute.
-
-    ![Click New Workspace](../img/gitpod-start-workspace.png)
-
-Once the workspace launches, you will have a cloud-based VS Code IDE!
+   ![New workspace](../img/gitpod-vs-code.png)
 
 ## 1.2 - Sign into Azure
 
