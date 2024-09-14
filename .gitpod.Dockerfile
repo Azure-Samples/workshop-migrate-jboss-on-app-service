@@ -34,8 +34,8 @@ RUN cd $HOME \
     && mv $HOME/wildfly-${WILDFLY_VERSION}/ $JBOSS_HOME \
     && rm wildfly-${WILDFLY_VERSION}.tar.gz
 
-RUN cat ${SETUP_DIR}/jboss-cli-docker.cli ${SETUP_DIR}/jboss-cli-commands.cli > ${SETUP_DIR}/config.cli
-RUN cat ${SETUP_DIR}/config.cli
+# RUN cat ${SETUP_DIR}/jboss-cli-docker.cli ${SETUP_DIR}/jboss-cli-commands.cli > ${SETUP_DIR}/config.cli
+# RUN cat ${SETUP_DIR}/config.cli
 
 ENV JBOSS_HOME /opt/jboss/wildfly/wildfly-${WILDFLY_VERSION}
 
