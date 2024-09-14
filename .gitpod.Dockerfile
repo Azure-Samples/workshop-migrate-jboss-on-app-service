@@ -82,6 +82,6 @@ RUN chown -R gitpod:0 ${JBOSS_HOME} \
 
 USER gitpod
 
-RUN $JBOSS_HOME/bin/jboss-cli.sh --echo-command --file=${SETUP_DIR}/config.cli
+# RUN $JBOSS_HOME/bin/jboss-cli.sh --echo-command --file=${SETUP_DIR}/config.cli
 
-RUN rm -rf $JBOSS_HOME/standalone/configuration/standalone_xml_history
+# RUN rm -rf $JBOSS_HOME/standalone/configuration/standalone_xml_history
