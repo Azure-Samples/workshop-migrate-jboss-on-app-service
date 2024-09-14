@@ -2,11 +2,9 @@ FROM gitpod/workspace-full:latest
 
 USER gitpod
 
-# RUN bash -c ". /home/gitpod/.sdkman/bin/sdkman-init.sh && \
-#     sdk install java 17.0.12.fx-zulu && \
-#     sdk default java 17.0.12.fx-zulu"
-
-RUN sdk default java 17.0.12.fx-zulu
+RUN bash -c ". /home/gitpod/.sdkman/bin/sdkman-init.sh && \
+    sdk install java 17.0.12.fx-zulu && \
+    sdk default java 17.0.12.fx-zulu"
 
 USER root
 
