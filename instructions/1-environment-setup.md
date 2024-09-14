@@ -33,7 +33,7 @@ The exercises in this workshop will involve creating and configuring resources f
 
 1. Open the VS Code terminal in GitPod by going to the existing `bash` terminal:
 
-    <img src="../img/0-terminal.png" width=650 align=center>
+    ![New termainl](../img/0-terminal.png)
 
 2. Run the following command to get a device authorization code and open a browser tab to the device login page.
 
@@ -88,7 +88,11 @@ Replace the entire file with the below content, and then replace the placeholder
 }
 ```
 
-Save the file, then close your existing bash Terminal since it will not have these new settings (careful not to close the others!):
+Close your existing bash Terminal since it will not have these new settings (careful not to close the others!).
+
+> **Note**
+> 
+> All changes will be automatically saved.
 
 <img src="../img/0-bash-kill.png" width=650 align=center>
 
@@ -107,7 +111,7 @@ done
 
 You should see the same values you entered. Now each new Terminal you open will have these settings. Some of the commands you run later in the workshop will reference these variables.
 
-> **Warning:**
+> **Warning**
 > 
 > If you still see placeholder values instead of the values you entered into the JSON file, ensure that
 > the file is saved by clicking into the file, and using `CTRL-S` (or `CMD-S` on a Mac), then close the
