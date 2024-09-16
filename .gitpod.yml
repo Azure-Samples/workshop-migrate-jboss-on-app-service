@@ -22,8 +22,8 @@ github:
 
 vscode:
   extensions:
-    - redhat.windup-vscode-extension
-    - vscjava.vscode-java-debug
+    - redhat.windup-vscode-extension@6.2.51
+    - vscjava.vscode-java-debug@1.34.0
 
 tasks:
   - name: Pre-warm Maven
