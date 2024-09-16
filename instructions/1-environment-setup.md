@@ -27,6 +27,10 @@ This workshop uses GitPod to provide a pre-configured development environment wi
 
    ![New workspace](../img/gitpod-vs-code.png)
 
+   > If you see the following warning popou on the bottom, select `Install and Reload` button.
+
+    ![Install warning](../img/gitpod-vs-ext-warning.png)
+
 ## 1.2 - Sign into Azure
 
 The exercises in this workshop will involve creating and configuring resources from the Azure CLI and Azure Portal. The GitPod workspace already has the Azure CLI installed, but you will have to sign in from the CLI.
