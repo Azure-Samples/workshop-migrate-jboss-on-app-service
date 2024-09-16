@@ -23,7 +23,7 @@ github:
 vscode:
   extensions:
     - redhat.windup-vscode-extension
-    - vscjava.vscode-java-debug
+    # - vscjava.vscode-java-debug
     - redhat.java
 
 tasks:
