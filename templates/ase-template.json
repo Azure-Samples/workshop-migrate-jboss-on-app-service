@@ -39,7 +39,7 @@
         },
         "linuxFxVersion": {
             "type": "string",
-            "defaultValue": "JBOSSEAP|7-java11"
+            "defaultValue": "JBOSSEAP|8-java17"
         },
 
 
