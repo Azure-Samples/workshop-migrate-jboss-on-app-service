@@ -19,7 +19,7 @@ vscode:
     - redhat.java
 
 tasks:
-  - before: sdk install java 17.0.4.1-tem < /dev/null
+  - before: sdk install java 17.0.12-tem < /dev/null
   - name: Pre-warm Maven
     init: mvn -fn dependency:resolve-plugins dependency:resolve dependency:go-offline clean compile package
   - name: Start PostgreSQL container
