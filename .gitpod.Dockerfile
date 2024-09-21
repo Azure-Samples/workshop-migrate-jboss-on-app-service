@@ -8,8 +8,6 @@ RUN bash -c ". /home/gitpod/.sdkman/bin/sdkman-init.sh && \
 
 USER root
 
-ENV JAVA_HOME /home/gitpod/.sdkman/candidates/java/17.0.12-tem/
-
 # Azure CLI
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 
