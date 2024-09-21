@@ -19,6 +19,10 @@ vscode:
     # - redhat.mta-vscode-extension
     - https://download.jboss.org/jbosstools/vscode/snapshots/mtr-vscode-extension/mtr-vscode-extension-1.2.1-693.vsix
     - redhat.java
+    - vscjava.vscode-java-pack
+    - vscjava.vscode-java-debug
+    - vscjava.vscode-maven
+    - vscjava.vscode-java-test
 
 tasks:
   # - before: sdk install java 17.0.12-tem < /dev/null
