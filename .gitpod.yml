@@ -16,7 +16,8 @@ ports:
 vscode:
   extensions:
     # - redhat.windup-vscode-extension
-    - redhat.mta-vscode-extension
+    # - redhat.mta-vscode-extension
+    - https://download.jboss.org/jbosstools/vscode/snapshots/mtr-vscode-extension/mtr-vscode-extension-1.2.1-693.vsix
     - redhat.java
 
 tasks:
