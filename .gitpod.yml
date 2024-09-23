@@ -13,19 +13,17 @@ ports:
   - port: 5432
     onOpen: ignore
 
-github:
-  prebuilds:
-    # enable for the default branch (defaults to true)
-    master: true
-    # enable for all branches in this repo (defaults to false)
-    branches: true
-
 vscode:
   extensions:
-    - redhat.windup-vscode-extension
+    - redhat.java
+    - vscjava.vscode-java-pack
     - vscjava.vscode-java-debug
+    - vscjava.vscode-maven
+    - vscjava.vscode-java-test
+    - redhat.mta-vscode-extension
 
 tasks:
+  # - before: sdk install java 17.0.12-tem < /dev/null
   - name: Pre-warm Maven
     init: mvn -fn dependency:resolve-plugins dependency:resolve dependency:go-offline clean compile package
   - name: Start PostgreSQL container
