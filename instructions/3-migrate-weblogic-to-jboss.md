@@ -29,13 +29,13 @@ JBoss EAP is based upon the popular open source project [WildFly](https://jbosso
 | 7.1      | 11       |
 | 7.0      | 10       |
 
-## 3.2 - What is the Migration Toolkit for Runtimes?
+## 3.2 - What is the Migration Toolkit for Applications?
 
 <p align="center">
-    <img src="../img/2-mtr_icon.png" align=center>
+    <img src="../img/2-mta_icon.png" align=center>
 </p>
 
-__Migration Toolkit for Runtimes (MTR)__ is an extensible and customizable rule-based tool that helps simplify migration of Java applications.
+__Migration Toolkit for Applications (MTA)__ is an extensible and customizable rule-based tool that helps simplify migration of Java applications.
 
 It is used by organizations for:
 
@@ -46,15 +46,15 @@ It is used by organizations for:
 * Rule extensibility and customization
 * Ability to analyze source code or application archives
 
-Read more about it in the [MTR documentation](https://developers.redhat.com/products/mtr/getting-started)
+Read more about it in the [MTA documentation](https://developers.redhat.com/products/MTA/getting-started)
 
-## 3.3 - Exercise: Analyze app using Windup VS Code extension
+## 3.3 - Exercise: Analyze app using MTA VS Code extension
 
 In this step we will analyze a monolithic application built for use with Oracle WebLogic Server (WLS). This application is a Java EE application using a number of different technologies, including standard Java EE APIs as well as proprietary WebLogic APIs and best practices.
 
-For this lab, we will use the Windup [Visual Studio Code Extension](https://marketplace.visualstudio.com/items?itemName=redhat.windup-vscode-extension) based on [Gitpod](https://www.gitpod.io/docs/).
+For this lab, we will use the MTA [Visual Studio Code Extension](https://marketplace.visualstudio.com/items?itemName=redhat.mta-vscode-extension) based on [Gitpod](https://www.gitpod.io/docs/).
 
-The VS Code extension for the Migration Toolkit for Applications provides assistance directly in Gitpod for developers making changes for a migration or modernization effort. It analyzes your projects using MTR, marks migration issues in the source code, provides guidance to fix the issues, and offers automatic code replacement when possible.
+The VS Code extension for the Migration Toolkit for Applications provides assistance directly in Gitpod for developers making changes for a migration or modernization effort. It analyzes your projects using MTA, marks migration issues in the source code, provides guidance to fix the issues, and offers automatic code replacement when possible.
 
 ### 3.3.1 - Access Your Development Environment
 
@@ -74,11 +74,19 @@ You can see icons on the left for navigating between project explorer, search, s
 
 ----
 
-Click on `Windup` icon on the left, you will see a new migration configuration is automatically added. 
+Click on `MTA` icon on the left, you will see a new migration configuration is automatically added. 
 
 <p align="center">
-<img src="../img/2-windup-icon.png" width=700 align=center>
+<img src="../img/2-mta-icon.png" width=700 align=center>
 </p>
+
+Add the MTA CLI tool to _--cli_ configuration by checking on `--cli` checkbox. Click on `Add` to add the path, `/workspace/workshop-migrate-jboss-on-app-service/setup/kantra`. 
+
+<p align="center">
+<img src="../img/2-mta-cli.png" width=700 align=center>
+</p>
+
+Note that the **Kantra** is a command-line interface (CLI) that unifies Konveyor (MTA's upstream tool)'s analysis and transformation capabilities.
 
 To input source files and directories, click on `Add` then select `Open File Explorer`:
 
@@ -186,7 +194,7 @@ Let's take a look at the details about the migration issue. Right-click on `WebL
 <img src="../img/2-mta-issue-detail.png" width=900 align=center>
 </p>
 
-WIndup also provides helpful links to understand the issue deeper and offer guidance for the migration when you click on `Open Report`:
+MTA also provides helpful links to understand the issue deeper and offer guidance for the migration when you click on `Open Report`:
 
 <p align="center">
 <img src="../img/2-mta-issue-open-report.png" width=900 align=center>
@@ -448,7 +456,7 @@ Much of WebLogic’s interfaces for EJB components like MDBs reside in WebLogic 
 `src/main/webapp/WEB-INF/weblogic-ejb-jar.xml` to see one of these descriptors. There are many different configuration possibilities for EJBs and MDBs in this file, but luckily our application only uses one of them, namely it configures `<trans-timeout-seconds>` to 30, which means that if a given transaction within an MDB operation takes too long to complete (over 30 seconds), then the transaction is rolled back and exceptions are thrown. This interface is WebLogic-specific so we’ll
 need to find an equivalent in JBoss.
 
-Remove the unneeded `weblogic-ejb-jar.xml` file from the **Project Explorer** (not the **Windup Explorer**). This file is proprietary to WebLogic and not recognized or processed by JBoss EAP. Delete the file by right-clicking on the `src/main/webapp/WEB-INF/weblogic-ejb-jar.xml` file from the **Project Explorer** and choosing **Delete**, and click **OK**.
+Remove the unneeded `weblogic-ejb-jar.xml` file from the **Project Explorer** (not the **MTA Explorer**). This file is proprietary to WebLogic and not recognized or processed by JBoss EAP. Delete the file by right-clicking on the `src/main/webapp/WEB-INF/weblogic-ejb-jar.xml` file from the **Project Explorer** and choosing **Delete**, and click **OK**.
 
 > **_TIP:_** If you have the tab for the `weblogic-ejb-jar.xml` file open (or handy) you can quickly find it in the Project Explorer by right-clicking on the tab and then selecting **Reveal in Explorer** as shown.
 
@@ -492,13 +500,13 @@ If builds successfully (you will see `BUILD SUCCESS`). If it does not compile, v
 
 In this step we will re-run the issue report to verify our migration was successful.
 
-In the _Windup Explorer_, Click on the `arrow` button on the *configuration* once again:
+In the _MTA Explorer_, Click on the `arrow` button on the *configuration* once again:
 
 <p align="center">
 <img src="../img/2-mta-rerun-report.png" width=700 align=center>
 </p>
 
-Windup CLI will be executed automatically in a new terminal in GitPod then it will take less than a minute to complete the analysis. Click on `Open Report`:
+MTA CLI will be executed automatically in a new terminal in GitPod then it will take less than a minute to complete the analysis. Click on `Open Report`:
 
 <p align="center">
 <img src="../img/2-mta-analysis-rerun-complete.png" width=700 align=center>
@@ -516,7 +524,7 @@ You have successfully migrated this app to JBoss EAP, congratulations!
 <img src="../img/2-mta_project_issues_story.png" width=700 align=center>
 </p>
 
-**_NOTE:_** You should be aware that this type of migration is more involved than the previous steps, and in real world applications it will rarely be as simple as changing one line at a time for a migration. Consult the [Migration Toolkit for Applications (Productized Windup) documentation](https://access.redhat.com/documentation/en-us/migration_toolkit_for_applications/) for more detail on Red Hat’s Application Migration strategies or contact your local Red Hat representative to learn more about how Red Hat can help you on your migration path.
+**_NOTE:_** You should be aware that this type of migration is more involved than the previous steps, and in real world applications it will rarely be as simple as changing one line at a time for a migration. Consult the [Migration Toolkit for Applications documentation](https://access.redhat.com/documentation/en-us/migration_toolkit_for_applications/) for more detail on Red Hat’s Application Migration strategies or contact your local Red Hat representative to learn more about how Red Hat can help you on your migration path.
 
 ### 3.4.13 - Test the application on JBoss EAP locally
 
