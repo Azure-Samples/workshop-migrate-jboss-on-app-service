@@ -20,7 +20,8 @@ vscode:
     - vscjava.vscode-java-debug
     - vscjava.vscode-maven
     - vscjava.vscode-java-test
-    - redhat.mta-vscode-extension
+    # - https://download.jboss.org/jbosstools/vscode/snapshots/mta-vscode-extension/mta-vscode-extension-7.1.1-699.vsix
+    - https://download.jboss.org/jbosstools/vscode/stable/windup-vscode-extension/windup-vscode-extension-6.2.51-576.vsix
 
 tasks:
   # - before: sdk install java 17.0.12-tem < /dev/null

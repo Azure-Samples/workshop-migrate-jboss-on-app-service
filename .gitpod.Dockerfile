@@ -1,10 +1,10 @@
 FROM gitpod/workspace-full:latest
 
-# USER gitpod
-
 RUN bash -c ". /home/gitpod/.sdkman/bin/sdkman-init.sh && \
     sdk install java 17.0.12-tem && \
     sdk default java 17.0.12-tem"
+
+RUN unset JAVA_TOOL_OPTIONS
 
 USER root
 
@@ -24,7 +24,6 @@ ENV LAUNCH_JBOSS_IN_BACKGROUND true
 RUN mkdir -p ${JBOSS_HOME}
 
 RUN wget -O /tmp/postgresql.jar https://jdbc.postgresql.org/download/postgresql-42.2.24.jar
-COPY ./setup /tmp/
 ENV SETUP_DIR /tmp
 
 RUN cd $HOME \
