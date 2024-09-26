@@ -32,7 +32,7 @@ JBoss EAP is based upon the popular open source project [WildFly](https://jbosso
 ## 3.2 - What is the Migration Toolkit for Applications?
 
 <p align="center">
-    <img src="../img/2-mta_icon.png" align=center>
+    <img src="../img/2-mta_icon.png" width=300 align=center>
 </p>
 
 __Migration Toolkit for Applications (MTA)__ is an extensible and customizable rule-based tool that helps simplify migration of Java applications.
@@ -76,31 +76,27 @@ You can see icons on the left for navigating between project explorer, search, s
 
 Click on `MTA` icon on the left, you will see a new migration configuration is automatically added. 
 
-<p align="center">
+<!-- <p align="center">
 <img src="../img/2-mta-icon.png" width=700 align=center>
+</p> -->
+
+<p align="center">
+<img src="../img/2-windup-icon.png" width=700 align=center>
 </p>
 
-Add the MTA CLI tool to _--cli_ configuration by checking on `--cli` checkbox. Click on `Add` to add the path, `/workspace/workshop-migrate-jboss-on-app-service/setup/kantra`. 
+<!-- Add the MTA CLI tool to _--cli_ configuration by checking on `--cli` checkbox. Click on `Add` to add the path, `/workspace/workshop-migrate-jboss-on-app-service/setup/kantra`. 
 
 <p align="center">
 <img src="../img/2-mta-cli.png" width=700 align=center>
-</p>
+</p> -->
 
-Note that the **Kantra** is a command-line interface (CLI) that unifies Konveyor (MTA's upstream tool)'s analysis and transformation capabilities.
+<!-- Note that the **Kantra** is a command-line interface (CLI) that unifies Konveyor (MTA's upstream tool)'s analysis and transformation capabilities. -->
 
-To input source files and directories, click on `Add` then select `Open File Explorer`:
+To input source files and directories, click on `Pencil icon`. Append `/src` directory to _--input_ configuration. Press `Enter` key.
 
 <p align="center">
 <img src="../img/2-mta-add-input.png" width=700 align=center>
 </p>
-
-The current working directory `/workspace/workshop-migrate-jboss-on-app-service/` will be shown. Then click on `src` directory and click on `Enter`:
-
-<p align="center">
-<img src="../img/2-mta-add-opendir.png" width=700 align=center>
-</p>
-
-Then you will see that `/workspace/workshop-migrate-jboss-on-app-service/src/` directory is added in _--input_ configuration.
 
 Find and select `eap7` in _--target_ server to migrate:
 
@@ -118,6 +114,12 @@ Find and click on the `--source` checkbox then select `weblogic` to indicate tha
 
 ----
 
+Before you runt the analysis, you need to update the Windup CLI tool based on Java 17. run the following bash script in the terminal.
+
+```shell
+sh setup/update-windup-cli
+```
+
 Click on the `arrow` button on the *configuration* to analyze the WebLogic application.
 
 <p align="center">
@@ -127,7 +129,7 @@ Click on the `arrow` button on the *configuration* to analyze the WebLogic appli
 CLI will be executed automatically in a new terminal in GitPod and it will take a minute or less to complete the analysis. Once it's done, click on `Open Report` in the pop-up:
 
 <p align="center">
-<img src="../img/2-mta-analysis-complete.png" width=700 align=center>
+<img src="../img/2-mta-analysis-complete.png" width=900 align=center>
 </p>
 
 ### 3.3.4 - Review the report
@@ -135,7 +137,7 @@ CLI will be executed automatically in a new terminal in GitPod and it will take 
 ----
 
 <p align="center">
-<img src="../img/2-mta_result_landing_page.png" width=700 align=center>
+<img src="../img/2-mta_result_landing_page.png" width=900 align=center>
 </p>
 
 The main landing page of the report lists the applications that were processed. Each row contains a high-level overview of the story points, number of incidents, and technologies encountered in that application.
@@ -189,12 +191,6 @@ In the Explorer, the issues use an icon to indicate their severity level and sta
 ----
 
 Let's take a look at the details about the migration issue. Right-click on `WebLogic ApplicationLifecycleListener[rule-id:xxx]` in _Hints_ of _StartupListener.java_ file. Click on `View Details`:
-
-<p align="center">
-<img src="../img/2-mta-issue-detail.png" width=900 align=center>
-</p>
-
-MTA also provides helpful links to understand the issue deeper and offer guidance for the migration when you click on `Open Report`:
 
 <p align="center">
 <img src="../img/2-mta-issue-open-report.png" width=900 align=center>
@@ -276,9 +272,24 @@ mvn -f $GITPOD_REPO_ROOT clean package
 
 If it builds successfully (you will see `BUILD SUCCESS`), let’s move on to the next issue! If it does not compile, verify you made all the changes correctly and try the build again.
 
-<p align="center">
-<img src="../img/2-gitpod-build-result.png" width=700 align=center>
-</p>
+```shell
+[INFO] --- surefire:3.2.5:test (default-test) @ monolith ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- war:3.2.0:war (default-war) @ monolith ---
+[INFO] Packaging webapp
+[INFO] Assembling webapp [monolith] in [/workspace/workshop-migrate-jboss-on-app-service/target/ROOT]
+[INFO] Processing war project
+[INFO] Copying webapp resources [/workspace/workshop-migrate-jboss-on-app-service/src/main/webapp]
+[INFO] Webapp assembled in [868 msecs]
+[INFO] Building war: /workspace/workshop-migrate-jboss-on-app-service/target/ROOT.war
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  5.812 s
+[INFO] Finished at: 2024-09-26T00:34:10Z
+[INFO] ------------------------------------------------------------------------
+```
 
 ### 3.4.5 - View the diffs
 

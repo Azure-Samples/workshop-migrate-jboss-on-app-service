@@ -1,0 +1,3 @@
+#!/bin/bash
+
+cp setup/windup-cli /home/gitpod/.windup/tooling/vscode/windup-cli-6.2.5.Final/bin/ && chmod +x /home/gitpod/.windup/tooling/vscode/windup-cli-6.2.5.Final/bin/windup-cli
