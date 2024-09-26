@@ -4,8 +4,6 @@ RUN bash -c ". /home/gitpod/.sdkman/bin/sdkman-init.sh && \
     sdk install java 17.0.12-tem && \
     sdk default java 17.0.12-tem"
 
-RUN unset JAVA_TOOL_OPTIONS
-
 USER root
 
 # Azure CLI
@@ -23,7 +21,6 @@ ENV LAUNCH_JBOSS_IN_BACKGROUND true
 
 RUN mkdir -p ${JBOSS_HOME}
 
-RUN wget -O /tmp/postgresql.jar https://jdbc.postgresql.org/download/postgresql-42.2.24.jar
 ENV SETUP_DIR /tmp
 
 RUN cd $HOME \
@@ -39,3 +36,5 @@ RUN chown -R gitpod:0 ${JBOSS_HOME} \
     && chmod -R g+rw ${JBOSS_HOME}
 
 USER gitpod
+
+RUN wget -O /tmp/postgresql.jar https://jdbc.postgresql.org/download/postgresql-42.2.24.jar

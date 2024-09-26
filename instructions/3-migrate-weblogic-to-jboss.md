@@ -65,7 +65,8 @@ You will be using Gitpod, a cloud-powered development environments based on [Vis
 You already started your IDE in a previous step, and you can see that the project is imported into your workspace and is visible in the project explorer:
 
 <p align="center">
-    <img src="../img/2-gitpod-explorer.png" width=900 align=center>
+    <!-- <img src="../img/2-gitpod-explorer.png" width=900 align=center> -->
+    <img src="../img/2-gitpod-explorer-windup.png" width=900 align=center>
 </p>
 
 You can see icons on the left for navigating between project explorer, search, source control  (e.g. Git), debugging, and other plugins. You’ll use these during the course of this workshop. Feel free to click on them and see what they do.
