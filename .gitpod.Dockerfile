@@ -21,7 +21,7 @@ ENV LAUNCH_JBOSS_IN_BACKGROUND true
 
 RUN mkdir -p ${JBOSS_HOME}
 
-ENV SETUP_DIR /tmp
+ENV SETUP_DIR /workspace/workshop-migrate-jboss-on-app-service/setup
 
 RUN cd $HOME \
     && curl -L -O https://github.com/wildfly/wildfly/releases/download/${WILDFLY_VERSION}/wildfly-${WILDFLY_VERSION}.tar.gz \
@@ -36,5 +36,3 @@ RUN chown -R gitpod:0 ${JBOSS_HOME} \
     && chmod -R g+rw ${JBOSS_HOME}
 
 USER gitpod
-
-RUN wget -O /tmp/postgresql.jar https://jdbc.postgresql.org/download/postgresql-42.2.24.jar
