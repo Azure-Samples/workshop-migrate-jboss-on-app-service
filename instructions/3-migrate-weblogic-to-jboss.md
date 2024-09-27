@@ -115,7 +115,7 @@ Find and click on the `--source` checkbox then select `weblogic` to indicate tha
 
 ----
 
-Before you runt the analysis, you need to update the Windup CLI tool based on Java 17. run the following bash script in the terminal.
+Before you runt the analysis, you need to update the Windup CLI tool based on Java 17. run the following bash script in the `Pre-warm Maven bash` terminal in GitPod.
 
 ```shell
 sh setup/update-windup-cli
@@ -127,7 +127,7 @@ Click on the `arrow` button on the *configuration* to analyze the WebLogic appli
 <img src="../img/2-mta-run-report.png" width=700 align=center>
 </p>
 
-CLI will be executed automatically in a new terminal in GitPod and it will take a minute or less to complete the analysis. Once it's done, click on `Open Report` in the pop-up:
+CLI will be executed automatically in a new terminal in GitPod and it will take a few minutes to complete the analysis. Once it's done, click on `Open Report` in the pop-up:
 
 <p align="center">
 <img src="../img/2-mta-analysis-complete.png" width=900 align=center>
@@ -261,7 +261,7 @@ public class StartupListener {
 
 ----
 
-In the GitPod terminal, run the following command to test the build:
+Run the following command to test the build in the `Pre-warm Maven bash` terminal in GitPod.
 
 ```shell
 mvn -f $GITPOD_REPO_ROOT clean package
