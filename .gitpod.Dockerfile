@@ -14,9 +14,11 @@ RUN install-packages postgresql-client
 
 # Wildfly  (https://github.com/jboss-dockerfiles/wildfly/blob/master/Dockerfile)
 ENV WILDFLY_VERSION 33.0.1.Final
+# ENV WILDFLY_VERSION 25.0.0.Final
 ENV JBOSS_HOME /opt/jboss/wildfly
 ENV DEPLOYMENT_DIR /workspace/deployments
 ENV WILDFLY_SHA1 943ec801bf65bb42de27ef78c85d325180dcab0d
+# ENV WILDFLY_SHA1 238e67f48f1bd1e79f2d845cba9194dcd54b4d89
 ENV LAUNCH_JBOSS_IN_BACKGROUND true
 
 RUN mkdir -p ${JBOSS_HOME}
