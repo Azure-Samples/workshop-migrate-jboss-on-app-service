@@ -21,7 +21,7 @@ jboss/server/minimal/work/**/*
 # Java-related files #
 
 target/
-deployments/
+# deployments/
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
