@@ -58,7 +58,7 @@ First, we will need a new resource group to house the resources we will create i
     az webapp create \
         --name $WEBAPP_NAME \
         --resource-group $RESOURCE_GROUP \
-        --runtime "JBOSSEAP|7-java11" \
+        --runtime "JBOSSEAP|7-java17" \
         --plan "workshop-app-service-plan"
     ```
 
