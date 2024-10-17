@@ -30,6 +30,6 @@ tasks:
   - name: Start PostgreSQL container
     command: docker run -d -p 5432:5432 -e POSTGRES_USER=coolstore -e POSTGRES_PASSWORD=coolstore123 -e POSTGRES_HOST_AUTH_METHOD=md5 -e POSTGRES_DB=monolith postgres
   - name: Setup Wildfly server
-    command: mkdir -p /workspace/deployments && $JBOSS_HOME/bin/jboss-cli.sh --echo-command --file=/workspace/workshop-migrate-jboss-on-app-service/setup/config.cli && rm -rf $JBOSS_HOME/standalone/configuration/standalone_xml_history
+    command: $JBOSS_HOME/bin/jboss-cli.sh --echo-command --file=/workspace/workshop-migrate-jboss-on-app-service/setup/config.cli && rm -rf $JBOSS_HOME/standalone/configuration/standalone_xml_history
   - name: Start Wildfly server
     command: $JBOSS_HOME/bin/standalone.sh -b 0.0.0.0

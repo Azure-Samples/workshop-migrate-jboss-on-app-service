@@ -147,7 +147,7 @@ Later sections of this workshop will introduce and explain the App Service Envir
         --parameters webAppName=${ASE_WEBAPP_NAME}
     ```
 
-> **Tip**: You can view the progress of your deployments in the Azure Portal by navigating to your resource group, and clicking on the **Deployments** tab.
+> **Tip**: You will see what resources (e.g., template, vnet, public IP address) are being created on the _Overview_ page in your resource group.
 
 *Congratulations!* Your GitPod workspace is now ready to go. Click the link below to go to the next section
 
